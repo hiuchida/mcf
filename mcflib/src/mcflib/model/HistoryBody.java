@@ -1,6 +1,9 @@
 package mcflib.model;
 
+import java.util.List;
+
 import mcflib.util.DigestBuilder;
+import mcflib.util.ListBuilder;
 import mcflib.util.UniqueIdUtil;
 
 public class HistoryBody {
@@ -15,6 +18,18 @@ public class HistoryBody {
 	
 	public HistoryBody() {
 		this.id = UniqueIdUtil.generate();
+	}
+
+	public List<String> toList() {
+		ListBuilder lb = new ListBuilder();
+		lb.append("id", id);
+		lb.append("timestamp", timestamp);
+		lb.append("ipaddr", ipaddr);
+		lb.append("userid", userid);
+		lb.append("docid", docid);
+		lb.append("comment", comment);
+		lb.append("appdata", appdata);
+		return lb.toList();
 	}
 	
 	@Override

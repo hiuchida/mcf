@@ -1,6 +1,9 @@
 package mcflib.model;
 
+import java.util.List;
+
 import mcflib.util.DigestBuilder;
+import mcflib.util.ListBuilder;
 
 public class History {
 	private String previd;
@@ -13,6 +16,14 @@ public class History {
 		this.hash = toDigestString();
 	}
 
+	public List<String> toList() {
+		ListBuilder lb = new ListBuilder();
+		lb.append("previd", previd);
+		lb.append(body.toList());
+		lb.append("hash", hash);
+		return lb.toList();
+	}
+	
 	@Override
 	public String toString() {
 		return this.body.toString() + "," + this.previd;

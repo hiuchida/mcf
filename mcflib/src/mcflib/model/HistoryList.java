@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mcflib.util.DigestBuilder;
+import mcflib.util.ListBuilder;
 
 public class HistoryList {
 	private String previd;
@@ -14,12 +15,22 @@ public class HistoryList {
 		list = new ArrayList<>();
 	}
 	
+	public List<String> toList() {
+		ListBuilder lb = new ListBuilder();
+		lb.append("previd", previd);
+		for (History h : list) {
+			lb.append(h.toList());
+		}
+		lb.append("hash", hash);
+		return lb.toList();
+	}
+	
 	@Override
 	public String toString() {
 		return this.previd + "," + this.list.toString();
 	}
 	
-	public void addHistory(History h) {
+	public void add(History h) {
 		if (this.hash != null) {
 			throw new RuntimeException("completed");
 		}
