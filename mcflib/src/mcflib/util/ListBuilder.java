@@ -6,7 +6,8 @@ import java.util.List;
 public class ListBuilder {
 	private List<String> list = new ArrayList<>();
 
-	public ListBuilder() {
+	public ListBuilder(Class<?> klass) {
+		append("class", klass.getName());
 	}
 
 	public void append(List<String> l) {

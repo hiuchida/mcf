@@ -17,8 +17,7 @@ public class History {
 	}
 
 	public List<String> toList() {
-		ListBuilder lb = new ListBuilder();
-		lb.append("class", History.class.getName());
+		ListBuilder lb = new ListBuilder(History.class);
 		lb.append("previd", previd);
 		lb.append(body.toList());
 		lb.append("hash", hash);

@@ -10,6 +10,7 @@ public class HistoryListParser extends ListParser {
 	
 	public HistoryList parse() {
 		String previd = get("previd");
+		String status = get("status");
 		HistoryList hl = new HistoryList();
 		String hash;
 		while (true) {
@@ -27,8 +28,7 @@ public class HistoryListParser extends ListParser {
 				throwIllegalLine();
 			}
 		}
-		hl.complete(previd);
-		hl.validate(hash);
+		hl.validate(previd, status, hash);
 		return hl;
 	}
 

@@ -25,8 +25,7 @@ public class HistoryBody {
 	}
 
 	public List<String> toList() {
-		ListBuilder lb = new ListBuilder();
-		lb.append("class", HistoryBody.class.getName());
+		ListBuilder lb = new ListBuilder(HistoryBody.class);
 		lb.append("id", id);
 		lb.append("timestamp", timestamp);
 		lb.append("ipaddr", ipaddr);
