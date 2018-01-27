@@ -18,6 +18,7 @@ public class History {
 
 	public List<String> toList() {
 		ListBuilder lb = new ListBuilder();
+		lb.append("class", History.class.getName());
 		lb.append("previd", previd);
 		lb.append(body.toList());
 		lb.append("hash", hash);
@@ -26,9 +27,15 @@ public class History {
 	
 	@Override
 	public String toString() {
-		return this.body.toString() + "," + this.previd;
+		return "(" + this.body.toString() + "," + this.previd + ")";
 	}
 	
+	public void validate(String hash) {
+		if (!this.hash.equals(hash)) {
+			throw new RuntimeException("Illegal hash");
+		}
+	}
+
 	private String toDigestString() {
 		body.complete();
 		DigestBuilder db = new DigestBuilder(History.class);

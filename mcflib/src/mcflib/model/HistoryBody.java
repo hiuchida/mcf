@@ -20,8 +20,13 @@ public class HistoryBody {
 		this.id = UniqueIdUtil.generate();
 	}
 
+	public HistoryBody(String id) {
+		this.id = id;
+	}
+
 	public List<String> toList() {
 		ListBuilder lb = new ListBuilder();
+		lb.append("class", HistoryBody.class.getName());
 		lb.append("id", id);
 		lb.append("timestamp", timestamp);
 		lb.append("ipaddr", ipaddr);

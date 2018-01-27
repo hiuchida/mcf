@@ -17,6 +17,7 @@ public class HistoryList {
 	
 	public List<String> toList() {
 		ListBuilder lb = new ListBuilder();
+		lb.append("class", HistoryList.class.getName());
 		lb.append("previd", previd);
 		for (History h : list) {
 			lb.append(h.toList());
@@ -40,6 +41,12 @@ public class HistoryList {
 	public void complete(String previd) {
 		this.previd = previd;
 		this.hash = toDigestString();
+	}
+	
+	public void validate(String hash) {
+		if (!this.hash.equals(hash)) {
+			throw new RuntimeException("Illegal hash");
+		}
 	}
 
 	private String toDigestString() {
