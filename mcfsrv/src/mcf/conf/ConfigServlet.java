@@ -28,11 +28,13 @@ public class ConfigServlet extends HttpServlet {
 		super.init(config);
 		
 		ServletContext context = config.getServletContext();
-		String logdir = context.getRealPath("/WEB-INF/logs");
-		FileUtil.mkdir(logdir);
-		System.setProperty("mcfsrv.log.home", logdir);
+		String logDir = context.getRealPath("/WEB-INF/logs");
+		FileUtil.mkdir(logDir);
+		System.setProperty("mcfsrv.log.home", logDir);
 		Logger logger = LogManager.getLogger(ConfigServlet.class);
 		logger.info("mcfsrv起動");
+		String dataDir = context.getRealPath("/WEB-INF/data");
+		DataConfig.getInstance().init(dataDir);
 	}
 
 	@Override

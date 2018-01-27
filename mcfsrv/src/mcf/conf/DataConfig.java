@@ -1,0 +1,26 @@
+package mcf.conf;
+
+import mcf.util.FileUtil;
+
+public class DataConfig {
+	private static DataConfig singleton = new DataConfig();
+	
+	public static DataConfig getInstance() {
+		return singleton;
+	}
+	
+	private String dataDir;
+	
+	private DataConfig() {
+	}
+	
+	public void init(String dir) {
+		dataDir = dir;
+		FileUtil.mkdir(dataDir);
+	}
+
+	public String getPath() {
+		return dataDir;
+	}
+
+}
