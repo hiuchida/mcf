@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<% mcf.Debug.test(); %>
+<% mcf.Debug.test(out); %>
 </body>
 </html>
