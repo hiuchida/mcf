@@ -4,7 +4,7 @@
 <!-- Build script for mcfsrv                                              -->
 <!-- ==================================================================== -->
 
-<project name="mcfsrv" default="dist" basedir=".">
+<project name="mcfsrv" default="dist.mcfsrv" basedir=".">
 
   <property file="${basedir}/build.properties" />
 
@@ -30,19 +30,19 @@
     </fileset> 
   </path>
 
-  <target name="clean" depends="">
+  <target name="clean.mcfsrv" depends="">
     <delete file="${antwork.home}/mcfsrv.war"/>
     <delete dir="${build.home}"/>
     <delete dir="${dist.home}"/>
   </target>
 
-  <target name="prepare" depends="clean">
+  <target name="prepare.mcfsrv" depends="clean.mcfsrv">
     <mkdir dir="${antwork.home}"/>
     <mkdir dir="${build.home}"/>
     <mkdir dir="${dist.home}"/>
   </target>
 
-  <target name="compile" depends="prepare">
+  <target name="compile.mcfsrv" depends="prepare.mcfsrv">
     <javac destdir="${build.home}"
           encoding="UTF-8"
       classpathref="cp.mcfsrv"
@@ -57,7 +57,7 @@
     </copy>
   </target>
 
-  <target name="dist" depends="compile">
+  <target name="dist.mcfsrv" depends="compile.mcfsrv">
     <copy todir="${dist.home}/mcfsrv">
       <fileset dir="${WebContent.home}" includes="**"/>
     </copy>

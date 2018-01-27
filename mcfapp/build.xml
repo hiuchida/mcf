@@ -4,7 +4,7 @@
 <!-- Build script for mcfapp                                              -->
 <!-- ==================================================================== -->
 
-<project name="mcfapp" default="dist" basedir=".">
+<project name="mcfapp" default="dist.mcfapp" basedir=".">
 
   <property file="${basedir}/build.properties" />
 
@@ -27,19 +27,19 @@
     </fileset> 
   </path>
 
-  <target name="clean" depends="">
+  <target name="clean.mcfapp" depends="">
     <delete file="${antwork.home}/mcfapp.war"/>
     <delete dir="${build.home}"/>
     <delete dir="${dist.home}"/>
   </target>
 
-  <target name="prepare" depends="clean">
+  <target name="prepare.mcfapp" depends="clean.mcfapp">
     <mkdir dir="${antwork.home}"/>
     <mkdir dir="${build.home}"/>
     <mkdir dir="${dist.home}"/>
   </target>
 
-  <target name="compile" depends="prepare">
+  <target name="compile.mcfapp" depends="prepare.mcfapp">
     <javac destdir="${build.home}"
           encoding="UTF-8"
       classpathref="cp.mcfapp"
@@ -54,7 +54,7 @@
     </copy>
   </target>
 
-  <target name="dist" depends="compile">
+  <target name="dist.mcfapp" depends="compile.mcfapp">
     <copy todir="${dist.home}/mcfapp">
       <fileset dir="${WebContent.home}" includes="**"/>
     </copy>

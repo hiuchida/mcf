@@ -4,7 +4,7 @@
 <!-- Build script for mcflib                                              -->
 <!-- ==================================================================== -->
 
-<project name="mcflib" default="dist" basedir=".">
+<project name="mcflib" default="dist.mcflib" basedir=".">
 
   <property file="${basedir}/build.properties" />
 
@@ -23,17 +23,17 @@
     </fileset> 
   </path>
 
-  <target name="clean" depends="">
+  <target name="clean.mcflib" depends="">
     <delete file="${antwork.home}/mcflib.jar"/>
     <delete dir="${build.home}"/>
   </target>
 
-  <target name="prepare" depends="clean">
+  <target name="prepare.mcflib" depends="clean.mcflib">
     <mkdir dir="${antwork.home}"/>
     <mkdir dir="${build.home}"/>
   </target>
 
-  <target name="compile" depends="prepare">
+  <target name="compile.mcflib" depends="prepare.mcflib">
     <javac destdir="${build.home}"
           encoding="UTF-8"
       classpathref="cp.mcflib"
@@ -45,7 +45,7 @@
     </javac>
   </target>
 
-  <target name="dist" depends="compile">
+  <target name="dist.mcflib" depends="compile.mcflib">
     <jar destfile="${antwork.home}/mcflib.jar" basedir="${build.home}" includes="**"/>
   </target>
 

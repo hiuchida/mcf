@@ -6,16 +6,16 @@
 
 <project name="mcf" default="dist" basedir=".">
 
-  <target name="clean">
-    <ant antfile="${basedir}/mcflib/build.xml" inheritAll="false" target="clean"/>
-    <ant antfile="${basedir}/mcfsrv/build.xml" inheritAll="false" target="clean"/>
-    <ant antfile="${basedir}/mcfapp/build.xml" inheritAll="false" target="clean"/>
+  <target name="clean" depends="">
+    <ant antfile="${basedir}/mcflib/build.xml" inheritAll="false" target="clean.mcflib"/>
+    <ant antfile="${basedir}/mcfsrv/build.xml" inheritAll="false" target="clean.mcfsrv"/>
+    <ant antfile="${basedir}/mcfapp/build.xml" inheritAll="false" target="clean.mcfapp"/>
   </target>
 
-  <target name="dist">
-    <ant antfile="${basedir}/mcflib/build.xml" inheritAll="false"/>
-    <ant antfile="${basedir}/mcfsrv/build.xml" inheritAll="false"/>
-    <ant antfile="${basedir}/mcfapp/build.xml" inheritAll="false"/>
+  <target name="dist" depends="clean">
+    <ant antfile="${basedir}/mcflib/build.xml" inheritAll="false" target="dist.mcflib"/>
+    <ant antfile="${basedir}/mcfsrv/build.xml" inheritAll="false" target="dist.mcfsrv"/>
+    <ant antfile="${basedir}/mcfapp/build.xml" inheritAll="false" target="dist.mcfapp"/>
   </target>
 
 </project>
