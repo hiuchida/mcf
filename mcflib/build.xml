@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ==================================================================== -->
+<!-- Build script for mcflib                                              -->
+<!-- ==================================================================== -->
+
+<project name="mcflib" default="dist" basedir=".">
+
+  <property file="${basedir}/build.properties" />
+
+  <property name="debug"                    value="true"/>
+  <property name="optimize"                 value="true"/>
+  <property name="deprecation"              value="false"/>
+
+  <property name="antwork.home"             value="${basedir}/antwork"/>
+  <property name="build.home"               value="${antwork.home}/build"/>
+  <property name="src.home"                 value="${basedir}/src"/>
+  <property name="lib.home"                 value="${basedir}/lib"/>
+
+  <path id="cp.mcflib">
+    <fileset dir="${lib.home}">
+      <include name="*.jar"/>
+    </fileset> 
+  </path>
+
+  <target name="clean" depends="">
+    <delete file="${antwork.home}/mcflib.jar"/>
+    <delete dir="${build.home}"/>
+  </target>
+
+  <target name="prepare" depends="clean">
+    <mkdir dir="${antwork.home}"/>
+    <mkdir dir="${build.home}"/>
+  </target>
+
+  <target name="compile" depends="prepare">
+    <javac destdir="${build.home}"
+          encoding="UTF-8"
+      classpathref="cp.mcflib"
+             debug="${debug}"
+          optimize="${optimize}"
+       deprecation="${deprecation}">
+      <src path="${src.home}" />
+      <include name="**/*.java" />
+    </javac>
+  </target>
+
+  <target name="dist" depends="compile">
+    <jar destfile="${antwork.home}/mcflib.jar" basedir="${build.home}" includes="**"/>
+  </target>
+
+</project>

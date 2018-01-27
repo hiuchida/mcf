@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ==================================================================== -->
+<!-- Build script for mcf                                                 -->
+<!-- ==================================================================== -->
+
+<project name="mcf" default="dist" basedir=".">
+
+  <target name="clean">
+    <ant antfile="${basedir}/mcflib/build.xml" inheritAll="false" target="clean"/>
+    <ant antfile="${basedir}/mcfsrv/build.xml" inheritAll="false" target="clean"/>
+    <ant antfile="${basedir}/mcfapp/build.xml" inheritAll="false" target="clean"/>
+  </target>
+
+  <target name="dist">
+    <ant antfile="${basedir}/mcflib/build.xml" inheritAll="false"/>
+    <ant antfile="${basedir}/mcfsrv/build.xml" inheritAll="false"/>
+    <ant antfile="${basedir}/mcfapp/build.xml" inheritAll="false"/>
+  </target>
+
+</project>

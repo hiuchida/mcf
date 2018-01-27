@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ==================================================================== -->
+<!-- Build script for mcfapp                                              -->
+<!-- ==================================================================== -->
+
+<project name="mcfapp" default="dist" basedir=".">
+
+  <property file="${basedir}/build.properties" />
+
+  <property name="debug"                    value="true"/>
+  <property name="optimize"                 value="true"/>
+  <property name="deprecation"              value="false"/>
+
+  <property name="antwork.home"             value="${basedir}/antwork"/>
+  <property name="build.home"               value="${antwork.home}/build"/>
+  <property name="dist.home"                value="${antwork.home}/dist"/>
+  <property name="src.home"                 value="${basedir}/src"/>
+  <property name="WebContent.home"          value="${basedir}/WebContent"/>
+
+  <path id="cp.mcfapp">
+    <fileset dir="${WebContent.home}/WEB-INF/lib">
+      <include name="*.jar"/>
+    </fileset> 
+    <fileset dir="../lib">
+      <include name="*.jar"/>
+    </fileset> 
+  </path>
+
+  <target name="clean" depends="">
+    <delete file="${antwork.home}/mcfapp.war"/>
+    <delete dir="${build.home}"/>
+    <delete dir="${dist.home}"/>
+  </target>
+
+  <target name="prepare" depends="clean">
+    <mkdir dir="${antwork.home}"/>
+    <mkdir dir="${build.home}"/>
+    <mkdir dir="${dist.home}"/>
+  </target>
+
+  <target name="compile" depends="prepare">
+    <javac destdir="${build.home}"
+          encoding="UTF-8"
+      classpathref="cp.mcfapp"
+             debug="${debug}"
+          optimize="${optimize}"
+       deprecation="${deprecation}">
+      <src path="${src.home}" />
+      <include name="**/*.java" />
+    </javac>
+    <copy todir="${build.home}" preservelastmodified="true">
+      <fileset dir="${src.home}" includes="log4j2.xml"/>
+    </copy>
+  </target>
+
+  <target name="dist" depends="compile">
+    <copy todir="${dist.home}/mcfapp">
+      <fileset dir="${WebContent.home}" includes="**"/>
+    </copy>
+    <copy todir="${dist.home}/mcfapp/WEB-INF/classes">
+      <fileset dir="${build.home}" includes="**" />
+    </copy>
+    <jar jarfile="${antwork.home}/mcfapp.war" basedir="${dist.home}/mcfapp" includes="**"/>
+  </target>
+
+</project>
