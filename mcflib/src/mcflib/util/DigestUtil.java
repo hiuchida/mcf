@@ -15,12 +15,7 @@ public class DigestUtil {
 		try {
 			MessageDigest md = MessageDigest.getInstance(algo);
 			md.update(bytes);
-			StringBuilder sb = new StringBuilder();
-			for (byte b : md.digest()) {
-				String hex = String.format("%02x", b);
-				sb.append(hex);
-			}
-			return sb.toString();
+			return Base64Util.encode(md.digest());
 		} catch (NoSuchAlgorithmException e) {
 			throw new RuntimeException(e);
 		}
