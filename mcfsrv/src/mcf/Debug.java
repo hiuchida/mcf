@@ -16,27 +16,43 @@ import mcflib.util.FileUtil;
 
 public class Debug {
 	public static void test(JspWriter out) throws IOException {
-		HistoryList hl = new HistoryList();
-		HistoryBody hb = new HistoryBody();
-		History h = new History(null, hb);
-		hl.add(h);
-		
-		HistoryBody hb2 = new HistoryBody();
-		History h2 = new History(h.getId(), hb2);
-		hl.add(h2);
-		
-		hl.complete(null);
+		{
+			HistoryList hl = new HistoryList();
+			HistoryBody hb = new HistoryBody();
+			History h = new History(hl.getLastId(), hb);
+			hl.add(h);
+			write(1, hl);
+		}
+		{
+			HistoryList hl = read(1);
+			out.println(hl);
+			
+			HistoryBody hb = new HistoryBody();
+			History h = new History(hl.getLastId(), hb);
+			hl.add(h);
+			hl.complete(null);
+			write(2, hl);
+		}
+		{
+			HistoryList hl = read(2);
+			out.println(hl);
+		}
+	}
 
+	static void write(int no, HistoryList hl) throws IOException {
 		String dataDir = DataConfig.getInstance().getPath();
-		try (PrintWriter pw = FileUtil.newWriter(dataDir + "/" + "historyList.txt")) {
+		try (PrintWriter pw = FileUtil.newWriter(dataDir + "/" + "historyList" + no + ".txt")) {
 			FileUtil.write(pw, hl.toList());
 		} finally {
 		}
-		
-		try (BufferedReader br = FileUtil.newReader(dataDir + "/" + "historyList.txt")) {
+	}
+
+	static HistoryList read(int no) throws IOException {
+		String dataDir = DataConfig.getInstance().getPath();
+		try (BufferedReader br = FileUtil.newReader(dataDir + "/" + "historyList" + no + ".txt")) {
 			List<String> list = FileUtil.read(br);
 			Object obj = ListParser.parse(list);
-			out.println(obj);
+			return (HistoryList)obj;
 		} finally {
 		}
 	}
