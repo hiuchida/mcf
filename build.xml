@@ -4,7 +4,7 @@
 <!-- Build script for mcf                                                 -->
 <!-- ==================================================================== -->
 
-<project name="mcf" default="dist" basedir=".">
+<project name="mcf" default="test" basedir=".">
 
   <target name="clean" depends="">
     <ant antfile="${basedir}/mcflib/build.xml" inheritAll="false" target="clean.mcflib"/>
@@ -16,6 +16,10 @@
     <ant antfile="${basedir}/mcflib/build.xml" inheritAll="false" target="dist.mcflib"/>
     <ant antfile="${basedir}/mcfsrv/build.xml" inheritAll="false" target="dist.mcfsrv"/>
     <ant antfile="${basedir}/mcfapp/build.xml" inheritAll="false" target="dist.mcfapp"/>
+  </target>
+
+  <target name="test" depends="dist">
+    <ant antfile="${basedir}/mcflib/build.xml" inheritAll="false" target="test.mcflib"/>
   </target>
 
 </project>
