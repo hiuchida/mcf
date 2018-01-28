@@ -44,6 +44,13 @@ public class HistoryList {
 		list.add(h);
 	}
 	
+	public String getFirstId() {
+		if (list.size() == 0) {
+			return null;
+		}
+		return list.get(0).getId();
+	}
+	
 	public String getLastId() {
 		if (list.size() == 0) {
 			return null;

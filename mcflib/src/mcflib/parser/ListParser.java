@@ -2,12 +2,13 @@ package mcflib.parser;
 
 import java.util.List;
 
+import mcflib.model.HistoryChain;
 import mcflib.model.HistoryList;
 
 public class ListParser {
 	public static Object parse(List<String> list) {
 		ListParserIterator itr = new ListParserIterator(list);
-		return new ListParser(itr).parse();
+		return new ListParser(itr).selectParser();
 	}
 	
 	private ListParserIterator itr;
@@ -20,10 +21,14 @@ public class ListParser {
 		this.itr = lp.itr;
 	}
 	
-	public Object parse() {
+	public Object selectParser() {
 		String klass = get("class");
 		if (klass.equals(HistoryList.class.getName())) {
 			Object obj = new HistoryListParser(this).parse();
+			itr.checkEol();
+			return obj;
+		} else if (klass.equals(HistoryChain.class.getName())) {
+			Object obj = new HistoryChainParser(this).parse();
 			itr.checkEol();
 			return obj;
 		} else {
