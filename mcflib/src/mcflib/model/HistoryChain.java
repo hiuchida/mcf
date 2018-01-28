@@ -6,12 +6,13 @@ import java.util.List;
 import mcflib.util.DigestBuilder;
 import mcflib.util.ListBuilder;
 
-public class HistoryChain {
+public class HistoryChain extends Node {
 	private String previd;
 	private List<HistoryList> list;
 	private String hash;
 
 	public HistoryChain() {
+		this.previd = FIRSTID;
 		this.list = new ArrayList<>();
 	}
 	
@@ -31,15 +32,16 @@ public class HistoryChain {
 		return this.previd + "," + this.list.toString();
 	}
 	
-	public void add(HistoryList h) {
-		list.add(h);
+	public void add(HistoryList hl) {
+		hl.setPrevid(getLastid());
+		list.add(hl);
 	}
 	
-	public String getLastId() {
+	private String getLastid() {
 		if (list.size() == 0) {
-			return null;
+			return FIRSTID;
 		}
-		return list.get(list.size() - 1).getFirstId();
+		return list.get(list.size() - 1).getFirstid();
 	}
 	
 	public void validate(String previd, String hash) {
@@ -59,6 +61,11 @@ public class HistoryChain {
 		return db.toString();
 	}
 	
+	void setPrevid(String previd) {
+		this.previd = previd;
+		this.hash = toDigestString();
+	}
+
 	public String getPrevid() {
 		return previd;
 	}

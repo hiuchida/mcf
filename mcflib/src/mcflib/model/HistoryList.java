@@ -6,7 +6,7 @@ import java.util.List;
 import mcflib.util.DigestBuilder;
 import mcflib.util.ListBuilder;
 
-public class HistoryList {
+public class HistoryList extends Node {
 	private static final String RUNNING = "running";
 	private static final String COMPLETE = "complete";
 
@@ -16,8 +16,9 @@ public class HistoryList {
 	private String hash;
 
 	public HistoryList() {
-		this.list = new ArrayList<>();
+		this.previd = FIRSTID;
 		this.status = RUNNING;
+		this.list = new ArrayList<>();
 	}
 	
 	public List<String> toList() {
@@ -41,27 +42,22 @@ public class HistoryList {
 		if (this.status.equals(COMPLETE)) {
 			throw new RuntimeException("completed");
 		}
+		h.setPrevid(getLastid());
 		list.add(h);
 	}
 	
-	public String getFirstId() {
+	public String getFirstid() {
 		if (list.size() == 0) {
-			return null;
+			return FIRSTID;
 		}
 		return list.get(0).getId();
 	}
 	
-	public String getLastId() {
+	private String getLastid() {
 		if (list.size() == 0) {
-			return null;
+			return FIRSTID;
 		}
 		return list.get(list.size() - 1).getId();
-	}
-	
-	public void complete(String previd) {
-		this.previd = previd;
-		this.status = COMPLETE;
-		this.hash = toDigestString();
 	}
 	
 	public void validate(String previd, String status, String hash) {
@@ -83,6 +79,12 @@ public class HistoryList {
 		return db.toString();
 	}
 	
+	void setPrevid(String previd) {
+		this.previd = previd;
+		this.status = COMPLETE;
+		this.hash = toDigestString();
+	}
+
 	public String getPrevid() {
 		return previd;
 	}
