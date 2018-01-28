@@ -15,9 +15,10 @@
   <property name="antwork.home"             value="${basedir}/antwork"/>
   <property name="build.home"               value="${antwork.home}/build"/>
   <property name="src.home"                 value="${basedir}/src"/>
+  <property name="testsrc.home"             value="${basedir}/testsrc"/>
   <property name="lib.home"                 value="${basedir}/lib"/>
   <property name="testbuild.home"           value="${antwork.home}/testbuild"/>
-  <property name="testsrc.home"             value="${basedir}/testsrc"/>
+  <property name="testreports.home"         value="${antwork.home}/test-reports"/>
 
   <path id="cp.mcflib">
     <fileset dir="${lib.home}">
@@ -38,12 +39,14 @@
     <delete file="${antwork.home}/mcflib.jar"/>
     <delete dir="${build.home}"/>
     <delete dir="${testbuild.home}"/>
+    <delete dir="${testreports.home}"/>
   </target>
 
   <target name="prepare.mcflib" depends="clean.mcflib">
     <mkdir dir="${antwork.home}"/>
     <mkdir dir="${build.home}"/>
     <mkdir dir="${testbuild.home}"/>
+    <mkdir dir="${testreports.home}"/>
   </target>
 
   <target name="compile.mcflib" depends="prepare.mcflib">
@@ -77,7 +80,8 @@
         <path refid="cp.testmcflib"/>
         <pathelement path="${testbuild.home}"/>
       </classpath>
-      <test name="mcflib.parser.ListParserTest"/>
+      <formatter type="xml"/>
+      <test name="mcflib.parser.ListParserTest" todir="${testreports.home}"/>
     </junit>
   </target>
 

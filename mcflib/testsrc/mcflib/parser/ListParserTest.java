@@ -21,7 +21,7 @@ public class ListParserTest {
 	}
 
 	@Test
-	public void testGetTimer() throws Exception {
+	public void testParse() throws Exception {
 		List<String> list;
 		{
 			HistoryList hl = new HistoryList();
