@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import mcflib.api.McfApi;
 import mcflib.util.FileUtil;
 
 /**
@@ -30,6 +31,8 @@ public class ConfigServlet extends HttpServlet {
 		System.setProperty("gr.unirico.mcfapp.log.home", logdir);
 		Logger logger = LogManager.getLogger(ConfigServlet.class);
 		logger.info("mcfapp起動");
+		String dataDir = context.getRealPath("/WEB-INF/data");
+		McfApi.init(dataDir);
 	}
 
 	@Override

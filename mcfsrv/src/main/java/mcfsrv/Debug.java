@@ -7,10 +7,10 @@ import java.util.List;
 
 import javax.servlet.jsp.JspWriter;
 
-import mcfsrv.conf.DataConfig;
+import mcflib.api.McfApi;
 import mcflib.model.History;
-import mcflib.model.HistoryList;
 import mcflib.model.HistoryChain;
+import mcflib.model.HistoryList;
 import mcflib.parser.ListParser;
 import mcflib.util.FileUtil;
 
@@ -91,7 +91,7 @@ public class Debug {
 	}
 
 	static String getPath() {
-		return DataConfig.getInstance().getPath();
+		return McfApi.getInstance().getDataDir();
 	}
 
 }

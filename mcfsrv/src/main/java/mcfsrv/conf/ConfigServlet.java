@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import mcflib.api.McfApi;
 import mcflib.util.FileUtil;
 
 /**
@@ -15,10 +16,7 @@ import mcflib.util.FileUtil;
  */
 public class ConfigServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+
     public ConfigServlet() {
         super();
     }
@@ -34,7 +32,7 @@ public class ConfigServlet extends HttpServlet {
 		Logger logger = LogManager.getLogger(ConfigServlet.class);
 		logger.info("mcfsrv起動");
 		String dataDir = context.getRealPath("/WEB-INF/data");
-		DataConfig.getInstance().init(dataDir);
+		McfApi.init(dataDir);
 	}
 
 	@Override
