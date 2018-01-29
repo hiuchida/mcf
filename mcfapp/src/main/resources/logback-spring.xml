@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE logback>
+<configuration>
+	<springProperty scope="context" name="rootLoggerLevel"
+					source="mcfapp.logging.level.root" />
+	<springProperty scope="context" name="showAccessLogOnConsole"
+					source="mcfapp.logging.console.accesslog.enabled" />
+	<springProperty scope="context" name="localLoggingEnabled"
+					source="mcfapp.logging.local.enabled" />
+	<springProperty scope="context" name="localLoggingBaseDir"
+					source="mcfapp.logging.local.basedir" />
+	<springProperty scope="context" name="localLoggingMaxHistory"
+					source="mcfapp.logging.local.maxhistory" />
+	<springProperty scope="context" name="useColor"
+					source="mcfapp.logging.local.colorize" />
+	<springProperty scope="context" name="remoteLoggingEnabled"
+					source="mcfapp.logging.remote.enabled" />
+	<springProperty scope="context" name="receiverRemoteHost"
+					source="mcfapp.logging.remote.host" />
+	<springProperty scope="context" name="receiverRemotePort"
+					source="mcfapp.logging.remote.port" />
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<Pattern>
+				%d{yyyy-MM-dd HH:mm:ss.SSS} %-7([%level]) %logger{36} - %msg%n
+			</Pattern>
+		</encoder>
+	</appender>
+
+	<appender name="STDOUT_WithContextUser" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<Pattern>
+				%d{yyyy-MM-dd HH:mm:ss} %-7([%level]) [user=%X{user}] %logger{36} - %msg%n
+			</Pattern>
+		</encoder>
+	</appender>
+
+	<appender name="STDOUT_AccessLog" class="ch.qos.logback.core.ConsoleAppender">
+		<withJansi>true</withJansi>
+		<encoder>
+			<if condition='${useColor}'>
+				<then>
+					<pattern>%cyan([%d{yyyy-MM-dd HH:mm:ss.SSS Z}]) %X{remoteHost} -> ${HOSTNAME} %magenta(%X{username}) %yellow(%X{method} %X{uri} "%X{queryString}") %green(%X{status} %X{statusPhrase}) %X{requestLength} "%X{UA}"%n</pattern>
+				</then>
+				<else>
+					<pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS Z}] %X{remoteHost} -> ${HOSTNAME} %X{username} %X{method} %X{uri} "%X{queryString}" %X{status} %X{statusPhrase} %X{requestLength} "%X{UA}"%n</pattern>
+				</else>
+			</if>
+		</encoder>
+	</appender>
+
+	<appender name="LogAggregationServer" class="ch.qos.logback.classic.net.SocketAppender">
+		<RemoteHost>${receiverRemoteHost}</RemoteHost>
+		<Port>${receiverRemotePort}</Port>
+		<ReconnectionDelay>30</ReconnectionDelay>
+		<IncludeCallerData>true</IncludeCallerData>
+	</appender>
+
+	<if condition='${localLoggingEnabled}'>
+		<then>
+			<appender name="AccessLogRollingFile"
+					  class="ch.qos.logback.core.rolling.RollingFileAppender">
+				<encoder>
+					<pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS Z}] %X{remoteHost}->${HOSTNAME} %X{username} %X{method} %X{uri} %X{status} %X{statusPhrase} %X{requestLength} "%X{UA}"%n</pattern>
+				</encoder>
+				<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+					<fileNamePattern>${localLoggingBaseDir}/cloudgear-core_access_%d{yyyyMMdd}.log.zip</fileNamePattern>
+					<maxHistory>${localLoggingMaxHistory}</maxHistory>
+				</rollingPolicy>
+			</appender>
+
+			<appender name="ErrorLogRollingFile"
+					  class="ch.qos.logback.core.rolling.RollingFileAppender">
+				<encoder>
+					<pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-7([%level]) [user=%X{user}] %logger{36} - %msg%n</pattern>
+				</encoder>
+				<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+					<fileNamePattern>${localLoggingBaseDir}/cloudgear-core_error_%d{yyyyMMdd}.log.zip</fileNamePattern>
+					<maxHistory>${localLoggingMaxHistory}</maxHistory>
+				</rollingPolicy>
+				<filter class="ch.qos.logback.classic.filter.LevelFilter">
+					<level>ERROR</level>
+					<onMatch>ACCEPT</onMatch>
+					<onMismatch>DENY</onMismatch>
+				</filter>
+			</appender>
+
+			<appender name="LogRollingFile"
+					  class="ch.qos.logback.core.rolling.RollingFileAppender">
+				<encoder>
+					<pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-7([%level]) [user=%X{user}] %logger{36} - %msg%n</pattern>
+				</encoder>
+				<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+					<fileNamePattern>${localLoggingBaseDir}/cloudgear-core_%d{yyyyMMdd}.log.zip</fileNamePattern>
+					<maxHistory>${localLoggingMaxHistory}</maxHistory>
+				</rollingPolicy>
+			</appender>
+		</then>
+	</if>
+
+	<root level="${rootLoggerLevel}">
+		<appender-ref ref="STDOUT" />
+		<if condition='${remoteLoggingEnabled}'>
+			<then>
+				<appender-ref ref="LogAggregationServer" />
+			</then>
+		</if>
+		<if condition='${localLoggingEnabled}'>
+			<then>
+				<appender-ref ref="ErrorLogRollingFile" />
+				<appender-ref ref="LogRollingFile" />
+			</then>
+		</if>
+	</root>
+
+	<logger name="tokyo.cloudrive" additivity="false">
+		<appender-ref ref="STDOUT_WithContextUser" />
+		<if condition='${remoteLoggingEnabled}'>
+			<then>
+				<appender-ref ref="LogAggregationServer" />
+			</then>
+		</if>
+		<if condition='${localLoggingEnabled}'>
+			<then>
+				<appender-ref ref="ErrorLogRollingFile" />
+				<appender-ref ref="LogRollingFile" />
+			</then>
+		</if>
+	</logger>
+
+	<logger name="AccessLog" additivity="false">
+		<if condition='${showAccessLogOnConsole}'>
+			<then>
+				<appender-ref ref="STDOUT_AccessLog" />
+			</then>
+		</if>
+		<if condition='${remoteLoggingEnabled}'>
+			<then>
+				<appender-ref ref="LogAggregationServer" />
+			</then>
+		</if>
+		<if condition='${localLoggingEnabled}'>
+			<then>
+				<appender-ref ref="AccessLogRollingFile" />
+			</then>
+		</if>
+	</logger>
+</configuration>

@@ -1,2 +1,13 @@
 /antwork/
 /build/
+
+#settings Files
+/target/
+/.settings/
+.classpath
+.project
+*.iml
+/.idea/*
+/.externalToolBuilders/
+.springBeans
+.tern-project

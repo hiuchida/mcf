@@ -11,7 +11,7 @@
   </welcome-file-list>
   <servlet>
     <servlet-name>Config Servlet</servlet-name>
-    <servlet-class>mcfsrv.conf.ConfigServlet</servlet-class>
+    <servlet-class>gr.unirico.mcfapp.config.ConfigServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
 </web-app>
