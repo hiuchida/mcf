@@ -7,7 +7,6 @@ import mcflib.util.ListBuilder;
 import mcflib.util.UniqueIdUtil;
 
 public class History extends Node {
-	private String previd;
 	private String id;
 	private String timestamp;
 	private String ipaddr;
@@ -15,13 +14,13 @@ public class History extends Node {
 	private String docid;
 	private String comment;
 	private String appdata;
-	private String hash;
 
 	public History() {
-		this.id = UniqueIdUtil.generate();
+		this(UniqueIdUtil.generate());
 	}
 
 	public History(String id) {
+		super();
 		this.id = id;
 	}
 
@@ -101,10 +100,6 @@ public class History extends Node {
 		this.appdata = appdata;
 	}
 
-	public String getPrevid() {
-		return previd;
-	}
-
 	public String getId() {
 		return id;
 	}
@@ -131,10 +126,6 @@ public class History extends Node {
 
 	public String getAppdata() {
 		return appdata;
-	}
-
-	public String getHash() {
-		return hash;
 	}
 
 }

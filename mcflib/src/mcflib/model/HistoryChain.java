@@ -7,12 +7,10 @@ import mcflib.util.DigestBuilder;
 import mcflib.util.ListBuilder;
 
 public class HistoryChain extends Node {
-	private String previd;
 	private List<HistoryList> list;
-	private String hash;
 
 	public HistoryChain() {
-		this.previd = FIRSTID;
+		super();
 		this.list = new ArrayList<>();
 	}
 	
@@ -33,6 +31,7 @@ public class HistoryChain extends Node {
 	}
 	
 	public void add(HistoryList hl) {
+		hl.checkArchived();
 		hl.setPrevid(getLastid());
 		hl.archive();
 		list.add(hl);
@@ -67,16 +66,8 @@ public class HistoryChain extends Node {
 		this.hash = toDigestString();
 	}
 
-	public String getPrevid() {
-		return previd;
-	}
-
 	public List<HistoryList> getList() {
 		return list;
-	}
-
-	public String getHash() {
-		return hash;
 	}
 
 }

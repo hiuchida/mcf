@@ -4,6 +4,12 @@ public abstract class Node {
 	public static final String FIRSTID = "first-id";
 
 	private boolean bArchived;
+	protected String previd;
+	protected String hash;
+	
+	public Node() {
+		this.previd = FIRSTID;
+	}
 	
 	protected void archive() {
 		bArchived = true;
@@ -14,4 +20,13 @@ public abstract class Node {
 			throw new RuntimeException("archived");
 		}
 	}
+
+	public String getPrevid() {
+		return previd;
+	}
+
+	public String getHash() {
+		return hash;
+	}
+
 }

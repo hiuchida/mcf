@@ -10,13 +10,11 @@ public class HistoryList extends Node {
 	private static final String RUNNING = "running";
 	private static final String COMPLETE = "complete";
 
-	private String previd;
 	private String status;
 	private List<History> list;
-	private String hash;
 
 	public HistoryList() {
-		this.previd = FIRSTID;
+		super();
 		this.status = RUNNING;
 		this.list = new ArrayList<>();
 	}
@@ -84,20 +82,12 @@ public class HistoryList extends Node {
 		this.hash = toDigestString();
 	}
 
-	public String getPrevid() {
-		return previd;
-	}
-
 	public String getStatus() {
 		return status;
 	}
 
 	public List<History> getList() {
 		return list;
-	}
-
-	public String getHash() {
-		return hash;
 	}
 
 }
