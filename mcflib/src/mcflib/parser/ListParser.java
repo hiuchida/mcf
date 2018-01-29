@@ -2,12 +2,18 @@ package mcflib.parser;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import mcflib.model.HistoryChain;
 import mcflib.model.HistoryList;
 import mcflib.model.Node;
 
 public class ListParser {
+	private static Logger logger = LogManager.getLogger(ListParser.class);
+	
 	public static Node parse(List<String> list) {
+		logger.info("parse count: " + list.size());
 		ListParserIterator itr = new ListParserIterator(list);
 		return new ListParser(itr).selectParser();
 	}

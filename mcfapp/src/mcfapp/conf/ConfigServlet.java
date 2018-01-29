@@ -1,4 +1,4 @@
-package mcf.conf;
+package mcfapp.conf;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import mcf.util.FileUtil;
+import mcflib.util.FileUtil;
 
 /**
  * Servlet implementation class ConfigServlet
@@ -30,9 +30,9 @@ public class ConfigServlet extends HttpServlet {
 		ServletContext context = config.getServletContext();
 		String logDir = context.getRealPath("/WEB-INF/logs");
 		FileUtil.mkdir(logDir);
-		System.setProperty("mcfsrv.log.home", logDir);
+		System.setProperty("mcfapp.log.home", logDir);
 		Logger logger = LogManager.getLogger(ConfigServlet.class);
-		logger.info("mcfsrv起動");
+		logger.info("mcfapp起動");
 		String dataDir = context.getRealPath("/WEB-INF/data");
 		DataConfig.getInstance().init(dataDir);
 	}
@@ -40,7 +40,7 @@ public class ConfigServlet extends HttpServlet {
 	@Override
 	public void destroy() {
 		Logger logger = LogManager.getLogger(ConfigServlet.class);
-		logger.info("mcfsrvシャットダウン");
+		logger.info("mcfappシャットダウン");
 		LogManager.shutdown();
 		
 		super.destroy();

@@ -75,6 +75,9 @@
       <src path="${testsrc.home}" />
       <include name="**/*.java" />
     </javac>
+    <copy todir="${testbuild.home}" preservelastmodified="true">
+      <fileset dir="${testsrc.home}" includes="log4j2.xml"/>
+    </copy>
     <junit printsummary="yes" haltonfailure="yes">
       <classpath>
         <path refid="cp.testmcflib"/>

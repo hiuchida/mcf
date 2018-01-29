@@ -1,6 +1,6 @@
-package mcf.conf;
+package mcfapp.conf;
 
-import mcf.util.FileUtil;
+import mcflib.util.FileUtil;
 
 public class DataConfig {
 	private static DataConfig singleton = new DataConfig();

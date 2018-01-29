@@ -1,4 +1,4 @@
-package mcf;
+package mcfapp;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,7 +7,7 @@ import java.util.List;
 
 import javax.servlet.jsp.JspWriter;
 
-import mcf.conf.DataConfig;
+import mcfapp.conf.DataConfig;
 import mcflib.model.History;
 import mcflib.model.HistoryChain;
 import mcflib.model.HistoryList;

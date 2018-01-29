@@ -12,21 +12,18 @@
         <Console name="stdout" target="SYSTEM_OUT">
             <PatternLayout pattern="${loglayout}"/>
         </Console>
-        <RollingFile name="rollingFile" fileName="${sys:mcfapp.log.home}/app.log" filePattern="${sys:mcfapp.log.home}/app_%d{yyyy-MM-dd}.log.zip">
+        <!-- RollingFile name="rollingFile" fileName="${sys:mcflib.log.home}/app.log" filePattern="${sys:mcflib.log.home}/app_%d{yyyy-MM-dd}.log.zip">
             <PatternLayout pattern="${loglayout}"/>
             <Policies>
                 <TimeBasedTriggeringPolicy />
             </Policies>
-        </RollingFile>
+        </RollingFile -->
     </Appenders>
 
     <!-- パッケージごとにAppenderとログレベルを組み合わせる -->
     <Loggers>
-        <Logger name="mcfapp" level="info" additivity="false">
-            <AppenderRef ref="rollingFile"/>
-        </Logger>
-        <Logger name="mcflib" level="info" additivity="false">
-            <AppenderRef ref="rollingFile"/>
+        <Logger name="mcflib" level="error" additivity="false">
+            <AppenderRef ref="stdout"/>
         </Logger>
     </Loggers>
 </Configuration>

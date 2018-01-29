@@ -22,7 +22,10 @@
 
     <!-- パッケージごとにAppenderとログレベルを組み合わせる -->
     <Loggers>
-        <Logger name="mcf" level="info" additivity="false">
+        <Logger name="mcfsrv" level="info" additivity="false">
+            <AppenderRef ref="rollingFile"/>
+        </Logger>
+        <Logger name="mcflib" level="info" additivity="false">
             <AppenderRef ref="rollingFile"/>
         </Logger>
     </Loggers>

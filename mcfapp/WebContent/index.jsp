@@ -8,7 +8,7 @@
 </head>
 <body>
 <pre>
-<% mcfsrv.Debug.test(out); %>
+<% mcfapp.Debug.test(out); %>
 </pre>
 </body>
 </html>

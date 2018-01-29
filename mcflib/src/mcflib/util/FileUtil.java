@@ -1,6 +1,7 @@
 package mcflib.util;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -34,6 +35,13 @@ public class FileUtil {
 	public static void write(PrintWriter pw, List<String> list) {
 		for (String s : list) {
 			pw.println(s);
+		}
+	}
+
+	public static void mkdir(String path) {
+		File dir = new File(path);
+		if (!dir.exists()) {
+			dir.mkdirs();
 		}
 	}
 
