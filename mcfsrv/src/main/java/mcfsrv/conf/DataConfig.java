@@ -1,6 +1,6 @@
 package mcfsrv.conf;
 
-import mcfsrv.util.FileUtil;
+import mcflib.util.FileUtil;
 
 public class DataConfig {
 	private static DataConfig singleton = new DataConfig();
