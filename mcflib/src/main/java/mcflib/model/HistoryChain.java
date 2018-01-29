@@ -5,12 +5,17 @@ import java.util.List;
 
 import mcflib.util.DigestBuilder;
 import mcflib.util.ListBuilder;
+import mcflib.util.UniqueIdUtil;
 
 public class HistoryChain extends Node {
 	private List<HistoryList> list;
 
 	public HistoryChain() {
-		super();
+		this(UniqueIdUtil.generate());
+	}
+	
+	public HistoryChain(String id) {
+		super(id);
 		this.list = new ArrayList<>();
 	}
 	
@@ -18,6 +23,7 @@ public class HistoryChain extends Node {
 		this.hash = toDigestString();
 		ListBuilder lb = new ListBuilder(HistoryChain.class);
 		lb.append("previd", previd);
+		lb.append("id", id);
 		for (HistoryList h : list) {
 			lb.append(h.toList());
 		}
@@ -41,7 +47,7 @@ public class HistoryChain extends Node {
 		if (list.size() == 0) {
 			return FIRSTID;
 		}
-		return list.get(list.size() - 1).getFirstid();
+		return list.get(list.size() - 1).getId();
 	}
 	
 	public void validate(String previd, String hash) {
@@ -55,6 +61,7 @@ public class HistoryChain extends Node {
 	private String toDigestString() {
 		DigestBuilder db = new DigestBuilder(HistoryList.class);
 		db.append("previd", previd);
+		db.append("id", id);
 		for (HistoryList h : list) {
 			db.append("history", h.getHash());
 		}

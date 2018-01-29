@@ -5,6 +5,7 @@ import java.util.List;
 
 import mcflib.util.DigestBuilder;
 import mcflib.util.ListBuilder;
+import mcflib.util.UniqueIdUtil;
 
 public class HistoryList extends Node {
 	private static final String RUNNING = "running";
@@ -14,7 +15,11 @@ public class HistoryList extends Node {
 	private List<History> list;
 
 	public HistoryList() {
-		super();
+		this(UniqueIdUtil.generate());
+	}
+	
+	public HistoryList(String id) {
+		super(id);
 		this.status = RUNNING;
 		this.list = new ArrayList<>();
 	}
@@ -23,6 +28,7 @@ public class HistoryList extends Node {
 		this.hash = toDigestString();
 		ListBuilder lb = new ListBuilder(HistoryList.class);
 		lb.append("previd", previd);
+		lb.append("id", id);
 		lb.append("status", status);
 		for (History h : list) {
 			lb.append(h.toList());
@@ -41,13 +47,6 @@ public class HistoryList extends Node {
 		h.setPrevid(getLastid());
 		h.archive(this);
 		list.add(h);
-	}
-	
-	public String getFirstid() {
-		if (list.size() == 0) {
-			return FIRSTID;
-		}
-		return list.get(0).getId();
 	}
 	
 	private String getLastid() {
@@ -69,6 +68,7 @@ public class HistoryList extends Node {
 	private String toDigestString() {
 		DigestBuilder db = new DigestBuilder(HistoryList.class);
 		db.append("previd", previd);
+		db.append("id", id);
 		db.append("status", status);
 		for (History h : list) {
 			db.append("history", h.getHash());

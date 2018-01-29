@@ -6,10 +6,12 @@ public abstract class Node {
 	private boolean bArchived;
 	private Node parent;
 	protected String previd;
+	protected String id;
 	protected String hash;
 	
-	public Node() {
+	public Node(String id) {
 		this.previd = FIRSTID;
+		this.id = id;
 	}
 	
 	protected void archive(Node parent) {
@@ -29,6 +31,10 @@ public abstract class Node {
 
 	public String getPrevid() {
 		return previd;
+	}
+
+	public String getId() {
+		return id;
 	}
 
 	public String getHash() {

@@ -10,7 +10,8 @@ public class HistoryChainParser extends ListParser {
 
 	public HistoryChain parse() {
 		String previd = get("previd");
-		HistoryChain hc = new HistoryChain();
+		String id = get("id");
+		HistoryChain hc = new HistoryChain(id);
 		String hash;
 		while (true) {
 			String[] pair = splitLine();

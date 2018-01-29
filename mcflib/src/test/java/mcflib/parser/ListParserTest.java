@@ -30,7 +30,7 @@ public class ListParserTest {
 			hl.add(h);
 			
 			hllist = hl.toList();
-			TestCase.assertEquals(14, hllist.size());
+			TestCase.assertEquals(15, hllist.size());
 		}
 		{
 			HistoryList hl = (HistoryList) mcflib.parser.ListParser.parse(hllist);
@@ -40,7 +40,7 @@ public class ListParserTest {
 			hl.add(h);
 			
 			hllist = hl.toList();
-			TestCase.assertEquals(24, hllist.size());
+			TestCase.assertEquals(25, hllist.size());
 		}
 		{
 			HistoryList hl = (HistoryList) mcflib.parser.ListParser.parse(hllist);
@@ -50,7 +50,7 @@ public class ListParserTest {
 			hc.add(hl);
 			
 			hclist = hc.toList();
-			TestCase.assertEquals(27, hclist.size());
+			TestCase.assertEquals(29, hclist.size());
 		}
 		{
 			HistoryList hl = new HistoryList();
@@ -58,7 +58,7 @@ public class ListParserTest {
 			hl.add(h);
 			
 			hllist = hl.toList();
-			TestCase.assertEquals(14, hllist.size());
+			TestCase.assertEquals(15, hllist.size());
 		}
 		{
 			HistoryChain hc = (HistoryChain) mcflib.parser.ListParser.parse(hclist);
@@ -69,7 +69,7 @@ public class ListParserTest {
 			
 			hc.add(hl);
 			hclist = hc.toList();
-			TestCase.assertEquals(41, hclist.size());
+			TestCase.assertEquals(44, hclist.size());
 		}
 	}
 

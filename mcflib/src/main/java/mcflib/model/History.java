@@ -7,7 +7,6 @@ import mcflib.util.ListBuilder;
 import mcflib.util.UniqueIdUtil;
 
 public class History extends Node {
-	private String id;
 	private String timestamp;
 	private String ipaddr;
 	private String userid;
@@ -20,8 +19,7 @@ public class History extends Node {
 	}
 
 	public History(String id) {
-		super();
-		this.id = id;
+		super(id);
 	}
 
 	public List<String> toList() {
@@ -98,10 +96,6 @@ public class History extends Node {
 	public void setAppdata(String appdata) {
 		checkArchived();
 		this.appdata = appdata;
-	}
-
-	public String getId() {
-		return id;
 	}
 
 	public String getTimestamp() {
