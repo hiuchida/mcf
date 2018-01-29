@@ -33,7 +33,7 @@ public class HistoryChain extends Node {
 	public void add(HistoryList hl) {
 		hl.checkArchived();
 		hl.setPrevid(getLastid());
-		hl.archive();
+		hl.archive(this);
 		list.add(hl);
 	}
 	

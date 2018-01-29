@@ -39,7 +39,7 @@ public class HistoryList extends Node {
 	public void add(History h) {
 		h.checkArchived();
 		h.setPrevid(getLastid());
-		h.archive();
+		h.archive(this);
 		list.add(h);
 	}
 	
