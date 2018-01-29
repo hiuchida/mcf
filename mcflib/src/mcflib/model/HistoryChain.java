@@ -34,6 +34,7 @@ public class HistoryChain extends Node {
 	
 	public void add(HistoryList hl) {
 		hl.setPrevid(getLastid());
+		hl.archive();
 		list.add(hl);
 	}
 	

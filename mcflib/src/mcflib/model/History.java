@@ -72,44 +72,32 @@ public class History extends Node {
 	}
 
 	public void setTimestamp(String timestamp) {
-		if (this.previd != null) {
-			throw new RuntimeException("completed");
-		}
+		checkArchived();
 		this.timestamp = timestamp;
 	}
 
 	public void setIpaddr(String ipaddr) {
-		if (this.previd != null) {
-			throw new RuntimeException("completed");
-		}
+		checkArchived();
 		this.ipaddr = ipaddr;
 	}
 
 	public void setUserid(String userid) {
-		if (this.previd != null) {
-			throw new RuntimeException("completed");
-		}
+		checkArchived();
 		this.userid = userid;
 	}
 
 	public void setDocid(String docid) {
-		if (this.previd != null) {
-			throw new RuntimeException("completed");
-		}
+		checkArchived();
 		this.docid = docid;
 	}
 
 	public void setComment(String comment) {
-		if (this.previd != null) {
-			throw new RuntimeException("completed");
-		}
+		checkArchived();
 		this.comment = comment;
 	}
 
 	public void setAppdata(String appdata) {
-		if (this.previd != null) {
-			throw new RuntimeException("completed");
-		}
+		checkArchived();
 		this.appdata = appdata;
 	}
 

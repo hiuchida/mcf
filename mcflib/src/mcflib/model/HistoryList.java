@@ -39,10 +39,9 @@ public class HistoryList extends Node {
 	}
 	
 	public void add(History h) {
-		if (this.status.equals(COMPLETE)) {
-			throw new RuntimeException("completed");
-		}
+		h.checkArchived();
 		h.setPrevid(getLastid());
+		h.archive();
 		list.add(h);
 	}
 	
