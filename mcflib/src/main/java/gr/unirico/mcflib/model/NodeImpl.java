@@ -1,22 +1,24 @@
 package gr.unirico.mcflib.model;
 
-public abstract class Node {
+import gr.unirico.mcflib.api.Node;
+
+public abstract class NodeImpl implements Node {
 	public static final String FIRSTID = "first-id";
 
 	private boolean bArchived;
-	private Node parent;
+	private NodeImpl parent;
 	protected String previd;
 	protected String id;
 	protected String name;
 	protected String hash;
 	
-	public Node(String id, String name) {
+	public NodeImpl(String id, String name) {
 		this.previd = FIRSTID;
 		this.id = id;
 		this.name = name;
 	}
 	
-	protected void archive(Node parent) {
+	protected void archive(NodeImpl parent) {
 		this.bArchived = true;
 		this.parent = parent;
 	}

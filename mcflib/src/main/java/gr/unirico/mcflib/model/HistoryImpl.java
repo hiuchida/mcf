@@ -2,11 +2,12 @@ package gr.unirico.mcflib.model;
 
 import java.util.List;
 
+import gr.unirico.mcflib.api.History;
 import gr.unirico.mcflib.util.DigestBuilder;
 import gr.unirico.mcflib.util.ListBuilder;
 import gr.unirico.mcflib.util.UniqueIdUtil;
 
-public class History extends Node {
+public class HistoryImpl extends NodeImpl implements History {
 	private String timestamp;
 	private String ipaddr;
 	private String userid;
@@ -14,17 +15,17 @@ public class History extends Node {
 	private String comment;
 	private String appdata;
 
-	public History(String name) {
+	public HistoryImpl(String name) {
 		this(UniqueIdUtil.generate(), name);
 	}
 
-	public History(String id, String name) {
+	public HistoryImpl(String id, String name) {
 		super(id, name);
 	}
 
 	public List<String> toList() {
 		this.hash = toDigestString();
-		ListBuilder lb = new ListBuilder(History.class);
+		ListBuilder lb = new ListBuilder(HistoryImpl.class);
 		lb.append("previd", previd);
 		lb.append("id", id);
 		lb.append("name", name);
@@ -52,7 +53,7 @@ public class History extends Node {
 	}
 
 	private String toDigestString() {
-		DigestBuilder db = new DigestBuilder(History.class);
+		DigestBuilder db = new DigestBuilder(HistoryImpl.class);
 		db.append("previd", previd);
 		db.append("id", id);
 		db.append("name", name);

@@ -1,26 +1,26 @@
 package gr.unirico.mcflib.parser;
 
-import gr.unirico.mcflib.model.HistoryChain;
-import gr.unirico.mcflib.model.HistoryList;
+import gr.unirico.mcflib.model.HistoryChainImpl;
+import gr.unirico.mcflib.model.HistoryListImpl;
 
 public class HistoryChainParser extends ListParser {
 	public HistoryChainParser(ListParser lp) {
 		super(lp);
 	}
 
-	public HistoryChain parse() {
+	public HistoryChainImpl parse() {
 		String previd = get("previd");
 		String id = get("id");
 		String name = get("name");
-		HistoryChain hc = new HistoryChain(id, name);
+		HistoryChainImpl hc = new HistoryChainImpl(id, name);
 		String hash;
 		while (true) {
 			String[] pair = splitLine();
 			if (pair[0].equals("class")) {
-				if (!pair[1].equals(HistoryList.class.getName())) {
+				if (!pair[1].equals(HistoryListImpl.class.getName())) {
 					throwIllegalLine();
 				}
-				HistoryList hl = new HistoryListParser(this).parse();
+				HistoryListImpl hl = new HistoryListParser(this).parse();
 				hc.add(hl);
 			} else if (pair[0].equals("hash")) {
 				hash = pair[1];

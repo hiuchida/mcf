@@ -1,17 +1,17 @@
 package gr.unirico.mcflib.parser;
 
-import gr.unirico.mcflib.model.History;
+import gr.unirico.mcflib.model.HistoryImpl;
 
 public class HistoryParser extends ListParser {
 	public HistoryParser(ListParser lp) {
 		super(lp);
 	}
 	
-	public History parse() {
+	public HistoryImpl parse() {
 		String previd = get("previd");
 		String id = get("id");
 		String name = get("name");
-		History h = new History(id, name);
+		HistoryImpl h = new HistoryImpl(id, name);
 		h.setTimestamp(get("timestamp"));
 		h.setIpaddr(get("ipaddr"));
 		h.setUserid(get("userid"));

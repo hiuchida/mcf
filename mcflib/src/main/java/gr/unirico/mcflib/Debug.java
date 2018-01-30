@@ -3,9 +3,9 @@ package gr.unirico.mcflib;
 import java.io.IOException;
 import java.io.PrintStream;
 
+import gr.unirico.mcflib.api.History;
+import gr.unirico.mcflib.api.HistoryList;
 import gr.unirico.mcflib.api.McfApi;
-import gr.unirico.mcflib.model.History;
-import gr.unirico.mcflib.model.HistoryList;
 
 public class Debug {
 	public static void main(String[] args) {

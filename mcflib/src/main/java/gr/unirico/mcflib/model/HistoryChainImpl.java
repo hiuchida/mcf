@@ -7,25 +7,25 @@ import gr.unirico.mcflib.util.DigestBuilder;
 import gr.unirico.mcflib.util.ListBuilder;
 import gr.unirico.mcflib.util.UniqueIdUtil;
 
-public class HistoryChain extends Node {
-	private List<HistoryList> list;
+public class HistoryChainImpl extends NodeImpl {
+	private List<HistoryListImpl> list;
 
-	public HistoryChain(String name) {
+	public HistoryChainImpl(String name) {
 		this(UniqueIdUtil.generate(), name);
 	}
 	
-	public HistoryChain(String id, String name) {
+	public HistoryChainImpl(String id, String name) {
 		super(id, name);
 		this.list = new ArrayList<>();
 	}
 	
 	public List<String> toList() {
 		this.hash = toDigestString();
-		ListBuilder lb = new ListBuilder(HistoryChain.class);
+		ListBuilder lb = new ListBuilder(HistoryChainImpl.class);
 		lb.append("previd", previd);
 		lb.append("id", id);
 		lb.append("name", name);
-		for (HistoryList h : list) {
+		for (HistoryListImpl h : list) {
 			lb.append(h.toList());
 		}
 		lb.append("hash", hash);
@@ -37,7 +37,7 @@ public class HistoryChain extends Node {
 		return this.previd + "," + this.list.toString();
 	}
 	
-	public void add(HistoryList hl) {
+	public void add(HistoryListImpl hl) {
 		hl.checkArchived();
 		hl.setPrevid(getLastid());
 		hl.archive(this);
@@ -60,11 +60,11 @@ public class HistoryChain extends Node {
 	}
 
 	private String toDigestString() {
-		DigestBuilder db = new DigestBuilder(HistoryList.class);
+		DigestBuilder db = new DigestBuilder(HistoryListImpl.class);
 		db.append("previd", previd);
 		db.append("id", id);
 		db.append("name", name);
-		for (HistoryList h : list) {
+		for (HistoryListImpl h : list) {
 			db.append("history", h.getHash());
 		}
 		return db.toString();
@@ -75,7 +75,7 @@ public class HistoryChain extends Node {
 		this.hash = toDigestString();
 	}
 
-	public List<HistoryList> getList() {
+	public List<HistoryListImpl> getList() {
 		return list;
 	}
 

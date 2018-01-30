@@ -5,14 +5,14 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import gr.unirico.mcflib.model.HistoryChain;
-import gr.unirico.mcflib.model.HistoryList;
-import gr.unirico.mcflib.model.Node;
+import gr.unirico.mcflib.model.HistoryChainImpl;
+import gr.unirico.mcflib.model.HistoryListImpl;
+import gr.unirico.mcflib.model.NodeImpl;
 
 public class ListParser {
 	private static Logger logger = LogManager.getLogger(ListParser.class);
 	
-	public static Node parse(List<String> list) {
+	public static NodeImpl parse(List<String> list) {
 		logger.info("parse count: " + list.size());
 		ListParserIterator itr = new ListParserIterator(list);
 		return new ListParser(itr).selectParser();
@@ -28,14 +28,14 @@ public class ListParser {
 		this.itr = lp.itr;
 	}
 	
-	public Node selectParser() {
+	public NodeImpl selectParser() {
 		String klass = get("class");
-		if (klass.equals(HistoryList.class.getName())) {
-			Node node = new HistoryListParser(this).parse();
+		if (klass.equals(HistoryListImpl.class.getName())) {
+			NodeImpl node = new HistoryListParser(this).parse();
 			itr.checkEol();
 			return node;
-		} else if (klass.equals(HistoryChain.class.getName())) {
-			Node node = new HistoryChainParser(this).parse();
+		} else if (klass.equals(HistoryChainImpl.class.getName())) {
+			NodeImpl node = new HistoryChainParser(this).parse();
 			itr.checkEol();
 			return node;
 		} else {

@@ -6,9 +6,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import gr.unirico.mcflib.model.History;
-import gr.unirico.mcflib.model.HistoryChain;
-import gr.unirico.mcflib.model.HistoryList;
+import gr.unirico.mcflib.model.HistoryImpl;
+import gr.unirico.mcflib.model.HistoryChainImpl;
+import gr.unirico.mcflib.model.HistoryListImpl;
 import junit.framework.TestCase;
 
 public class ListParserTest {
@@ -25,46 +25,46 @@ public class ListParserTest {
 		List<String> hllist;
 		List<String> hclist;
 		{
-			HistoryList hl = new HistoryList("Thread-1");
-			History h = new History("Comment-1");
+			HistoryListImpl hl = new HistoryListImpl("Thread-1");
+			HistoryImpl h = new HistoryImpl("Comment-1");
 			hl.add(h);
 			
 			hllist = hl.toList();
 			TestCase.assertEquals(17, hllist.size());
 		}
 		{
-			HistoryList hl = (HistoryList) gr.unirico.mcflib.parser.ListParser.parse(hllist);
+			HistoryListImpl hl = (HistoryListImpl) gr.unirico.mcflib.parser.ListParser.parse(hllist);
 			TestCase.assertEquals(1, hl.getList().size());
 			
-			History h = new History("Comment-2");
+			HistoryImpl h = new HistoryImpl("Comment-2");
 			hl.add(h);
 			
 			hllist = hl.toList();
 			TestCase.assertEquals(28, hllist.size());
 		}
 		{
-			HistoryList hl = (HistoryList) gr.unirico.mcflib.parser.ListParser.parse(hllist);
+			HistoryListImpl hl = (HistoryListImpl) gr.unirico.mcflib.parser.ListParser.parse(hllist);
 			TestCase.assertEquals(2, hl.getList().size());
 			
-			HistoryChain hc = new HistoryChain("Archive Master");
+			HistoryChainImpl hc = new HistoryChainImpl("Archive Master");
 			hc.add(hl);
 			
 			hclist = hc.toList();
 			TestCase.assertEquals(33, hclist.size());
 		}
 		{
-			HistoryList hl = new HistoryList("Thread-2");
-			History h = new History("Comment-1");
+			HistoryListImpl hl = new HistoryListImpl("Thread-2");
+			HistoryImpl h = new HistoryImpl("Comment-1");
 			hl.add(h);
 			
 			hllist = hl.toList();
 			TestCase.assertEquals(17, hllist.size());
 		}
 		{
-			HistoryChain hc = (HistoryChain) gr.unirico.mcflib.parser.ListParser.parse(hclist);
+			HistoryChainImpl hc = (HistoryChainImpl) gr.unirico.mcflib.parser.ListParser.parse(hclist);
 			TestCase.assertEquals(1, hc.getList().size());
 			
-			HistoryList hl = (HistoryList) gr.unirico.mcflib.parser.ListParser.parse(hllist);
+			HistoryListImpl hl = (HistoryListImpl) gr.unirico.mcflib.parser.ListParser.parse(hllist);
 			TestCase.assertEquals(1, hl.getList().size());
 			
 			hc.add(hl);

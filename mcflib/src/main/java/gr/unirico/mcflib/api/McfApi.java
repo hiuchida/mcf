@@ -6,9 +6,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-import gr.unirico.mcflib.model.History;
-import gr.unirico.mcflib.model.HistoryChain;
-import gr.unirico.mcflib.model.HistoryList;
+import gr.unirico.mcflib.model.HistoryChainImpl;
+import gr.unirico.mcflib.model.HistoryImpl;
+import gr.unirico.mcflib.model.HistoryListImpl;
 import gr.unirico.mcflib.parser.ListParser;
 import gr.unirico.mcflib.util.FileUtil;
 
@@ -29,7 +29,7 @@ public class McfApi {
 	}
 	
 	private String dataDir;
-	private HistoryChain archive;
+	private HistoryChainImpl archive;
 	
 	private McfApi(String dataDir) {
 		this.dataDir = dataDir;
@@ -42,17 +42,17 @@ public class McfApi {
 	}
 
 	public History newHistory(String name) {
-		return new History(name);
+		return new HistoryImpl(name);
 	}
 
 	public HistoryList newHistoryList(String name) {
-		return new HistoryList(name);
+		return new HistoryListImpl(name);
 	}
 
 	public void write(HistoryList hl) throws IOException {
 		String id = hl.getId();
 		try (PrintWriter pw = FileUtil.newWriter(dataDir + "/" + id + ".txt")) {
-			FileUtil.write(pw, hl.toList());
+			FileUtil.write(pw, ((HistoryListImpl)hl).toList());
 		} finally {
 		}
 	}
@@ -61,7 +61,7 @@ public class McfApi {
 		try (BufferedReader br = FileUtil.newReader(dataDir + "/" + id + ".txt")) {
 			List<String> list = FileUtil.read(br);
 			Object obj = ListParser.parse(list);
-			return (HistoryList)obj;
+			return (HistoryListImpl)obj;
 		} finally {
 		}
 	}
@@ -72,30 +72,30 @@ public class McfApi {
 	}
 	
 	public void archive(HistoryList hl) throws IOException {
-		archive.add(hl);
+		archive.add((HistoryListImpl)hl);
 		writeArchive(archive);
 		delete(hl);
 	}
 
-	private void writeArchive(HistoryChain hc) throws IOException {
+	private void writeArchive(HistoryChainImpl hc) throws IOException {
 		try (PrintWriter pw = FileUtil.newWriter(dataDir + "/" + "archive.txt")) {
 			FileUtil.write(pw, hc.toList());
 		} finally {
 		}
 	}
 
-	private HistoryChain readArchive() {
+	private HistoryChainImpl readArchive() {
 		File file = new File(dataDir + "/" + "archive.txt");
 		if (file.exists()) {
 			try (BufferedReader br = FileUtil.newReader(file.getPath())) {
 				List<String> list = FileUtil.read(br);
 				Object obj = ListParser.parse(list);
-				return (HistoryChain)obj;
+				return (HistoryChainImpl)obj;
 			} catch (IOException e) {
 			} finally {
 			}
 		}
-		return new HistoryChain("Archive Master");
+		return new HistoryChainImpl("Archive Master");
 	}
 
 }
