@@ -1,36 +1,30 @@
-package mcflib.model;
+package gr.unirico.mcflib.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import mcflib.util.DigestBuilder;
-import mcflib.util.ListBuilder;
-import mcflib.util.UniqueIdUtil;
+import gr.unirico.mcflib.util.DigestBuilder;
+import gr.unirico.mcflib.util.ListBuilder;
+import gr.unirico.mcflib.util.UniqueIdUtil;
 
-public class HistoryList extends Node {
-	private static final String RUNNING = "running";
-	private static final String COMPLETE = "complete";
+public class HistoryChain extends Node {
+	private List<HistoryList> list;
 
-	private String status;
-	private List<History> list;
-
-	public HistoryList() {
+	public HistoryChain() {
 		this(UniqueIdUtil.generate());
 	}
 	
-	public HistoryList(String id) {
+	public HistoryChain(String id) {
 		super(id);
-		this.status = RUNNING;
 		this.list = new ArrayList<>();
 	}
 	
 	public List<String> toList() {
 		this.hash = toDigestString();
-		ListBuilder lb = new ListBuilder(HistoryList.class);
+		ListBuilder lb = new ListBuilder(HistoryChain.class);
 		lb.append("previd", previd);
 		lb.append("id", id);
-		lb.append("status", status);
-		for (History h : list) {
+		for (HistoryList h : list) {
 			lb.append(h.toList());
 		}
 		lb.append("hash", hash);
@@ -39,14 +33,14 @@ public class HistoryList extends Node {
 	
 	@Override
 	public String toString() {
-		return this.previd + "," + this.status + "," + this.list.toString();
+		return this.previd + "," + this.list.toString();
 	}
 	
-	public void add(History h) {
-		h.checkArchived();
-		h.setPrevid(getLastid());
-		h.archive(this);
-		list.add(h);
+	public void add(HistoryList hl) {
+		hl.checkArchived();
+		hl.setPrevid(getLastid());
+		hl.archive(this);
+		list.add(hl);
 	}
 	
 	private String getLastid() {
@@ -56,9 +50,8 @@ public class HistoryList extends Node {
 		return list.get(list.size() - 1).getId();
 	}
 	
-	public void validate(String previd, String status, String hash) {
+	public void validate(String previd, String hash) {
 		this.previd = previd;
-		this.status = status;
 		this.hash = toDigestString();
 		if (!this.hash.equals(hash)) {
 			throw new RuntimeException("Illegal hash");
@@ -69,8 +62,7 @@ public class HistoryList extends Node {
 		DigestBuilder db = new DigestBuilder(HistoryList.class);
 		db.append("previd", previd);
 		db.append("id", id);
-		db.append("status", status);
-		for (History h : list) {
+		for (HistoryList h : list) {
 			db.append("history", h.getHash());
 		}
 		return db.toString();
@@ -78,15 +70,10 @@ public class HistoryList extends Node {
 	
 	void setPrevid(String previd) {
 		this.previd = previd;
-		this.status = COMPLETE;
 		this.hash = toDigestString();
 	}
 
-	public String getStatus() {
-		return status;
-	}
-
-	public List<History> getList() {
+	public List<HistoryList> getList() {
 		return list;
 	}
 

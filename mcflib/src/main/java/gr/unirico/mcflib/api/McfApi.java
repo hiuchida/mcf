@@ -1,4 +1,4 @@
-package mcflib.api;
+package gr.unirico.mcflib.api;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -6,11 +6,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-import mcflib.model.History;
-import mcflib.model.HistoryChain;
-import mcflib.model.HistoryList;
-import mcflib.parser.ListParser;
-import mcflib.util.FileUtil;
+import gr.unirico.mcflib.model.History;
+import gr.unirico.mcflib.model.HistoryChain;
+import gr.unirico.mcflib.model.HistoryList;
+import gr.unirico.mcflib.parser.ListParser;
+import gr.unirico.mcflib.util.FileUtil;
 
 public class McfApi {
 	private static McfApi singleton;

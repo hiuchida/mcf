@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServlet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import mcflib.api.McfApi;
-import mcflib.util.FileUtil;
+import gr.unirico.mcflib.api.McfApi;
+import gr.unirico.mcflib.util.FileUtil;
 
 /**
  * Servlet implementation class ConfigServlet

@@ -1,4 +1,4 @@
-package mcflib.parser;
+package gr.unirico.mcflib.parser;
 
 import java.util.List;
 

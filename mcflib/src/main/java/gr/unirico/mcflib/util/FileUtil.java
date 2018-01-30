@@ -1,4 +1,4 @@
-package mcflib.util;
+package gr.unirico.mcflib.util;
 
 import java.io.BufferedReader;
 import java.io.File;

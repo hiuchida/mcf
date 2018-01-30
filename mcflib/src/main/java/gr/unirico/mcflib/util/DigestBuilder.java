@@ -1,4 +1,4 @@
-package mcflib.util;
+package gr.unirico.mcflib.util;
 
 public class DigestBuilder {
 	private StringBuilder sb = new StringBuilder();

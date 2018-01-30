@@ -1,4 +1,4 @@
-package mcflib.util;
+package gr.unirico.mcflib.util;
 
 import java.util.ArrayList;
 import java.util.List;

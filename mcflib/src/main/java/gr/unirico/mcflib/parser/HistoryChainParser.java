@@ -1,7 +1,7 @@
-package mcflib.parser;
+package gr.unirico.mcflib.parser;
 
-import mcflib.model.HistoryChain;
-import mcflib.model.HistoryList;
+import gr.unirico.mcflib.model.HistoryChain;
+import gr.unirico.mcflib.model.HistoryList;
 
 public class HistoryChainParser extends ListParser {
 	public HistoryChainParser(ListParser lp) {

@@ -1,4 +1,4 @@
-package mcflib.util;
+package gr.unirico.mcflib.util;
 
 import java.util.Base64;
 import java.util.Base64.Decoder;

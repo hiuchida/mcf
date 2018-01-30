@@ -1,10 +1,10 @@
-package mcflib.model;
+package gr.unirico.mcflib.model;
 
 import java.util.List;
 
-import mcflib.util.DigestBuilder;
-import mcflib.util.ListBuilder;
-import mcflib.util.UniqueIdUtil;
+import gr.unirico.mcflib.util.DigestBuilder;
+import gr.unirico.mcflib.util.ListBuilder;
+import gr.unirico.mcflib.util.UniqueIdUtil;
 
 public class History extends Node {
 	private String timestamp;
