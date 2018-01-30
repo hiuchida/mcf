@@ -44,5 +44,10 @@ public class FileUtil {
 			dir.mkdirs();
 		}
 	}
+	
+	public static void delete(String path) {
+		File file = new File(path);
+		file.delete();
+	}
 
 }

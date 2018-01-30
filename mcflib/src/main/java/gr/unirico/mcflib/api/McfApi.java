@@ -66,9 +66,15 @@ public class McfApi {
 		}
 	}
 	
+	public void delete(HistoryList hl) {
+		String id = hl.getId();
+		FileUtil.delete(dataDir + "/" + id + ".txt");
+	}
+	
 	public void archive(HistoryList hl) throws IOException {
 		archive.add(hl);
 		writeArchive(archive);
+		delete(hl);
 	}
 
 	private void writeArchive(HistoryChain hc) throws IOException {
