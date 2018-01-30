@@ -6,12 +6,68 @@
 	<meta charset="utf-8"/>
 	<meta http-equiv="x-ua-compatible" content="ie=edge"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
 	<title>Sample</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous" defer="true"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous" defer="true"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous" defer="true"></script>
+
+	<script th:inline="javascript">
+		window.addEventListener("load", function(event) {
+			loadHistory();
+			$('#mcf-write').on('click', function(){
+				$.ajax({
+					type: "POST",
+					url: '/api/sample',
+					contentType: "application/json",
+					data: JSON.stringify({"data": $('#sample-text').val()})
+				}).then(
+					function(data) {
+						$('#success-alert').alert().fadeTo(2000, 500).slideUp(500);
+						loadHistory();
+					},
+					function(data) {
+						$('#error-alert').alert().fadeTo(2000, 500).slideUp(500);
+					}
+				);
+			});
+
+			function loadHistory() {
+				$.ajax({
+					type: "GET",
+					url: '/sample/histories'
+				}).then(
+					function(data) {
+						$('#history-list').html(data);
+					},
+					function(data) {
+						console.error(data);
+					}
+				);
+			}
+		});
+	</script>
 </head>
 
 <body>
-<div>
-	サンプルページなのだ
+<div class="container">
+	<div id="success-alert" class="alert alert-success fixed-top fade hide" role="alert">データの保存に成功しました。</div>
+	<div id="error-alert" class="alert alert-danger fixed-top fade hide" role="alert">データの保存に失敗しました。</div>
+	<h1 class="mt-5">サンプルページなのだ</h1>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="input-group mb-3">
+				<input type="text" id="sample-text" class="form-control" placeholder="保存するデータ" />
+				<div class="input-group-append">
+					<button id="mcf-write" class="btn btn-primary" type="button">送信</button>
+				</div>
+			</div>
+		</div>
+		<div id="history-list" class="col-md-6">
+			<div th:substituteby="v1/history::card"></div>
+		</div>
+	</div>
 </div>
 </body>
 

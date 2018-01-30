@@ -1,0 +1,15 @@
+<div class="card" th:fragment="card" th:each="history: ${histories}" style="margin-bottom:5px;">
+	<div class="card-body">
+		<h5 class="card-title" th:text="${history.content}"></h5>
+		<p class="card-text">
+		<div>
+			<span>ハッシュ値：</span>
+			<span th:utext="${history.hash}"></span>
+		</div>
+		<div>
+			<span>プレハッシュ：</span>
+			<span th:utext="${history.prehash}"></span>
+		</div>
+		</p>
+	</div>
+</div>
