@@ -22,8 +22,8 @@ public class Debug {
 		String id2;
 		String id3;
 		{
-			HistoryList hl = api.newHistoryList();
-			History h = api.newHistory();
+			HistoryList hl = api.newHistoryList("Thread-1");
+			History h = api.newHistory("Comment-1");
 			hl.add(h);
 			api.write(hl);
 			id = hl.getId();
@@ -32,7 +32,7 @@ public class Debug {
 			HistoryList hl = api.read(id);
 			out.println(hl);
 			
-			History h = api.newHistory();
+			History h = api.newHistory("Comment-2");
 			hl.add(h);
 			api.write(hl);
 		}
@@ -42,8 +42,8 @@ public class Debug {
 			api.archive(hl);
 		}
 		{
-			HistoryList hl = api.newHistoryList();
-			History h = api.newHistory();
+			HistoryList hl = api.newHistoryList("Thread-2");
+			History h = api.newHistory("Comment-1");
 			hl.add(h);
 			api.write(hl);
 			id2 = hl.getId();
@@ -54,7 +54,7 @@ public class Debug {
 			api.archive(hl);
 		}
 		{
-			HistoryList hl = api.newHistoryList();
+			HistoryList hl = api.newHistoryList("Thread-3");
 			api.write(hl);
 			id3 = hl.getId();
 		}

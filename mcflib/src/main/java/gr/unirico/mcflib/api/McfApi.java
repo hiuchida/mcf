@@ -41,12 +41,12 @@ public class McfApi {
 		return dataDir;
 	}
 
-	public History newHistory() {
-		return new History();
+	public History newHistory(String name) {
+		return new History(name);
 	}
 
-	public HistoryList newHistoryList() {
-		return new HistoryList();
+	public HistoryList newHistoryList(String name) {
+		return new HistoryList(name);
 	}
 
 	public void write(HistoryList hl) throws IOException {
@@ -95,7 +95,7 @@ public class McfApi {
 			} finally {
 			}
 		}
-		return new HistoryChain();
+		return new HistoryChain("Archive Master");
 	}
 
 }

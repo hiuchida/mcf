@@ -7,11 +7,13 @@ public abstract class Node {
 	private Node parent;
 	protected String previd;
 	protected String id;
+	protected String name;
 	protected String hash;
 	
-	public Node(String id) {
+	public Node(String id, String name) {
 		this.previd = FIRSTID;
 		this.id = id;
+		this.name = name;
 	}
 	
 	protected void archive(Node parent) {
@@ -35,6 +37,10 @@ public abstract class Node {
 
 	public String getId() {
 		return id;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public String getHash() {

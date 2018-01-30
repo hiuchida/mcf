@@ -10,7 +10,8 @@ public class HistoryParser extends ListParser {
 	public History parse() {
 		String previd = get("previd");
 		String id = get("id");
-		History h = new History(id);
+		String name = get("name");
+		History h = new History(id, name);
 		h.setTimestamp(get("timestamp"));
 		h.setIpaddr(get("ipaddr"));
 		h.setUserid(get("userid"));

@@ -14,12 +14,12 @@ public class HistoryList extends Node {
 	private String status;
 	private List<History> list;
 
-	public HistoryList() {
-		this(UniqueIdUtil.generate());
+	public HistoryList(String name) {
+		this(UniqueIdUtil.generate(), name);
 	}
 	
-	public HistoryList(String id) {
-		super(id);
+	public HistoryList(String id, String name) {
+		super(id, name);
 		this.status = RUNNING;
 		this.list = new ArrayList<>();
 	}
@@ -29,6 +29,7 @@ public class HistoryList extends Node {
 		ListBuilder lb = new ListBuilder(HistoryList.class);
 		lb.append("previd", previd);
 		lb.append("id", id);
+		lb.append("name", name);
 		lb.append("status", status);
 		for (History h : list) {
 			lb.append(h.toList());
@@ -69,6 +70,7 @@ public class HistoryList extends Node {
 		DigestBuilder db = new DigestBuilder(HistoryList.class);
 		db.append("previd", previd);
 		db.append("id", id);
+		db.append("name", name);
 		db.append("status", status);
 		for (History h : list) {
 			db.append("history", h.getHash());

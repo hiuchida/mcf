@@ -25,40 +25,40 @@ public class ListParserTest {
 		List<String> hllist;
 		List<String> hclist;
 		{
-			HistoryList hl = new HistoryList();
-			History h = new History();
+			HistoryList hl = new HistoryList("Thread-1");
+			History h = new History("Comment-1");
 			hl.add(h);
 			
 			hllist = hl.toList();
-			TestCase.assertEquals(15, hllist.size());
+			TestCase.assertEquals(17, hllist.size());
 		}
 		{
 			HistoryList hl = (HistoryList) gr.unirico.mcflib.parser.ListParser.parse(hllist);
 			TestCase.assertEquals(1, hl.getList().size());
 			
-			History h = new History();
+			History h = new History("Comment-2");
 			hl.add(h);
 			
 			hllist = hl.toList();
-			TestCase.assertEquals(25, hllist.size());
+			TestCase.assertEquals(28, hllist.size());
 		}
 		{
 			HistoryList hl = (HistoryList) gr.unirico.mcflib.parser.ListParser.parse(hllist);
 			TestCase.assertEquals(2, hl.getList().size());
 			
-			HistoryChain hc = new HistoryChain();
+			HistoryChain hc = new HistoryChain("Archive Master");
 			hc.add(hl);
 			
 			hclist = hc.toList();
-			TestCase.assertEquals(29, hclist.size());
+			TestCase.assertEquals(33, hclist.size());
 		}
 		{
-			HistoryList hl = new HistoryList();
-			History h = new History();
+			HistoryList hl = new HistoryList("Thread-2");
+			History h = new History("Comment-1");
 			hl.add(h);
 			
 			hllist = hl.toList();
-			TestCase.assertEquals(15, hllist.size());
+			TestCase.assertEquals(17, hllist.size());
 		}
 		{
 			HistoryChain hc = (HistoryChain) gr.unirico.mcflib.parser.ListParser.parse(hclist);
@@ -69,7 +69,7 @@ public class ListParserTest {
 			
 			hc.add(hl);
 			hclist = hc.toList();
-			TestCase.assertEquals(44, hclist.size());
+			TestCase.assertEquals(50, hclist.size());
 		}
 	}
 

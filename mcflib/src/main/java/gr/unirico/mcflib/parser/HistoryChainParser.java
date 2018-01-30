@@ -11,7 +11,8 @@ public class HistoryChainParser extends ListParser {
 	public HistoryChain parse() {
 		String previd = get("previd");
 		String id = get("id");
-		HistoryChain hc = new HistoryChain(id);
+		String name = get("name");
+		HistoryChain hc = new HistoryChain(id, name);
 		String hash;
 		while (true) {
 			String[] pair = splitLine();

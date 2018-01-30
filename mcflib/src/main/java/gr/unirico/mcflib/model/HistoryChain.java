@@ -10,12 +10,12 @@ import gr.unirico.mcflib.util.UniqueIdUtil;
 public class HistoryChain extends Node {
 	private List<HistoryList> list;
 
-	public HistoryChain() {
-		this(UniqueIdUtil.generate());
+	public HistoryChain(String name) {
+		this(UniqueIdUtil.generate(), name);
 	}
 	
-	public HistoryChain(String id) {
-		super(id);
+	public HistoryChain(String id, String name) {
+		super(id, name);
 		this.list = new ArrayList<>();
 	}
 	
@@ -24,6 +24,7 @@ public class HistoryChain extends Node {
 		ListBuilder lb = new ListBuilder(HistoryChain.class);
 		lb.append("previd", previd);
 		lb.append("id", id);
+		lb.append("name", name);
 		for (HistoryList h : list) {
 			lb.append(h.toList());
 		}
@@ -62,6 +63,7 @@ public class HistoryChain extends Node {
 		DigestBuilder db = new DigestBuilder(HistoryList.class);
 		db.append("previd", previd);
 		db.append("id", id);
+		db.append("name", name);
 		for (HistoryList h : list) {
 			db.append("history", h.getHash());
 		}

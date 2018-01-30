@@ -14,12 +14,12 @@ public class History extends Node {
 	private String comment;
 	private String appdata;
 
-	public History() {
-		this(UniqueIdUtil.generate());
+	public History(String name) {
+		this(UniqueIdUtil.generate(), name);
 	}
 
-	public History(String id) {
-		super(id);
+	public History(String id, String name) {
+		super(id, name);
 	}
 
 	public List<String> toList() {
@@ -27,6 +27,7 @@ public class History extends Node {
 		ListBuilder lb = new ListBuilder(History.class);
 		lb.append("previd", previd);
 		lb.append("id", id);
+		lb.append("name", name);
 		lb.append("timestamp", timestamp);
 		lb.append("ipaddr", ipaddr);
 		lb.append("userid", userid);
@@ -54,6 +55,7 @@ public class History extends Node {
 		DigestBuilder db = new DigestBuilder(History.class);
 		db.append("previd", previd);
 		db.append("id", id);
+		db.append("name", name);
 		db.append("timestamp", timestamp);
 		db.append("ipaddr", ipaddr);
 		db.append("userid", userid);
