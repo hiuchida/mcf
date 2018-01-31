@@ -1,0 +1,88 @@
+<!doctype html>
+<html layout:decorator="v1/common/layout" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title th:text="ホーム"></title>
+	<link th:href="@{'/resources/v1/css/home.css'}" rel="stylesheet"/>
+
+	<script th:inline="javascript">
+		window.addEventListener("load", function(event) {
+			$('#registerBtn').on('click', function(){
+				var inputObj = $('#url-text');
+				if(inputObj[0].validity.typeMismatch) {
+					return false;
+				}
+
+				$('#registerModal').modal('hide');
+				$('#progress-overlay').show();
+				$.ajax({
+					type: "POST",
+					url: '/api/topics',
+					contentType: "application/json",
+					data: JSON.stringify({"data": inputObj.val()})
+				}).then(
+					function(data) {
+						$('#success-alert').html('トピックを登録しました。').alert().fadeTo(2000, 500).slideUp(500);
+						$('#progress-overlay').hide();
+					},
+					function(data) {
+						$('#error-alert').html('トピックの登録に失敗しました。').alert().fadeTo(2000, 500).slideUp(500);
+						$('#progress-overlay').hide();
+					}
+				);
+			});
+		});
+
+		function moveTopic(id) {
+			location.href = '/topics/' + id;
+		}
+
+		function moveArchive(id) {
+			location.href = '/archives/' + id;
+		}
+
+	</script>
+
+</head>
+
+<body>
+<div class="container" layout:fragment="layout-content">
+	<div class="jumbotron">
+		<h1>BlockChain Topics</h1>
+		<p>気になるトピックを登録してみよう</p>
+		<div class="text-right">
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerModal">トピックを登録する</button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<h3>トピック一覧</h3>
+			<div th:substituteby="v1/fragment/topic::topic"></div>
+		</div>
+		<div id="comment-list" class="col-md-6">
+			<h3>アーカイブ一覧</h3>
+			<div th:substituteby="v1/fragment/topic::archive"></div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="registerModalLabel">トピックを登録する</h5>
+				</div>
+				<div class="modal-body">
+					<div class="input-group mb-3">
+						<input type="url" id="url-text" class="form-control" placeholder="URLを入力してください。" />
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+					<button id="registerBtn" type="button" class="btn btn-primary">登録する</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+
+</html>

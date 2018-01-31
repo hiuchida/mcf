@@ -1,0 +1,128 @@
+html {
+  min-height: 100%;
+  position: relative;
+}
+
+body {
+  font-family: "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  background: #FAFAFA;
+  height: 100%
+}
+
+.container {
+  padding-top: 30px;
+  padding-left: 230px;
+}
+
+.breadcrumb > li + li:before {
+  content: "> ";
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    opacity: 0.4;
+  }
+  50% {
+    -webkit-transform: rotate(180deg);
+    opacity: 1.0;
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    opacity: 0.4;
+  }
+}
+@-moz-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+    opacity: 0.4;
+  }
+  50% {
+    -moz-transform: rotate(180deg);
+    opacity: 1.0;
+  }
+  100% {
+    -moz-transform: rotate(360deg);
+    opacity: 0.4;
+  }
+}
+@-ms-keyframes spin {
+  0% {
+    -ms-transform: rotate(0deg);
+    opacity: 0.4;
+  }
+  50% {
+    -ms-transform: rotate(180deg);
+    opacity: 1.0;
+  }
+  100% {
+    -ms-transform: rotate(360deg);
+    opacity: 0.4;
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+    opacity: 0.4;
+  }
+  50% {
+    transform: rotate(180deg);
+    opacity: 1.0;
+  }
+  100% {
+    transform: rotate(360deg);
+    opacity: 0.4;
+  }
+}
+
+@keyframes loadingMessage {
+  0% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1.0;
+  }
+  100% {
+    opacity: 0.4;
+  }
+  /*100%の時に20％の透明度に戻る*/
+}
+
+#loader {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  margin-left: -50px;
+}
+
+#loader .loader-spin {
+	width: 100px; /*ローディングアイコンの横サイズ*/
+	height: 100px; /*ローディングアイコンの縦サイズ*/
+	border-radius: 50%; /*CSS3で円を書く*/
+	border: 20px solid #1779ba; /*円に○の白枠をつける*/
+	border-right-color: transparent; /*円の右にC状の空きをつける*/
+	-webkit-animation: spin 1.0s linear infinite;
+	-moz-animation: spin 1.0s linear infinite;
+	-ms-animation: spin 1.0s linear infinite;
+	animation: spin 1.0s linear infinite;
+}
+#loader .loader-message {
+	width: 100px;
+	margin-top: 5px;
+	text-align: center;
+	color: #fafafa;
+	font-weight: bold;
+	animation: loadingMessage 1.0s linear infinite;
+}
+
+.reveal-overlay {
+    height: 100%;
+    width: 100%;
+    position: fixed; /* Stay in place */
+    z-index: 100000000; /* Sit on top */
+    left: 0;
+    top: 0;
+    background-color: rgba(0,0,0, 0.5); /* Black w/opacity */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    transition: 0.5s;
+}

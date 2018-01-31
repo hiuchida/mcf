@@ -1,0 +1,28 @@
+<div class="card" th:fragment="topic" th:each="topic: ${topics}" style="margin-bottom:5px;" th:attr="onclick='moveTopic(' + ${topic.id} + ');'">
+	<div class="card-body">
+		<p class="card-text">
+		<div>
+			<span>ID：</span>
+			<span th:utext="${topic.id}"></span>
+		</div>
+		<div>
+			<span>トピック：</span>
+			<span th:utext="${topic.name}"></span>
+		</div>
+		</p>
+	</div>
+</div>
+<div class="card" th:fragment="archive" th:each="archive: ${archives}" style="margin-bottom:5px;" th:attr="onclick='moveArchive(' + ${archive.id} + ');'">
+	<div class="card-body">
+		<p class="card-text">
+		<div>
+			<span>ID：</span>
+			<span th:utext="${archive.id}"></span>
+		</div>
+		<div>
+			<span>アーカイブ：</span>
+			<span th:utext="${archive.name}"></span>
+		</div>
+		</p>
+	</div>
+</div>

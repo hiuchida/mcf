@@ -1,0 +1,95 @@
+<!doctype html>
+<html layout:decorator="v1/common/layout" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title th:text="|トピック - ${data.name}|"></title>
+	<script th:inline="javascript">
+		window.addEventListener("load", function(event) {
+			var apiUrl = '/api/topics/' + /*[[${data.id}]]*/;
+			var url = '/topics/' + /*[[${data.id}]]*/;
+			$('#mcf-write').on('click', function(){
+				$('#progress-overlay').show();
+				$.ajax({
+					type: "POST",
+					url: apiUrl + '/comment',
+					contentType: "application/json",
+					data: JSON.stringify({"data": $('#comment-text').val()})
+				}).then(
+					function(data) {
+						$('#success-alert').html('コメントを投稿しました。').alert().fadeTo(2000, 500).slideUp(500);
+						$('#comment-text').val('')
+						loadComments();
+						$('#progress-overlay').hide();
+					},
+					function(data) {
+						$('#error-alert').html('コメントの投稿に失敗しました。').alert().fadeTo(2000, 500).slideUp(500);
+						$('#progress-overlay').hide();
+					}
+				);
+			});
+
+			$('#archiveBtn').on('click', function(){
+				$('#progress-overlay').show();
+				$.ajax({
+					type: "GET",
+					url: apiUrl + '/archive',
+					contentType: "application/json"
+				}).then(
+					function(data) {
+						window.location.href = '/archives/' + data.archiveId;
+						$('#progress-overlay').hide();
+					},
+					function(data) {
+						$('#error-alert').html('アーカイブに失敗しました。').alert().fadeTo(2000, 500).slideUp(500);
+						$('#progress-overlay').hide();
+					}
+				);
+			});
+
+			function loadComments() {
+				$.ajax({
+					type: "GET",
+					url: url + '/comments'
+				}).then(
+					function(data) {
+						$('#comment-list').html(data);
+					},
+					function(data) {
+						console.error(data);
+					}
+				);
+			}
+		});
+	</script>
+</head>
+
+<body>
+<div class="container" layout:fragment="layout-content">
+	<ol class="breadcrumb">
+		<li><a href="/">ホーム</a></li>
+		<li class="active" th:text="${data.name}"></li>
+	</ol>
+	<div class="jumbotron">
+		<h1 th:text="|${data.name}|"></h1>
+		<p>トピックの情報を表示しています。</p>
+		<p>どんどんコメントしよう。</p>
+		<div class="text-right">
+			<button id="archiveBtn" type="button" class="btn btn-danger">トピックをアーカイブする</button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="input-group mb-3">
+				<input type="text" id="comment-text" class="form-control" placeholder="コメントを入力してください。" />
+				<div class="input-group-append">
+					<button id="mcf-write" class="btn btn-primary" type="button">送信</button>
+				</div>
+			</div>
+		</div>
+		<div id="comment-list" class="col-md-6">
+			<div th:substituteby="v1/fragment/comment::comment"></div>
+		</div>
+	</div>
+</div>
+</body>
+
+</html>

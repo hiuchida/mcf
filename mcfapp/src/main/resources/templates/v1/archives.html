@@ -1,0 +1,25 @@
+<!doctype html>
+<html layout:decorator="v1/common/layout" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title th:text="|アーカイブ - ${data.name}|"></title>
+</head>
+
+<body>
+<div class="container" layout:fragment="layout-content">
+	<ol class="breadcrumb">
+		<li><a href="/">ホーム</a></li>
+		<li class="active" th:text="${data.name}"></li>
+	</ol>
+	<div class="jumbotron">
+		<h1 th:text="|${data.name}（アーカイブ）|"></h1>
+		<p>アーカイブされた情報を表示しています。</p>
+	</div>
+	<div class="row">
+		<div id="comment-list" class="col-md-12">
+			<div th:substituteby="v1/fragment/comment::comment"></div>
+		</div>
+	</div>
+</div>
+</body>
+
+</html>
