@@ -5,8 +5,8 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import gr.unirico.mcflib.model.HistoryChainImpl;
-import gr.unirico.mcflib.model.HistoryListImpl;
+import gr.unirico.mcflib.model.ArchiveImpl;
+import gr.unirico.mcflib.model.TopicImpl;
 import gr.unirico.mcflib.model.NodeImpl;
 
 public class ListParser {
@@ -30,12 +30,12 @@ public class ListParser {
 	
 	public NodeImpl selectParser() {
 		String klass = get("class");
-		if (klass.equals(HistoryListImpl.class.getName())) {
-			NodeImpl node = new HistoryListParser(this).parse();
+		if (klass.equals(TopicImpl.class.getName())) {
+			NodeImpl node = new TopicParser(this).parse();
 			itr.checkEol();
 			return node;
-		} else if (klass.equals(HistoryChainImpl.class.getName())) {
-			NodeImpl node = new HistoryChainParser(this).parse();
+		} else if (klass.equals(ArchiveImpl.class.getName())) {
+			NodeImpl node = new ArchiveParser(this).parse();
 			itr.checkEol();
 			return node;
 		} else {

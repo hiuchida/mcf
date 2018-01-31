@@ -6,9 +6,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import gr.unirico.mcflib.model.HistoryImpl;
-import gr.unirico.mcflib.model.HistoryChainImpl;
-import gr.unirico.mcflib.model.HistoryListImpl;
+import gr.unirico.mcflib.model.ArchiveImpl;
+import gr.unirico.mcflib.model.CommentImpl;
+import gr.unirico.mcflib.model.TopicImpl;
 import junit.framework.TestCase;
 
 public class ListParserTest {
@@ -22,54 +22,54 @@ public class ListParserTest {
 
 	@Test
 	public void testParse() throws Exception {
-		List<String> hllist;
-		List<String> hclist;
+		List<String> tlist;
+		List<String> alist;
 		{
-			HistoryListImpl hl = new HistoryListImpl("Thread-1");
-			HistoryImpl h = new HistoryImpl("Comment-1");
-			hl.add(h);
+			TopicImpl t = new TopicImpl("Thread-1");
+			CommentImpl c = new CommentImpl("Comment-1");
+			t.add(c);
 			
-			hllist = hl.toList();
-			TestCase.assertEquals(17, hllist.size());
+			tlist = t.toList();
+			TestCase.assertEquals(17, tlist.size());
 		}
 		{
-			HistoryListImpl hl = (HistoryListImpl) gr.unirico.mcflib.parser.ListParser.parse(hllist);
-			TestCase.assertEquals(1, hl.getList().size());
+			TopicImpl t = (TopicImpl) gr.unirico.mcflib.parser.ListParser.parse(tlist);
+			TestCase.assertEquals(1, t.getList().size());
 			
-			HistoryImpl h = new HistoryImpl("Comment-2");
-			hl.add(h);
+			CommentImpl c = new CommentImpl("Comment-2");
+			t.add(c);
 			
-			hllist = hl.toList();
-			TestCase.assertEquals(28, hllist.size());
+			tlist = t.toList();
+			TestCase.assertEquals(28, tlist.size());
 		}
 		{
-			HistoryListImpl hl = (HistoryListImpl) gr.unirico.mcflib.parser.ListParser.parse(hllist);
-			TestCase.assertEquals(2, hl.getList().size());
+			TopicImpl t = (TopicImpl) gr.unirico.mcflib.parser.ListParser.parse(tlist);
+			TestCase.assertEquals(2, t.getList().size());
 			
-			HistoryChainImpl hc = new HistoryChainImpl("Archive Master");
-			hc.add(hl);
+			ArchiveImpl a = new ArchiveImpl("Archive Master");
+			a.add(t);
 			
-			hclist = hc.toList();
-			TestCase.assertEquals(33, hclist.size());
+			alist = a.toList();
+			TestCase.assertEquals(33, alist.size());
 		}
 		{
-			HistoryListImpl hl = new HistoryListImpl("Thread-2");
-			HistoryImpl h = new HistoryImpl("Comment-1");
-			hl.add(h);
+			TopicImpl t = new TopicImpl("Thread-2");
+			CommentImpl c = new CommentImpl("Comment-1");
+			t.add(c);
 			
-			hllist = hl.toList();
-			TestCase.assertEquals(17, hllist.size());
+			tlist = t.toList();
+			TestCase.assertEquals(17, tlist.size());
 		}
 		{
-			HistoryChainImpl hc = (HistoryChainImpl) gr.unirico.mcflib.parser.ListParser.parse(hclist);
-			TestCase.assertEquals(1, hc.getList().size());
+			ArchiveImpl a = (ArchiveImpl) gr.unirico.mcflib.parser.ListParser.parse(alist);
+			TestCase.assertEquals(1, a.getList().size());
 			
-			HistoryListImpl hl = (HistoryListImpl) gr.unirico.mcflib.parser.ListParser.parse(hllist);
-			TestCase.assertEquals(1, hl.getList().size());
+			TopicImpl t = (TopicImpl) gr.unirico.mcflib.parser.ListParser.parse(tlist);
+			TestCase.assertEquals(1, t.getList().size());
 			
-			hc.add(hl);
-			hclist = hc.toList();
-			TestCase.assertEquals(50, hclist.size());
+			a.add(t);
+			alist = a.toList();
+			TestCase.assertEquals(50, alist.size());
 		}
 	}
 

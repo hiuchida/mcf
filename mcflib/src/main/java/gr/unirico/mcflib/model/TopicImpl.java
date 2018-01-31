@@ -3,29 +3,38 @@ package gr.unirico.mcflib.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import gr.unirico.mcflib.api.Comment;
+import gr.unirico.mcflib.api.Topic;
 import gr.unirico.mcflib.util.DigestBuilder;
 import gr.unirico.mcflib.util.ListBuilder;
 import gr.unirico.mcflib.util.UniqueIdUtil;
 
-public class HistoryChainImpl extends NodeImpl {
-	private List<HistoryListImpl> list;
+public class TopicImpl extends NodeImpl implements Topic {
+	private static final String RUNNING = "running";
+	private static final String COMPLETE = "complete";
 
-	public HistoryChainImpl(String name) {
+	private String status;
+	private List<Comment> list;
+
+	public TopicImpl(String name) {
 		this(UniqueIdUtil.generate(), name);
 	}
 	
-	public HistoryChainImpl(String id, String name) {
+	public TopicImpl(String id, String name) {
 		super(id, name);
+		this.status = RUNNING;
 		this.list = new ArrayList<>();
 	}
 	
 	public List<String> toList() {
 		this.hash = toDigestString();
-		ListBuilder lb = new ListBuilder(HistoryChainImpl.class);
+		ListBuilder lb = new ListBuilder(TopicImpl.class);
 		lb.append("previd", previd);
 		lb.append("id", id);
 		lb.append("name", name);
-		for (HistoryListImpl h : list) {
+		lb.append("status", status);
+		for (Comment _h : list) {
+			CommentImpl h = (CommentImpl)_h;
 			lb.append(h.toList());
 		}
 		lb.append("hash", hash);
@@ -34,14 +43,15 @@ public class HistoryChainImpl extends NodeImpl {
 	
 	@Override
 	public String toString() {
-		return this.previd + "," + this.list.toString();
+		return this.previd + "," + this.status + "," + this.list.toString();
 	}
 	
-	public void add(HistoryListImpl hl) {
-		hl.checkArchived();
-		hl.setPrevid(getLastid());
-		hl.archive(this);
-		list.add(hl);
+	public void add(Comment _h) {
+		CommentImpl h = (CommentImpl)_h;
+		h.checkArchived();
+		h.setPrevid(getLastid());
+		h.archive(this);
+		list.add(h);
 	}
 	
 	private String getLastid() {
@@ -51,8 +61,9 @@ public class HistoryChainImpl extends NodeImpl {
 		return list.get(list.size() - 1).getId();
 	}
 	
-	public void validate(String previd, String hash) {
+	public void validate(String previd, String status, String hash) {
 		this.previd = previd;
+		this.status = status;
 		this.hash = toDigestString();
 		if (!this.hash.equals(hash)) {
 			throw new RuntimeException("Illegal hash");
@@ -60,11 +71,13 @@ public class HistoryChainImpl extends NodeImpl {
 	}
 
 	private String toDigestString() {
-		DigestBuilder db = new DigestBuilder(HistoryListImpl.class);
+		DigestBuilder db = new DigestBuilder(TopicImpl.class);
 		db.append("previd", previd);
 		db.append("id", id);
 		db.append("name", name);
-		for (HistoryListImpl h : list) {
+		db.append("status", status);
+		for (Comment _h : list) {
+			CommentImpl h = (CommentImpl)_h;
 			db.append("history", h.getHash());
 		}
 		return db.toString();
@@ -72,10 +85,15 @@ public class HistoryChainImpl extends NodeImpl {
 	
 	void setPrevid(String previd) {
 		this.previd = previd;
+		this.status = COMPLETE;
 		this.hash = toDigestString();
 	}
 
-	public List<HistoryListImpl> getList() {
+	public String getStatus() {
+		return status;
+	}
+
+	public List<Comment> getList() {
 		return list;
 	}
 

@@ -2,13 +2,13 @@ package gr.unirico.mcflib.model;
 
 import java.util.List;
 
-import gr.unirico.mcflib.api.History;
+import gr.unirico.mcflib.api.Comment;
 import gr.unirico.mcflib.util.DateUtil;
 import gr.unirico.mcflib.util.DigestBuilder;
 import gr.unirico.mcflib.util.ListBuilder;
 import gr.unirico.mcflib.util.UniqueIdUtil;
 
-public class HistoryImpl extends NodeImpl implements History {
+public class CommentImpl extends NodeImpl implements Comment {
 	private String timestamp;
 	private String ipaddr;
 	private String userid;
@@ -16,17 +16,17 @@ public class HistoryImpl extends NodeImpl implements History {
 	private String comment;
 	private String appdata;
 
-	public HistoryImpl(String name) {
+	public CommentImpl(String name) {
 		this(UniqueIdUtil.generate(), name);
 	}
 
-	public HistoryImpl(String id, String name) {
+	public CommentImpl(String id, String name) {
 		super(id, name);
 	}
 
 	public List<String> toList() {
 		this.hash = toDigestString();
-		ListBuilder lb = new ListBuilder(HistoryImpl.class);
+		ListBuilder lb = new ListBuilder(CommentImpl.class);
 		lb.append("previd", previd);
 		lb.append("id", id);
 		lb.append("name", name);
@@ -55,7 +55,7 @@ public class HistoryImpl extends NodeImpl implements History {
 	}
 
 	private String toDigestString() {
-		DigestBuilder db = new DigestBuilder(HistoryImpl.class);
+		DigestBuilder db = new DigestBuilder(CommentImpl.class);
 		db.append("previd", previd);
 		db.append("id", id);
 		db.append("name", name);

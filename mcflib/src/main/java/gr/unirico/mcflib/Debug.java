@@ -3,8 +3,8 @@ package gr.unirico.mcflib;
 import java.io.IOException;
 import java.io.PrintStream;
 
-import gr.unirico.mcflib.api.History;
-import gr.unirico.mcflib.api.HistoryList;
+import gr.unirico.mcflib.api.Comment;
+import gr.unirico.mcflib.api.Topic;
 import gr.unirico.mcflib.api.McfApi;
 import gr.unirico.mcflib.api.McfApiFactory;
 
@@ -23,46 +23,46 @@ public class Debug {
 		String id2;
 		String id3;
 		{
-			HistoryList hl = api.newHistoryList("Thread-1");
-			History h = api.newHistory("Comment-1");
-			hl.add(h);
-			api.write(hl);
-			id = hl.getId();
+			Topic t = api.newTopic("Thread-1");
+			Comment c = api.newComment("Comment-1");
+			t.add(c);
+			api.writeTopic(t);
+			id = t.getId();
 		}
 		{
-			HistoryList hl = api.read(id);
-			out.println(hl);
+			Topic t = api.readTopic(id);
+			out.println(t);
 			
-			History h = api.newHistory("Comment-2");
-			hl.add(h);
-			api.write(hl);
+			Comment c = api.newComment("Comment-2");
+			t.add(c);
+			api.writeTopic(t);
 		}
 		{
-			HistoryList hl = api.read(id);
-			out.println(hl);
-			api.archive(hl);
+			Topic t = api.readTopic(id);
+			out.println(t);
+			api.archiveTopic(t);
 		}
 		{
-			HistoryList hl = api.newHistoryList("Thread-2");
-			History h = api.newHistory("Comment-1");
-			hl.add(h);
-			api.write(hl);
-			id2 = hl.getId();
+			Topic t = api.newTopic("Thread-2");
+			Comment c = api.newComment("Comment-1");
+			t.add(c);
+			api.writeTopic(t);
+			id2 = t.getId();
 		}
 		{
-			HistoryList hl = api.read(id2);
-			out.println(hl);
-			api.archive(hl);
+			Topic t = api.readTopic(id2);
+			out.println(t);
+			api.archiveTopic(t);
 		}
 		{
-			HistoryList hl = api.newHistoryList("Thread-3");
-			api.write(hl);
-			id3 = hl.getId();
+			Topic t = api.newTopic("Thread-3");
+			api.writeTopic(t);
+			id3 = t.getId();
 		}
 		{
-			HistoryList hl = api.read(id3);
-			out.println(hl);
-			api.archive(hl);
+			Topic t = api.readTopic(id3);
+			out.println(t);
+			api.archiveTopic(t);
 		}
 	}
 
