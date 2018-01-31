@@ -6,6 +6,7 @@ import java.io.PrintStream;
 import gr.unirico.mcflib.api.History;
 import gr.unirico.mcflib.api.HistoryList;
 import gr.unirico.mcflib.api.McfApi;
+import gr.unirico.mcflib.api.McfApiFactory;
 
 public class Debug {
 	public static void main(String[] args) {
@@ -17,7 +18,7 @@ public class Debug {
 	}
 
 	public static void test(PrintStream out) throws IOException {
-		McfApi api = McfApi.getInstance();
+		McfApi api = McfApiFactory.getInstance();
 		String id;
 		String id2;
 		String id3;
