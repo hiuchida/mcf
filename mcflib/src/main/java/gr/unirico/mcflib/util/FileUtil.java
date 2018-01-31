@@ -37,6 +37,18 @@ public class FileUtil {
 			pw.println(s);
 		}
 	}
+	
+	public static List<File> filelist(String path) {
+		File dir = new File(path);
+		File[] files = dir.listFiles();
+		List<File> list = new ArrayList<>();
+		for (File f : files) {
+			if (f.isFile()) {
+				list.add(f);
+			}
+		}
+		return list;
+	}
 
 	public static void mkdir(String path) {
 		File dir = new File(path);

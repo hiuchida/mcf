@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import gr.unirico.mcflib.api.Comment;
@@ -33,6 +34,25 @@ public class McfApiImpl implements McfApi {
 
 	public Topic newTopic(String name) {
 		return new TopicImpl(name);
+	}
+
+	public List<Topic> getTopicList() {
+		List<Topic> list = new ArrayList<>();
+		List<File> flist = FileUtil.filelist(dataDir);
+		for (File f : flist) {
+			String fname = f.getName();
+			if (fname.equals("archive.txt")) {
+				continue;
+			}
+			try {
+				String id = fname.substring(0, fname.indexOf("."));
+				Topic t = readTopic(id);
+				list.add(t);
+			} catch (IOException e) {
+				FileUtil.delete(f.getPath());
+			}
+		}
+		return list;
 	}
 
 	public void writeTopic(Topic hl) throws IOException {

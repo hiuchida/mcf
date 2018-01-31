@@ -2,11 +2,12 @@ package gr.unirico.mcflib;
 
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.List;
 
 import gr.unirico.mcflib.api.Comment;
-import gr.unirico.mcflib.api.Topic;
 import gr.unirico.mcflib.api.McfApi;
 import gr.unirico.mcflib.api.McfApiFactory;
+import gr.unirico.mcflib.api.Topic;
 
 public class Debug {
 	public static void main(String[] args) {
@@ -30,6 +31,8 @@ public class Debug {
 			id = t.getId();
 		}
 		{
+			List<Topic> list = api.getTopicList();
+			out.println(list);
 			Topic t = api.readTopic(id);
 			out.println(t);
 			
@@ -38,7 +41,9 @@ public class Debug {
 			api.writeTopic(t);
 		}
 		{
-			Topic t = api.readTopic(id);
+			List<Topic> list = api.getTopicList();
+			out.println(list);
+			Topic t = api.readTopic(list.get(0).getId());
 			out.println(t);
 			api.archiveTopic(t);
 		}
@@ -50,6 +55,8 @@ public class Debug {
 			id2 = t.getId();
 		}
 		{
+			List<Topic> list = api.getTopicList();
+			out.println(list);
 			Topic t = api.readTopic(id2);
 			out.println(t);
 			api.archiveTopic(t);
@@ -60,6 +67,8 @@ public class Debug {
 			id3 = t.getId();
 		}
 		{
+			List<Topic> list = api.getTopicList();
+			out.println(list);
 			Topic t = api.readTopic(id3);
 			out.println(t);
 			api.archiveTopic(t);
