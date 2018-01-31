@@ -17,12 +17,10 @@ import gr.unirico.mcflib.util.FileUtil;
 
 public class McfApiImpl implements McfApi {
 	private String dataDir;
-	private ArchiveImpl archive;
 	
 	public McfApiImpl(String dataDir) {
 		this.dataDir = dataDir;
 		FileUtil.mkdir(dataDir);
-		archive = readArchive();
 	}
 	
 	public String getDataDir() {
@@ -60,6 +58,7 @@ public class McfApiImpl implements McfApi {
 	}
 	
 	public void archiveTopic(Topic hl) throws IOException {
+		ArchiveImpl archive = readArchive();
 		archive.add((TopicImpl)hl);
 		writeArchive(archive);
 		deleteTopic(hl);
