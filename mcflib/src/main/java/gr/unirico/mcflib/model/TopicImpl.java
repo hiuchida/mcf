@@ -13,6 +13,7 @@ public class TopicImpl extends NodeImpl implements Topic {
 	private static final String RUNNING = "running";
 	private static final String COMPLETE = "complete";
 
+	private String url = "";
 	private String status;
 	private List<Comment> list;
 
@@ -32,6 +33,7 @@ public class TopicImpl extends NodeImpl implements Topic {
 		lb.append("previd", previd);
 		lb.append("id", id);
 		lb.append("name", name);
+		lb.append("url", url);
 		lb.append("status", status);
 		for (Comment _h : list) {
 			CommentImpl h = (CommentImpl)_h;
@@ -75,6 +77,7 @@ public class TopicImpl extends NodeImpl implements Topic {
 		db.append("previd", previd);
 		db.append("id", id);
 		db.append("name", name);
+		db.append("url", url);
 		db.append("status", status);
 		for (Comment _h : list) {
 			CommentImpl h = (CommentImpl)_h;
@@ -87,6 +90,14 @@ public class TopicImpl extends NodeImpl implements Topic {
 		this.previd = previd;
 		this.status = COMPLETE;
 		this.hash = toDigestString();
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getUrl() {
+		return url;
 	}
 
 	public String getStatus() {

@@ -30,7 +30,7 @@ public class ListParserTest {
 			t.add(c);
 			
 			tlist = t.toList();
-			TestCase.assertEquals(17, tlist.size());
+			TestCase.assertEquals(15, tlist.size());
 		}
 		{
 			TopicImpl t = (TopicImpl) gr.unirico.mcflib.parser.ListParser.parse(tlist);
@@ -40,7 +40,7 @@ public class ListParserTest {
 			t.add(c);
 			
 			tlist = t.toList();
-			TestCase.assertEquals(28, tlist.size());
+			TestCase.assertEquals(23, tlist.size());
 		}
 		{
 			TopicImpl t = (TopicImpl) gr.unirico.mcflib.parser.ListParser.parse(tlist);
@@ -50,7 +50,7 @@ public class ListParserTest {
 			a.add(t);
 			
 			alist = a.toList();
-			TestCase.assertEquals(33, alist.size());
+			TestCase.assertEquals(28, alist.size());
 		}
 		{
 			TopicImpl t = new TopicImpl("Thread-2");
@@ -58,7 +58,7 @@ public class ListParserTest {
 			t.add(c);
 			
 			tlist = t.toList();
-			TestCase.assertEquals(17, tlist.size());
+			TestCase.assertEquals(15, tlist.size());
 		}
 		{
 			ArchiveImpl a = (ArchiveImpl) gr.unirico.mcflib.parser.ListParser.parse(alist);
@@ -69,7 +69,7 @@ public class ListParserTest {
 			
 			a.add(t);
 			alist = a.toList();
-			TestCase.assertEquals(50, alist.size());
+			TestCase.assertEquals(43, alist.size());
 		}
 	}
 

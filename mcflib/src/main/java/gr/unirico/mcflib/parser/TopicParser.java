@@ -12,8 +12,9 @@ public class TopicParser extends ListParser {
 		String previd = get("previd");
 		String id = get("id");
 		String name = get("name");
-		String status = get("status");
 		TopicImpl hl = new TopicImpl(id, name);
+		hl.setUrl(get("url"));
+		String status = get("status");
 		String hash;
 		while (true) {
 			String[] pair = splitLine();

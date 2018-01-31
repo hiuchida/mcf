@@ -10,11 +10,8 @@ import gr.unirico.mcflib.util.UniqueIdUtil;
 
 public class CommentImpl extends NodeImpl implements Comment {
 	private String timestamp;
-	private String ipaddr;
-	private String userid;
-	private String docid;
-	private String comment;
-	private String appdata;
+	private String userid = "";
+	private String comment = "";
 
 	public CommentImpl(String name) {
 		this(UniqueIdUtil.generate(), name);
@@ -31,11 +28,8 @@ public class CommentImpl extends NodeImpl implements Comment {
 		lb.append("id", id);
 		lb.append("name", name);
 		lb.append("timestamp", timestamp);
-		lb.append("ipaddr", ipaddr);
 		lb.append("userid", userid);
-		lb.append("docid", docid);
 		lb.append("comment", comment);
-		lb.append("appdata", appdata);
 		lb.append("hash", hash);
 		return lb.toList();
 	}
@@ -60,11 +54,8 @@ public class CommentImpl extends NodeImpl implements Comment {
 		db.append("id", id);
 		db.append("name", name);
 		db.append("timestamp", timestamp);
-		db.append("ipaddr", ipaddr);
 		db.append("userid", userid);
-		db.append("docid", docid);
 		db.append("comment", comment);
-		db.append("appdata", appdata);
 		return db.toString();
 	}
 	
@@ -76,19 +67,9 @@ public class CommentImpl extends NodeImpl implements Comment {
 		this.hash = toDigestString();
 	}
 
-	public void setIpaddr(String ipaddr) {
-		checkArchived();
-		this.ipaddr = ipaddr;
-	}
-
 	public void setUserid(String userid) {
 		checkArchived();
 		this.userid = userid;
-	}
-
-	public void setDocid(String docid) {
-		checkArchived();
-		this.docid = docid;
 	}
 
 	public void setComment(String comment) {
@@ -96,33 +77,16 @@ public class CommentImpl extends NodeImpl implements Comment {
 		this.comment = comment;
 	}
 
-	public void setAppdata(String appdata) {
-		checkArchived();
-		this.appdata = appdata;
-	}
-
 	public String getTimestamp() {
 		return timestamp;
-	}
-
-	public String getIpaddr() {
-		return ipaddr;
 	}
 
 	public String getUserid() {
 		return userid;
 	}
 
-	public String getDocid() {
-		return docid;
-	}
-
 	public String getComment() {
 		return comment;
-	}
-
-	public String getAppdata() {
-		return appdata;
 	}
 
 }
