@@ -25,8 +25,8 @@ public class ArchiveImpl extends NodeImpl {
 		lb.append("previd", previd);
 		lb.append("id", id);
 		lb.append("name", name);
-		for (TopicImpl h : list) {
-			lb.append(h.toList());
+		for (TopicImpl t : list) {
+			lb.append(t.toList());
 		}
 		lb.append("hash", hash);
 		return lb.toList();
@@ -37,11 +37,11 @@ public class ArchiveImpl extends NodeImpl {
 		return this.previd + "," + this.list.toString();
 	}
 	
-	public void add(TopicImpl hl) {
-		hl.checkArchived();
-		hl.setPrevid(getLastid());
-		hl.archive(this);
-		list.add(hl);
+	public void add(TopicImpl t) {
+		t.checkArchived();
+		t.setPrevid(getLastid());
+		t.archive(this);
+		list.add(t);
 	}
 	
 	private String getLastid() {
@@ -64,8 +64,8 @@ public class ArchiveImpl extends NodeImpl {
 		db.append("previd", previd);
 		db.append("id", id);
 		db.append("name", name);
-		for (TopicImpl h : list) {
-			db.append("history", h.getHash());
+		for (TopicImpl t : list) {
+			db.append("topic", t.getHash());
 		}
 		return db.toString();
 	}

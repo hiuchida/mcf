@@ -35,9 +35,9 @@ public class TopicImpl extends NodeImpl implements Topic {
 		lb.append("name", name);
 		lb.append("url", url);
 		lb.append("status", status);
-		for (Comment _h : list) {
-			CommentImpl h = (CommentImpl)_h;
-			lb.append(h.toList());
+		for (Comment _c : list) {
+			CommentImpl c = (CommentImpl)_c;
+			lb.append(c.toList());
 		}
 		lb.append("hash", hash);
 		return lb.toList();
@@ -48,12 +48,12 @@ public class TopicImpl extends NodeImpl implements Topic {
 		return this.previd + "," + this.status + "," + this.list.toString();
 	}
 	
-	public void add(Comment _h) {
-		CommentImpl h = (CommentImpl)_h;
-		h.checkArchived();
-		h.setPrevid(getLastid());
-		h.archive(this);
-		list.add(h);
+	public void add(Comment _c) {
+		CommentImpl c = (CommentImpl)_c;
+		c.checkArchived();
+		c.setPrevid(getLastid());
+		c.archive(this);
+		list.add(c);
 	}
 	
 	private String getLastid() {
@@ -79,9 +79,9 @@ public class TopicImpl extends NodeImpl implements Topic {
 		db.append("name", name);
 		db.append("url", url);
 		db.append("status", status);
-		for (Comment _h : list) {
-			CommentImpl h = (CommentImpl)_h;
-			db.append("history", h.getHash());
+		for (Comment _c : list) {
+			CommentImpl c = (CommentImpl)_c;
+			db.append("comment", c.getHash());
 		}
 		return db.toString();
 	}

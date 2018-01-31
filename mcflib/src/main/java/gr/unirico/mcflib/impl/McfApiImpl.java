@@ -55,10 +55,10 @@ public class McfApiImpl implements McfApi {
 		return list;
 	}
 
-	public void writeTopic(Topic hl) throws IOException {
-		String id = hl.getId();
+	public void writeTopic(Topic t) throws IOException {
+		String id = t.getId();
 		try (PrintWriter pw = FileUtil.newWriter(dataDir + "/" + id + ".txt")) {
-			FileUtil.write(pw, ((TopicImpl)hl).toList());
+			FileUtil.write(pw, ((TopicImpl)t).toList());
 		} finally {
 		}
 	}
@@ -72,21 +72,21 @@ public class McfApiImpl implements McfApi {
 		}
 	}
 	
-	private void deleteTopic(Topic hl) {
-		String id = hl.getId();
+	private void deleteTopic(Topic t) {
+		String id = t.getId();
 		FileUtil.delete(dataDir + "/" + id + ".txt");
 	}
 	
-	public void archiveTopic(Topic hl) throws IOException {
+	public void archiveTopic(Topic t) throws IOException {
 		ArchiveImpl archive = readArchive();
-		archive.add((TopicImpl)hl);
+		archive.add((TopicImpl)t);
 		writeArchive(archive);
-		deleteTopic(hl);
+		deleteTopic(t);
 	}
 
-	private void writeArchive(ArchiveImpl hc) throws IOException {
+	private void writeArchive(ArchiveImpl a) throws IOException {
 		try (PrintWriter pw = FileUtil.newWriter(dataDir + "/" + "archive.txt")) {
-			FileUtil.write(pw, hc.toList());
+			FileUtil.write(pw, a.toList());
 		} finally {
 		}
 	}
