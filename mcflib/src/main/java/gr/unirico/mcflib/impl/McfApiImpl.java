@@ -48,7 +48,8 @@ public class McfApiImpl implements McfApi {
 				String id = fname.substring(0, fname.indexOf("."));
 				Topic t = readTopic(id);
 				list.add(t);
-			} catch (IOException e) {
+			} catch (Exception e) {
+				e.printStackTrace();
 				FileUtil.delete(f.getPath());
 			}
 		}
@@ -98,7 +99,9 @@ public class McfApiImpl implements McfApi {
 				List<String> list = FileUtil.read(br);
 				Object obj = ListParser.parse(list);
 				return (ArchiveImpl)obj;
-			} catch (IOException e) {
+			} catch (Exception e) {
+				e.printStackTrace();
+				FileUtil.delete(file.getPath());
 			} finally {
 			}
 		}
