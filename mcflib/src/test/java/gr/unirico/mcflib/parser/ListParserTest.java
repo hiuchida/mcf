@@ -33,7 +33,7 @@ public class ListParserTest {
 			TestCase.assertEquals(15, tlist.size());
 		}
 		{
-			TopicImpl t = (TopicImpl) gr.unirico.mcflib.parser.ListParser.parse(tlist);
+			TopicImpl t = (TopicImpl) ListParser.parse(tlist);
 			TestCase.assertEquals(1, t.getList().size());
 			
 			CommentImpl c = new CommentImpl("Comment-2");
@@ -43,7 +43,7 @@ public class ListParserTest {
 			TestCase.assertEquals(23, tlist.size());
 		}
 		{
-			TopicImpl t = (TopicImpl) gr.unirico.mcflib.parser.ListParser.parse(tlist);
+			TopicImpl t = (TopicImpl) ListParser.parse(tlist);
 			TestCase.assertEquals(2, t.getList().size());
 			
 			ArchiveImpl a = new ArchiveImpl("Archive Master");
@@ -61,10 +61,10 @@ public class ListParserTest {
 			TestCase.assertEquals(15, tlist.size());
 		}
 		{
-			ArchiveImpl a = (ArchiveImpl) gr.unirico.mcflib.parser.ListParser.parse(alist);
+			ArchiveImpl a = (ArchiveImpl) ListParser.parse(alist);
 			TestCase.assertEquals(1, a.getList().size());
 			
-			TopicImpl t = (TopicImpl) gr.unirico.mcflib.parser.ListParser.parse(tlist);
+			TopicImpl t = (TopicImpl) ListParser.parse(tlist);
 			TestCase.assertEquals(1, t.getList().size());
 			
 			a.add(t);

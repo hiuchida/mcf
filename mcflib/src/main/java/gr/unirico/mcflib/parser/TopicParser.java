@@ -12,8 +12,8 @@ public class TopicParser extends ListParser {
 		String previd = get("previd");
 		String id = get("id");
 		String name = get("name");
-		TopicImpl hl = new TopicImpl(id, name);
-		hl.setUrl(get("url"));
+		TopicImpl t = new TopicImpl(id, name);
+		t.setUrl(get("url"));
 		String status = get("status");
 		String hash;
 		while (true) {
@@ -23,7 +23,7 @@ public class TopicParser extends ListParser {
 					throwIllegalLine();
 				}
 				CommentImpl h = new CommentParser(this).parse();
-				hl.add(h);
+				t.add(h);
 			} else if (pair[0].equals("hash")) {
 				hash = pair[1];
 				break;
@@ -31,8 +31,8 @@ public class TopicParser extends ListParser {
 				throwIllegalLine();
 			}
 		}
-		hl.validate(previd, status, hash);
-		return hl;
+		t.validate(previd, status, hash);
+		return t;
 	}
 
 }

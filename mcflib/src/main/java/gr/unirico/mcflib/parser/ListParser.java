@@ -2,49 +2,41 @@ package gr.unirico.mcflib.parser;
 
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import gr.unirico.mcflib.model.ArchiveImpl;
-import gr.unirico.mcflib.model.TopicImpl;
 import gr.unirico.mcflib.model.NodeImpl;
+import gr.unirico.mcflib.model.TopicImpl;
 
 public class ListParser {
-	private static Logger logger = LogManager.getLogger(ListParser.class);
-	
 	public static NodeImpl parse(List<String> list) {
-		logger.info("parse count: " + list.size());
 		ListParserIterator itr = new ListParserIterator(list);
 		return new ListParser(itr).selectParser();
 	}
 	
 	private ListParserIterator itr;
 	
-	public ListParser(ListParserIterator itr) {
+	private ListParser(ListParserIterator itr) {
 		this.itr = itr;
 	}
 	
-	public ListParser(ListParser lp) {
+	protected ListParser(ListParser lp) {
 		this.itr = lp.itr;
 	}
 	
-	public NodeImpl selectParser() {
+	private NodeImpl selectParser() {
+		NodeImpl node = null;
 		String klass = get("class");
 		if (klass.equals(TopicImpl.class.getName())) {
-			NodeImpl node = new TopicParser(this).parse();
-			itr.checkEol();
-			return node;
+			node = new TopicParser(this).parse();
 		} else if (klass.equals(ArchiveImpl.class.getName())) {
-			NodeImpl node = new ArchiveParser(this).parse();
-			itr.checkEol();
-			return node;
+			node = new ArchiveParser(this).parse();
 		} else {
 			throwIllegalLine();
 		}
-		return null;
+		itr.checkEol();
+		return node;
 	}
 
-	public String get(String key) {
+	protected String get(String key) {
 		String[] pair = splitLine();
 		if (!pair[0].equals(key)) {
 			throwIllegalLine();
@@ -52,7 +44,7 @@ public class ListParser {
 		return pair[1];
 	}
 	
-	public String[] splitLine() {
+	protected String[] splitLine() {
 		String line = itr.nextLine();
 		int idx = line.indexOf(":");
 		if (idx < 0) {
@@ -64,7 +56,7 @@ public class ListParser {
 		return pair;
 	}
 	
-	public void throwIllegalLine() {
+	protected void throwIllegalLine() {
 		itr.throwIllegalLine();
 	}
 

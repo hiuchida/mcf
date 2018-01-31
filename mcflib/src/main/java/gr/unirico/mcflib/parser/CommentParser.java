@@ -11,13 +11,13 @@ public class CommentParser extends ListParser {
 		String previd = get("previd");
 		String id = get("id");
 		String name = get("name");
-		CommentImpl h = new CommentImpl(id, name);
+		CommentImpl c = new CommentImpl(id, name);
 		String timestamp = get("timestamp");
-		h.setUserid(get("userid"));
-		h.setComment(get("comment"));
+		c.setUserid(get("userid"));
+		c.setComment(get("comment"));
 		String hash = get("hash");
-		h.validate(previd, timestamp, hash);
-		return h;
+		c.validate(previd, timestamp, hash);
+		return c;
 	}
 
 }
