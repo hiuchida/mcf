@@ -1,7 +1,6 @@
 package gr.unirico.mcflib.api;
 
 public interface History extends Node {
-	public void setTimestamp(String timestamp);
 	public void setIpaddr(String ipaddr);
 	public void setUserid(String userid);
 	public void setDocid(String docid);

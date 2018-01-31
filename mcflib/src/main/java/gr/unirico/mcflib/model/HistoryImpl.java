@@ -3,6 +3,7 @@ package gr.unirico.mcflib.model;
 import java.util.List;
 
 import gr.unirico.mcflib.api.History;
+import gr.unirico.mcflib.util.DateUtil;
 import gr.unirico.mcflib.util.DigestBuilder;
 import gr.unirico.mcflib.util.ListBuilder;
 import gr.unirico.mcflib.util.UniqueIdUtil;
@@ -44,8 +45,9 @@ public class HistoryImpl extends NodeImpl implements History {
 		return "(" + this.id + "," + this.previd + ")";
 	}
 	
-	public void validate(String previd, String hash) {
+	public void validate(String previd, String timestamp, String hash) {
 		this.previd = previd;
+		this.timestamp = timestamp;
 		this.hash = toDigestString();
 		if (!this.hash.equals(hash)) {
 			throw new RuntimeException("Illegal hash");
@@ -68,12 +70,10 @@ public class HistoryImpl extends NodeImpl implements History {
 	
 	void setPrevid(String previd) {
 		this.previd = previd;
+		if (this.timestamp == null) {
+			this.timestamp = DateUtil.createTimestampStr();
+		}
 		this.hash = toDigestString();
-	}
-
-	public void setTimestamp(String timestamp) {
-		checkArchived();
-		this.timestamp = timestamp;
 	}
 
 	public void setIpaddr(String ipaddr) {

@@ -11,15 +11,15 @@ public class HistoryParser extends ListParser {
 		String previd = get("previd");
 		String id = get("id");
 		String name = get("name");
+		String timestamp = get("timestamp");
 		HistoryImpl h = new HistoryImpl(id, name);
-		h.setTimestamp(get("timestamp"));
 		h.setIpaddr(get("ipaddr"));
 		h.setUserid(get("userid"));
 		h.setDocid(get("docid"));
 		h.setComment(get("comment"));
 		h.setAppdata(get("appdata"));
 		String hash = get("hash");
-		h.validate(previd, hash);
+		h.validate(previd, timestamp, hash);
 		return h;
 	}
 
