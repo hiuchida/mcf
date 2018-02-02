@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -29,8 +31,9 @@ public class AccessLoggingFilter extends OncePerRequestFilter {
 
 	private void log(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String username = "anonymousUser";
-		if(request.getAttribute("username") != null){
-			username = (String)request.getAttribute("username");
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if(authentication != null){
+			username = authentication.getName();
 		}
 		String size = "0";
 		if(request.getHeader("Content-Length") != null) {

@@ -9,6 +9,8 @@ import gr.unirico.mcfapp.application.ArchiveService;
 import gr.unirico.mcfapp.application.MockService;
 import gr.unirico.mcfapp.application.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +31,10 @@ public class HomeController {
 
 	@GetMapping
 	public ModelAndView index() {
+		// ユーザ名を取得する
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		System.out.println(authentication.getName());
+
 		ModelAndView mav = new ModelAndView("v1/home");
 		mav.addObject("topics", mockService.listTopics());
 		mav.addObject("archives", mockService.listTopics());

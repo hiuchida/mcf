@@ -1,0 +1,28 @@
+<html layout:decorator="v1/common/layout" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title th:text="ログイン"></title>
+</head>
+
+<body>
+<div class="container" layout:fragment="layout-content">
+	<div th:if="${error}" class="alert alert-danger fixed-top" role="alert">
+		<strong>ログインに失敗しました: </strong>ユーザが存在しないか、パスワードが間違っています。
+	</div>
+
+	<h1>ログイン</h1>
+	<div class="jumbotron" style="padding:32px;">
+		<form action="" th:action="@{/login}" method="post" name="login">
+			<div class="form-group">
+				<label for="uid"><strong>ユーザID</strong></label>
+				<input type="text" class="form-control" placeholder="ユーザID" name="uid" id="uid" required="true"/>
+			</div>
+			<div class="form-group">
+				<label for="password"><strong>パスワード</strong></label>
+				<input type="password" class="form-control" placeholder="パスワード" name="password" id="password" required="true"/>
+			</div>
+			<button class="btn btn-primary" type="submit">ログイン</button>
+		</form>
+	</div>
+</div>
+</body>
+</html>
