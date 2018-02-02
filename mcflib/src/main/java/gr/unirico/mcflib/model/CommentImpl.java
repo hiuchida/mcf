@@ -9,7 +9,7 @@ import gr.unirico.mcflib.util.ListBuilder;
 import gr.unirico.mcflib.util.UniqueIdUtil;
 
 public class CommentImpl extends NodeImpl implements Comment {
-	private String timestamp;
+	private String timestamp = "";
 	private String userid = "";
 	private String comment = "";
 
@@ -61,7 +61,7 @@ public class CommentImpl extends NodeImpl implements Comment {
 	
 	void setPrevid(String previd) {
 		this.previd = previd;
-		if (this.timestamp == null) {
+		if (this.timestamp.length() == 0) {
 			this.timestamp = DateUtil.createTimestampStr();
 		}
 		this.hash = toDigestString();

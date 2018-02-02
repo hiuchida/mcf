@@ -13,6 +13,7 @@ public class TopicParser extends ListParser {
 		String id = get("id");
 		String name = get("name");
 		TopicImpl t = new TopicImpl(id, name);
+		String timestamp = get("timestamp");
 		t.setUrl(get("url"));
 		String status = get("status");
 		String hash;
@@ -31,7 +32,7 @@ public class TopicParser extends ListParser {
 				throwIllegalLine();
 			}
 		}
-		t.validate(previd, status, hash);
+		t.validate(previd, timestamp, status, hash);
 		return t;
 	}
 

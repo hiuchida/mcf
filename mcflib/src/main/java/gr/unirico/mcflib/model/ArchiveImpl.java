@@ -8,17 +8,16 @@ import gr.unirico.mcflib.util.ListBuilder;
 import gr.unirico.mcflib.util.UniqueIdUtil;
 
 public class ArchiveImpl extends NodeImpl {
-	private List<TopicImpl> list;
+	private List<TopicImpl> list = new ArrayList<>();
 
 	public ArchiveImpl(String name) {
 		this(UniqueIdUtil.generate(), name);
 	}
-	
+
 	public ArchiveImpl(String id, String name) {
 		super(id, name);
-		this.list = new ArrayList<>();
 	}
-	
+
 	public List<String> toList() {
 		this.hash = toDigestString();
 		ListBuilder lb = new ListBuilder(ArchiveImpl.class);

@@ -5,6 +5,7 @@ import java.util.List;
 
 import gr.unirico.mcflib.api.Comment;
 import gr.unirico.mcflib.api.Topic;
+import gr.unirico.mcflib.util.DateUtil;
 import gr.unirico.mcflib.util.DigestBuilder;
 import gr.unirico.mcflib.util.ListBuilder;
 import gr.unirico.mcflib.util.UniqueIdUtil;
@@ -13,26 +14,26 @@ public class TopicImpl extends NodeImpl implements Topic {
 	private static final String RUNNING = "running";
 	private static final String COMPLETE = "complete";
 
+	private String timestamp = "";
 	private String url = "";
-	private String status;
-	private List<Comment> list;
+	private String status = RUNNING;
+	private List<Comment> list = new ArrayList<>();
 
 	public TopicImpl(String name) {
 		this(UniqueIdUtil.generate(), name);
 	}
-	
+
 	public TopicImpl(String id, String name) {
 		super(id, name);
-		this.status = RUNNING;
-		this.list = new ArrayList<>();
 	}
-	
+
 	public List<String> toList() {
 		this.hash = toDigestString();
 		ListBuilder lb = new ListBuilder(TopicImpl.class);
 		lb.append("previd", previd);
 		lb.append("id", id);
 		lb.append("name", name);
+		lb.append("timestamp", timestamp);
 		lb.append("url", url);
 		lb.append("status", status);
 		for (Comment _c : list) {
@@ -63,8 +64,9 @@ public class TopicImpl extends NodeImpl implements Topic {
 		return list.get(list.size() - 1).getId();
 	}
 	
-	public void validate(String previd, String status, String hash) {
+	public void validate(String previd, String timestamp, String status, String hash) {
 		this.previd = previd;
+		this.timestamp = timestamp;
 		this.status = status;
 		this.hash = toDigestString();
 		if (!this.hash.equals(hash)) {
@@ -77,6 +79,7 @@ public class TopicImpl extends NodeImpl implements Topic {
 		db.append("previd", previd);
 		db.append("id", id);
 		db.append("name", name);
+		db.append("timestamp", timestamp);
 		db.append("url", url);
 		db.append("status", status);
 		for (Comment _c : list) {
@@ -88,12 +91,19 @@ public class TopicImpl extends NodeImpl implements Topic {
 	
 	void setPrevid(String previd) {
 		this.previd = previd;
+		if (this.timestamp.length() == 0) {
+			this.timestamp = DateUtil.createTimestampStr();
+		}
 		this.status = COMPLETE;
 		this.hash = toDigestString();
 	}
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public String getTimestamp() {
+		return timestamp;
 	}
 
 	public String getUrl() {
