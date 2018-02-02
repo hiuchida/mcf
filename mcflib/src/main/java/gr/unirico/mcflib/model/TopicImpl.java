@@ -27,7 +27,7 @@ public class TopicImpl extends NodeImpl implements Topic {
 		super(id, name);
 	}
 
-	public List<String> toList() {
+	public synchronized List<String> toList() {
 		this.hash = toDigestString();
 		ListBuilder lb = new ListBuilder(TopicImpl.class);
 		lb.append("previd", previd);
@@ -49,7 +49,7 @@ public class TopicImpl extends NodeImpl implements Topic {
 		return this.previd + "," + this.status + "," + this.list.toString();
 	}
 	
-	public void add(Comment _c) {
+	public synchronized void add(Comment _c) {
 		CommentImpl c = (CommentImpl)_c;
 		c.checkArchived();
 		c.setPrevid(getLastid());
@@ -57,14 +57,14 @@ public class TopicImpl extends NodeImpl implements Topic {
 		list.add(c);
 	}
 	
-	private String getLastid() {
+	private synchronized String getLastid() {
 		if (list.size() == 0) {
 			return FIRSTID;
 		}
 		return list.get(list.size() - 1).getId();
 	}
 	
-	public void validate(String previd, String timestamp, String status, String hash) {
+	public synchronized void validate(String previd, String timestamp, String status, String hash) {
 		this.previd = previd;
 		this.timestamp = timestamp;
 		this.status = status;
@@ -74,7 +74,7 @@ public class TopicImpl extends NodeImpl implements Topic {
 		}
 	}
 
-	private String toDigestString() {
+	private synchronized String toDigestString() {
 		DigestBuilder db = new DigestBuilder(TopicImpl.class);
 		db.append("previd", previd);
 		db.append("id", id);
@@ -89,7 +89,7 @@ public class TopicImpl extends NodeImpl implements Topic {
 		return db.toString();
 	}
 	
-	void setPrevid(String previd) {
+	synchronized void setPrevid(String previd) {
 		this.previd = previd;
 		if (this.timestamp.length() == 0) {
 			this.timestamp = DateUtil.createTimestampStr();
@@ -98,7 +98,7 @@ public class TopicImpl extends NodeImpl implements Topic {
 		this.hash = toDigestString();
 	}
 
-	public void setUrl(String url) {
+	public synchronized void setUrl(String url) {
 		this.url = url;
 	}
 

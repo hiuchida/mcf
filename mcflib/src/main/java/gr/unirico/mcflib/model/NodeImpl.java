@@ -18,12 +18,12 @@ public abstract class NodeImpl implements Node {
 		this.name = name;
 	}
 	
-	protected void archive(NodeImpl parent) {
+	protected synchronized void archive(NodeImpl parent) {
 		this.bArchived = true;
 		this.parent = parent;
 	}
 	
-	protected void checkArchived() {
+	protected synchronized void checkArchived() {
 		if (bArchived) {
 			throw new RuntimeException("archived");
 		}

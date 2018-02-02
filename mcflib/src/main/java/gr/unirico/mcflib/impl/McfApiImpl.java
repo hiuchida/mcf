@@ -36,7 +36,7 @@ public class McfApiImpl implements McfApi {
 		return new TopicImpl(name);
 	}
 
-	public List<Topic> getTopicList() {
+	public synchronized List<Topic> getTopicList() {
 		List<Topic> list = new ArrayList<>();
 		List<File> flist = FileUtil.filelist(dataDir);
 		for (File f : flist) {
@@ -56,7 +56,7 @@ public class McfApiImpl implements McfApi {
 		return list;
 	}
 
-	public void writeTopic(Topic t) throws IOException {
+	public synchronized void writeTopic(Topic t) throws IOException {
 		String id = t.getId();
 		try (PrintWriter pw = FileUtil.newWriter(dataDir + "/" + id + ".txt")) {
 			FileUtil.write(pw, ((TopicImpl)t).toList());
@@ -64,7 +64,7 @@ public class McfApiImpl implements McfApi {
 		}
 	}
 
-	public Topic readTopic(String id) throws IOException {
+	public synchronized Topic readTopic(String id) throws IOException {
 		try (BufferedReader br = FileUtil.newReader(dataDir + "/" + id + ".txt")) {
 			List<String> list = FileUtil.read(br);
 			Object obj = ListParser.parse(list);
@@ -73,26 +73,26 @@ public class McfApiImpl implements McfApi {
 		}
 	}
 	
-	private void deleteTopic(Topic t) {
+	private synchronized void deleteTopic(Topic t) {
 		String id = t.getId();
 		FileUtil.delete(dataDir + "/" + id + ".txt");
 	}
 	
-	public void archiveTopic(Topic t) throws IOException {
+	public synchronized void archiveTopic(Topic t) throws IOException {
 		ArchiveImpl archive = readArchive();
 		archive.add((TopicImpl)t);
 		writeArchive(archive);
 		deleteTopic(t);
 	}
 
-	private void writeArchive(ArchiveImpl a) throws IOException {
+	private synchronized void writeArchive(ArchiveImpl a) throws IOException {
 		try (PrintWriter pw = FileUtil.newWriter(dataDir + "/" + "archive.txt")) {
 			FileUtil.write(pw, a.toList());
 		} finally {
 		}
 	}
 
-	private ArchiveImpl readArchive() {
+	private synchronized ArchiveImpl readArchive() {
 		File file = new File(dataDir + "/" + "archive.txt");
 		if (file.exists()) {
 			try (BufferedReader br = FileUtil.newReader(file.getPath())) {

@@ -21,7 +21,7 @@ public class CommentImpl extends NodeImpl implements Comment {
 		super(id, name);
 	}
 
-	public List<String> toList() {
+	public synchronized List<String> toList() {
 		this.hash = toDigestString();
 		ListBuilder lb = new ListBuilder(CommentImpl.class);
 		lb.append("previd", previd);
@@ -39,7 +39,7 @@ public class CommentImpl extends NodeImpl implements Comment {
 		return "(" + this.id + "," + this.previd + ")";
 	}
 	
-	public void validate(String previd, String timestamp, String hash) {
+	public synchronized void validate(String previd, String timestamp, String hash) {
 		this.previd = previd;
 		this.timestamp = timestamp;
 		this.hash = toDigestString();
@@ -48,7 +48,7 @@ public class CommentImpl extends NodeImpl implements Comment {
 		}
 	}
 
-	private String toDigestString() {
+	private synchronized String toDigestString() {
 		DigestBuilder db = new DigestBuilder(CommentImpl.class);
 		db.append("previd", previd);
 		db.append("id", id);
@@ -59,7 +59,7 @@ public class CommentImpl extends NodeImpl implements Comment {
 		return db.toString();
 	}
 	
-	void setPrevid(String previd) {
+	synchronized void setPrevid(String previd) {
 		this.previd = previd;
 		if (this.timestamp.length() == 0) {
 			this.timestamp = DateUtil.createTimestampStr();
@@ -67,12 +67,12 @@ public class CommentImpl extends NodeImpl implements Comment {
 		this.hash = toDigestString();
 	}
 
-	public void setUserid(String userid) {
+	public synchronized void setUserid(String userid) {
 		checkArchived();
 		this.userid = userid;
 	}
 
-	public void setComment(String comment) {
+	public synchronized void setComment(String comment) {
 		checkArchived();
 		this.comment = comment;
 	}

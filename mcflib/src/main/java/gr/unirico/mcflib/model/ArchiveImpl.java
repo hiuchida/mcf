@@ -18,7 +18,7 @@ public class ArchiveImpl extends NodeImpl {
 		super(id, name);
 	}
 
-	public List<String> toList() {
+	public synchronized List<String> toList() {
 		this.hash = toDigestString();
 		ListBuilder lb = new ListBuilder(ArchiveImpl.class);
 		lb.append("previd", previd);
@@ -36,21 +36,21 @@ public class ArchiveImpl extends NodeImpl {
 		return this.previd + "," + this.list.toString();
 	}
 	
-	public void add(TopicImpl t) {
+	public synchronized void add(TopicImpl t) {
 		t.checkArchived();
 		t.setPrevid(getLastid());
 		t.archive(this);
 		list.add(t);
 	}
 	
-	private String getLastid() {
+	private synchronized String getLastid() {
 		if (list.size() == 0) {
 			return FIRSTID;
 		}
 		return list.get(list.size() - 1).getId();
 	}
 	
-	public void validate(String previd, String hash) {
+	public synchronized void validate(String previd, String hash) {
 		this.previd = previd;
 		this.hash = toDigestString();
 		if (!this.hash.equals(hash)) {
@@ -58,7 +58,7 @@ public class ArchiveImpl extends NodeImpl {
 		}
 	}
 
-	private String toDigestString() {
+	private synchronized String toDigestString() {
 		DigestBuilder db = new DigestBuilder(TopicImpl.class);
 		db.append("previd", previd);
 		db.append("id", id);
@@ -69,7 +69,7 @@ public class ArchiveImpl extends NodeImpl {
 		return db.toString();
 	}
 	
-	void setPrevid(String previd) {
+	synchronized void setPrevid(String previd) {
 		this.previd = previd;
 		this.hash = toDigestString();
 	}
