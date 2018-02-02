@@ -99,6 +99,7 @@ public class TopicImpl extends NodeImpl implements Topic {
 	}
 
 	public synchronized void setUrl(String url) {
+		checkArchived();
 		this.url = url;
 	}
 
