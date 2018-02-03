@@ -7,7 +7,7 @@ import gr.unirico.mcflib.model.NodeImpl;
 import gr.unirico.mcflib.model.TopicImpl;
 
 public class ListParser {
-	public static NodeImpl parse(List<String> list) {
+	public static synchronized NodeImpl parse(List<String> list) {
 		ListParserIterator itr = new ListParserIterator(list);
 		return new ListParser(itr).selectParser();
 	}

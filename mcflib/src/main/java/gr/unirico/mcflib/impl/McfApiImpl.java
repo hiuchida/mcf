@@ -83,7 +83,7 @@ public class McfApiImpl implements McfApi {
 		}
 	}
 	
-	private synchronized void deleteTopic(Topic t) {
+	private void deleteTopic(Topic t) {
 		String id = t.getId();
 		FileUtil.delete(dataDir + "/" + id + ".txt");
 	}
@@ -91,19 +91,19 @@ public class McfApiImpl implements McfApi {
 	public synchronized void archiveTopic(Topic t) throws IOException {
 		logger.info("archiveTopic: {}", t.getId());
 		ArchiveImpl archive = readArchive();
-		archive.add((TopicImpl)t);
+		archive.add(t);
 		writeArchive(archive);
 		deleteTopic(t);
 	}
 
-	private synchronized void writeArchive(ArchiveImpl a) throws IOException {
+	private void writeArchive(ArchiveImpl a) throws IOException {
 		try (PrintWriter pw = FileUtil.newWriter(dataDir + "/" + "archive.txt")) {
 			FileUtil.write(pw, a.toList());
 		} finally {
 		}
 	}
 
-	private synchronized ArchiveImpl readArchive() {
+	private ArchiveImpl readArchive() {
 		File file = new File(dataDir + "/" + "archive.txt");
 		if (file.exists()) {
 			try (BufferedReader br = FileUtil.newReader(file.getPath())) {

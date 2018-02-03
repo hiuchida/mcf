@@ -6,28 +6,21 @@ import gr.unirico.mcflib.api.Comment;
 import gr.unirico.mcflib.util.DateUtil;
 import gr.unirico.mcflib.util.DigestBuilder;
 import gr.unirico.mcflib.util.ListBuilder;
-import gr.unirico.mcflib.util.UniqueIdUtil;
 
 public class CommentImpl extends NodeImpl implements Comment {
-	private String timestamp = "";
 	private String userid = "";
 	private String comment = "";
 
 	public CommentImpl(String name) {
-		this(UniqueIdUtil.generate(), name);
+		super(name);
 	}
 
-	public CommentImpl(String id, String name) {
-		super(id, name);
+	public CommentImpl(String previd, String id, String name, String timestamp) {
+		super(previd, id, name, timestamp);
 	}
 
-	public synchronized List<String> toList() {
-		this.hash = toDigestString();
-		ListBuilder lb = new ListBuilder(CommentImpl.class);
-		lb.append("previd", previd);
-		lb.append("id", id);
-		lb.append("name", name);
-		lb.append("timestamp", timestamp);
+	public List<String> toList() {
+		ListBuilder lb = newListBuilder(CommentImpl.class);
 		lb.append("userid", userid);
 		lb.append("comment", comment);
 		lb.append("hash", hash);
@@ -35,36 +28,29 @@ public class CommentImpl extends NodeImpl implements Comment {
 	}
 	
 	@Override
-	public String toString() {
-		return "(" + this.id + "," + this.previd + ")";
-	}
-	
-	public synchronized void validate(String previd, String timestamp, String hash) {
-		this.previd = previd;
-		this.timestamp = timestamp;
-		this.hash = toDigestString();
-		if (!this.hash.equals(hash)) {
-			throw new RuntimeException("Illegal hash");
-		}
-	}
-
-	private synchronized String toDigestString() {
-		DigestBuilder db = new DigestBuilder(CommentImpl.class);
-		db.append("previd", previd);
-		db.append("id", id);
-		db.append("name", name);
-		db.append("timestamp", timestamp);
+	protected String toDigestString() {
+		DigestBuilder db = newDigestBuilder(CommentImpl.class);
 		db.append("userid", userid);
 		db.append("comment", comment);
 		return db.toString();
 	}
 	
-	synchronized void setPrevid(String previd) {
-		this.previd = previd;
-		if (this.timestamp.length() == 0) {
+	@Override
+	public String toString() {
+		return "(" + this.id + "," + this.previd + ")";
+	}
+	
+	void archive(boolean bValidate, NodeImpl parent, String previd) {
+		checkArchived();
+		if (bValidate) {
+			if (!this.previd.equals(previd)) {
+				throw new RuntimeException("Illegal previd");
+			}
+		} else {
+			this.previd = previd;
 			this.timestamp = DateUtil.createTimestampStr();
 		}
-		this.hash = toDigestString();
+		setArchived(this);
 	}
 
 	public synchronized void setUserid(String userid) {

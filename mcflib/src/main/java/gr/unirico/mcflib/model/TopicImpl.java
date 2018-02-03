@@ -8,34 +8,29 @@ import gr.unirico.mcflib.api.Topic;
 import gr.unirico.mcflib.util.DateUtil;
 import gr.unirico.mcflib.util.DigestBuilder;
 import gr.unirico.mcflib.util.ListBuilder;
-import gr.unirico.mcflib.util.UniqueIdUtil;
 
 public class TopicImpl extends NodeImpl implements Topic {
 	private static final String RUNNING = "running";
 	private static final String COMPLETE = "complete";
 
-	private String timestamp = "";
 	private String url = "";
-	private String status = RUNNING;
+	private String status;
 	private List<Comment> list = new ArrayList<>();
 
 	public TopicImpl(String name) {
-		this(UniqueIdUtil.generate(), name);
+		super(name);
+		this.status = RUNNING;
 	}
 
-	public TopicImpl(String id, String name) {
-		super(id, name);
+	public TopicImpl(String previd, String id, String name, String timestamp, String status) {
+		super(previd, id, name, timestamp);
+		this.status = status;
 	}
 
-	public synchronized List<String> toList() {
-		this.hash = toDigestString();
-		ListBuilder lb = new ListBuilder(TopicImpl.class);
-		lb.append("previd", previd);
-		lb.append("id", id);
-		lb.append("name", name);
-		lb.append("timestamp", timestamp);
-		lb.append("url", url);
+	public List<String> toList() {
+		ListBuilder lb = newListBuilder(TopicImpl.class);
 		lb.append("status", status);
+		lb.append("url", url);
 		for (Comment _c : list) {
 			CommentImpl c = (CommentImpl)_c;
 			lb.append(c.toList());
@@ -45,43 +40,10 @@ public class TopicImpl extends NodeImpl implements Topic {
 	}
 	
 	@Override
-	public String toString() {
-		return this.previd + "," + this.status + "," + this.list.toString();
-	}
-	
-	public synchronized void add(Comment _c) {
-		CommentImpl c = (CommentImpl)_c;
-		c.checkArchived();
-		c.setPrevid(getLastid());
-		c.archive(this);
-		list.add(c);
-	}
-	
-	private synchronized String getLastid() {
-		if (list.size() == 0) {
-			return FIRSTID;
-		}
-		return list.get(list.size() - 1).getId();
-	}
-	
-	public synchronized void validate(String previd, String timestamp, String status, String hash) {
-		this.previd = previd;
-		this.timestamp = timestamp;
-		this.status = status;
-		this.hash = toDigestString();
-		if (!this.hash.equals(hash)) {
-			throw new RuntimeException("Illegal hash");
-		}
-	}
-
-	private synchronized String toDigestString() {
-		DigestBuilder db = new DigestBuilder(TopicImpl.class);
-		db.append("previd", previd);
-		db.append("id", id);
-		db.append("name", name);
-		db.append("timestamp", timestamp);
-		db.append("url", url);
+	protected String toDigestString() {
+		DigestBuilder db = newDigestBuilder(TopicImpl.class);
 		db.append("status", status);
+		db.append("url", url);
 		for (Comment _c : list) {
 			CommentImpl c = (CommentImpl)_c;
 			db.append("comment", c.getHash());
@@ -89,13 +51,42 @@ public class TopicImpl extends NodeImpl implements Topic {
 		return db.toString();
 	}
 	
-	synchronized void setPrevid(String previd) {
-		this.previd = previd;
-		if (this.timestamp.length() == 0) {
+	@Override
+	public String toString() {
+		return this.previd + "," + this.status + "," + this.list.toString();
+	}
+	
+	public synchronized void add(Comment _c) {
+		CommentImpl c = (CommentImpl)_c;
+		c.archive(false, this, getLastid());
+		list.add(c);
+	}
+	
+	public void addValidate(Comment _c) {
+		CommentImpl c = (CommentImpl)_c;
+		c.archive(true, this, getLastid());
+		list.add(c);
+	}
+	
+	private String getLastid() {
+		if (list.size() == 0) {
+			return FIRSTID;
+		}
+		return list.get(list.size() - 1).getId();
+	}
+	
+	void archive(boolean bValidate, NodeImpl parent, String previd) {
+		checkArchived();
+		if (bValidate) {
+			if (!this.previd.equals(previd)) {
+				throw new RuntimeException("Illegal previd");
+			}
+		} else {
+			this.previd = previd;
 			this.timestamp = DateUtil.createTimestampStr();
 		}
 		this.status = COMPLETE;
-		this.hash = toDigestString();
+		setArchived(this);
 	}
 
 	public synchronized void setUrl(String url) {

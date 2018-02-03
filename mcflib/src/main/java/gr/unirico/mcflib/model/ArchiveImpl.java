@@ -3,27 +3,24 @@ package gr.unirico.mcflib.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import gr.unirico.mcflib.api.Topic;
+import gr.unirico.mcflib.util.DateUtil;
 import gr.unirico.mcflib.util.DigestBuilder;
 import gr.unirico.mcflib.util.ListBuilder;
-import gr.unirico.mcflib.util.UniqueIdUtil;
 
 public class ArchiveImpl extends NodeImpl {
 	private List<TopicImpl> list = new ArrayList<>();
 
 	public ArchiveImpl(String name) {
-		this(UniqueIdUtil.generate(), name);
+		super(name);
 	}
 
-	public ArchiveImpl(String id, String name) {
-		super(id, name);
+	public ArchiveImpl(String previd, String id, String name, String timestamp) {
+		super(previd, id, name, timestamp);
 	}
 
-	public synchronized List<String> toList() {
-		this.hash = toDigestString();
-		ListBuilder lb = new ListBuilder(ArchiveImpl.class);
-		lb.append("previd", previd);
-		lb.append("id", id);
-		lb.append("name", name);
+	public List<String> toList() {
+		ListBuilder lb = newListBuilder(ArchiveImpl.class);
 		for (TopicImpl t : list) {
 			lb.append(t.toList());
 		}
@@ -32,14 +29,28 @@ public class ArchiveImpl extends NodeImpl {
 	}
 	
 	@Override
+	protected synchronized String toDigestString() {
+		DigestBuilder db = newDigestBuilder(ArchiveImpl.class);
+		for (TopicImpl t : list) {
+			db.append("topic", t.getHash());
+		}
+		return db.toString();
+	}
+	
+	@Override
 	public String toString() {
 		return this.previd + "," + this.list.toString();
 	}
 	
-	public synchronized void add(TopicImpl t) {
-		t.checkArchived();
-		t.setPrevid(getLastid());
-		t.archive(this);
+	public synchronized void add(Topic _t) {
+		TopicImpl t = (TopicImpl)_t;
+		t.archive(false, this, getLastid());
+		list.add(t);
+	}
+	
+	public void addValidate(Topic _t) {
+		TopicImpl t = (TopicImpl)_t;
+		t.archive(true, this, getLastid());
 		list.add(t);
 	}
 	
@@ -50,28 +61,17 @@ public class ArchiveImpl extends NodeImpl {
 		return list.get(list.size() - 1).getId();
 	}
 	
-	public synchronized void validate(String previd, String hash) {
-		this.previd = previd;
-		this.hash = toDigestString();
-		if (!this.hash.equals(hash)) {
-			throw new RuntimeException("Illegal hash");
+	void archive(boolean bValidate, NodeImpl parent, String previd) {
+		checkArchived();
+		if (bValidate) {
+			if (!this.previd.equals(previd)) {
+				throw new RuntimeException("Illegal previd");
+			}
+		} else {
+			this.previd = previd;
+			this.timestamp = DateUtil.createTimestampStr();
 		}
-	}
-
-	private synchronized String toDigestString() {
-		DigestBuilder db = new DigestBuilder(TopicImpl.class);
-		db.append("previd", previd);
-		db.append("id", id);
-		db.append("name", name);
-		for (TopicImpl t : list) {
-			db.append("topic", t.getHash());
-		}
-		return db.toString();
-	}
-	
-	synchronized void setPrevid(String previd) {
-		this.previd = previd;
-		this.hash = toDigestString();
+		setArchived(this);
 	}
 
 	public List<TopicImpl> getList() {

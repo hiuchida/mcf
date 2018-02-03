@@ -12,7 +12,8 @@ public class ArchiveParser extends ListParser {
 		String previd = get("previd");
 		String id = get("id");
 		String name = get("name");
-		ArchiveImpl a = new ArchiveImpl(id, name);
+		String timestamp = get("timestamp");
+		ArchiveImpl a = new ArchiveImpl(previd, id, name, timestamp);
 		String hash;
 		while (true) {
 			String[] pair = splitLine();
@@ -20,8 +21,8 @@ public class ArchiveParser extends ListParser {
 				if (!pair[1].equals(TopicImpl.class.getName())) {
 					throwIllegalLine();
 				}
-				TopicImpl hl = new TopicParser(this).parse();
-				a.add(hl);
+				TopicImpl t = new TopicParser(this).parse();
+				a.addValidate(t);
 			} else if (pair[0].equals("hash")) {
 				hash = pair[1];
 				break;
@@ -29,7 +30,7 @@ public class ArchiveParser extends ListParser {
 				throwIllegalLine();
 			}
 		}
-		a.validate(previd, hash);
+		a.validate(hash);
 		return a;
 	}
 

@@ -50,7 +50,7 @@ public class ListParserTest {
 			a.add(t);
 			
 			alist = a.toList();
-			TestCase.assertEquals(29, alist.size());
+			TestCase.assertEquals(30, alist.size());
 		}
 		{
 			TopicImpl t = new TopicImpl("Thread-2");
@@ -69,7 +69,7 @@ public class ListParserTest {
 			
 			a.add(t);
 			alist = a.toList();
-			TestCase.assertEquals(45, alist.size());
+			TestCase.assertEquals(46, alist.size());
 		}
 	}
 
