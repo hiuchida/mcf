@@ -65,7 +65,7 @@
 					<pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS Z}] %X{remoteHost}->${HOSTNAME} %X{username} %X{method} %X{uri} %X{status} %X{statusPhrase} %X{requestLength} "%X{UA}"%n</pattern>
 				</encoder>
 				<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-					<fileNamePattern>${localLoggingBaseDir}/macfapp_access_%d{yyyyMMdd}.log.zip</fileNamePattern>
+					<fileNamePattern>${localLoggingBaseDir}/mcfapp_access_%d{yyyyMMdd}.log.zip</fileNamePattern>
 					<maxHistory>${localLoggingMaxHistory}</maxHistory>
 				</rollingPolicy>
 			</appender>
@@ -76,7 +76,7 @@
 					<pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-7([%level]) [user=%X{user}] %logger{36} - %msg%n</pattern>
 				</encoder>
 				<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-					<fileNamePattern>${localLoggingBaseDir}/macfapp_error_%d{yyyyMMdd}.log.zip</fileNamePattern>
+					<fileNamePattern>${localLoggingBaseDir}/mcfapp_error_%d{yyyyMMdd}.log.zip</fileNamePattern>
 					<maxHistory>${localLoggingMaxHistory}</maxHistory>
 				</rollingPolicy>
 				<filter class="ch.qos.logback.classic.filter.LevelFilter">
@@ -92,7 +92,7 @@
 					<pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-7([%level]) [user=%X{user}] %logger{36} - %msg%n</pattern>
 				</encoder>
 				<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-					<fileNamePattern>${localLoggingBaseDir}/macfapp_%d{yyyyMMdd}.log.zip</fileNamePattern>
+					<fileNamePattern>${localLoggingBaseDir}/mcfapp_%d{yyyyMMdd}.log.zip</fileNamePattern>
 					<maxHistory>${localLoggingMaxHistory}</maxHistory>
 				</rollingPolicy>
 			</appender>
@@ -114,7 +114,7 @@
 		</if>
 	</root>
 
-	<logger name="macfapp" additivity="false">
+	<logger name="gr.unirico" additivity="false">
 		<appender-ref ref="STDOUT_WithContextUser" />
 		<if condition='${remoteLoggingEnabled}'>
 			<then>
