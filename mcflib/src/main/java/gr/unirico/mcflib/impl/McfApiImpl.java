@@ -7,6 +7,9 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import gr.unirico.mcflib.api.Comment;
 import gr.unirico.mcflib.api.McfApi;
 import gr.unirico.mcflib.api.Topic;
@@ -17,11 +20,13 @@ import gr.unirico.mcflib.parser.ListParser;
 import gr.unirico.mcflib.util.FileUtil;
 
 public class McfApiImpl implements McfApi {
+	private static Logger logger = LoggerFactory.getLogger(McfApiImpl.class);
 	private String dataDir;
 	
 	public McfApiImpl(String dataDir) {
 		this.dataDir = dataDir;
 		FileUtil.mkdir(dataDir);
+		logger.info("McfApiImpl: {}", dataDir);
 	}
 	
 	public String getDataDir() {
@@ -29,10 +34,12 @@ public class McfApiImpl implements McfApi {
 	}
 
 	public Comment newComment(String name) {
+		logger.info("newComment: {}", name);
 		return new CommentImpl(name);
 	}
 
 	public Topic newTopic(String name) {
+		logger.info("newTopic: {}", name);
 		return new TopicImpl(name);
 	}
 
@@ -53,11 +60,13 @@ public class McfApiImpl implements McfApi {
 				FileUtil.delete(f.getPath());
 			}
 		}
+		logger.info("getTopicList: {}", list.size());
 		return list;
 	}
 
 	public synchronized void writeTopic(Topic t) throws IOException {
 		String id = t.getId();
+		logger.info("writeTopic: {}", id);
 		try (PrintWriter pw = FileUtil.newWriter(dataDir + "/" + id + ".txt")) {
 			FileUtil.write(pw, ((TopicImpl)t).toList());
 		} finally {
@@ -65,6 +74,7 @@ public class McfApiImpl implements McfApi {
 	}
 
 	public synchronized Topic readTopic(String id) throws IOException {
+		logger.info("readTopic: {}", id);
 		try (BufferedReader br = FileUtil.newReader(dataDir + "/" + id + ".txt")) {
 			List<String> list = FileUtil.read(br);
 			Object obj = ListParser.parse(list);
@@ -79,6 +89,7 @@ public class McfApiImpl implements McfApi {
 	}
 	
 	public synchronized void archiveTopic(Topic t) throws IOException {
+		logger.info("archiveTopic: {}", t.getId());
 		ArchiveImpl archive = readArchive();
 		archive.add((TopicImpl)t);
 		writeArchive(archive);
