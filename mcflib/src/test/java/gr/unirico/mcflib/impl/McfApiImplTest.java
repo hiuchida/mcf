@@ -5,57 +5,65 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import gr.unirico.mcflib.api.Comment;
 import gr.unirico.mcflib.api.Topic;
+import gr.unirico.mcflib.util.FileUtil;
 import junit.framework.TestCase;
 
 public class McfApiImplTest {
+	private static Logger logger = LoggerFactory.getLogger(McfApiImplTest.class);
+	private McfApiImpl a;
+	
 	@Before
 	public void setUp() throws Exception {
+		a = new McfApiImpl("data");
+		String dir = a.getDataDir();
+		int cnt = FileUtil.deleteFiles(dir);
+		logger.debug("setUp: deleteFiles={}", cnt);
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		String dir = a.getDataDir();
+		int cnt = FileUtil.deleteFiles(dir);
+		logger.debug("tearDown: deleteFiles={}", cnt);
 	}
 
 	@Test
-	public void testNew() throws Exception {
-		McfApiImpl a = new McfApiImpl("data");
-		TestCase.assertEquals("data", a.getDataDir());
+	public void testGetDataDir() throws Exception {
+		McfApiImpl api = new McfApiImpl("data");
+		TestCase.assertEquals("data", api.getDataDir());
 	}
 
 	@Test
 	public void testNewComment() throws Exception {
-		McfApiImpl a = new McfApiImpl("data");
 		Comment c = a.newComment("test");
 		TestCase.assertEquals("test", c.getName());
 	}
 
 	@Test
 	public void testNewTopic() throws Exception {
-		McfApiImpl a = new McfApiImpl("data");
 		Topic t = a.newTopic("test");
 		TestCase.assertEquals("test", t.getName());
 	}
 
 	@Test
 	public void testGetTopicList() throws Exception {
-		McfApiImpl a = new McfApiImpl("data");
 		List<Topic> l = a.getTopicList();
 		TestCase.assertEquals(0, l.size());
 	}
 
 	@Test
 	public void testGetArchivedTopicList() throws Exception {
-		McfApiImpl a = new McfApiImpl("data");
 		List<Topic> l = a.getArchivedTopicList();
-		TestCase.assertNotNull(l);
+		TestCase.assertEquals(0, l.size());
 	}
 
 	@Test
 	public void testArchiveTopic() throws Exception {
-		McfApiImpl a = new McfApiImpl("data");
 		Topic t = a.newTopic("test");
 		a.writeTopic(t);
 		Topic t2 = a.readTopic(t.getId());
