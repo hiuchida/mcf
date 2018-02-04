@@ -63,10 +63,6 @@ public class CommentImpl extends NodeImpl implements Comment {
 		this.comment = comment;
 	}
 
-	public String getTimestamp() {
-		return timestamp;
-	}
-
 	public String getUserid() {
 		return userid;
 	}

@@ -85,6 +85,10 @@ public abstract class NodeImpl implements Node {
 		return name;
 	}
 
+	public String getTimestamp() {
+		return timestamp;
+	}
+
 	public String getHash() {
 		return hash;
 	}

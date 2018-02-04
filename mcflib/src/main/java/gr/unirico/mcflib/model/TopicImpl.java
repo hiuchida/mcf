@@ -13,8 +13,8 @@ public class TopicImpl extends NodeImpl implements Topic {
 	private static final String RUNNING = "running";
 	private static final String COMPLETE = "complete";
 
-	private String url = "";
 	private String status;
+	private String url = "";
 	private List<Comment> list = new ArrayList<>();
 
 	public TopicImpl(String name) {
@@ -92,10 +92,6 @@ public class TopicImpl extends NodeImpl implements Topic {
 	public synchronized void setUrl(String url) {
 		checkArchived();
 		this.url = url;
-	}
-
-	public String getTimestamp() {
-		return timestamp;
 	}
 
 	public String getUrl() {
