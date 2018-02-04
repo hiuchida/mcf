@@ -7,8 +7,13 @@
 
 package gr.unirico.mcfapp.application;
 
-import java.util.List;
+import java.io.IOException;
+import java.util.*;
 
+import gr.unirico.mcflib.api.McfApi;
+import gr.unirico.mcflib.api.McfApiFactory;
+import gr.unirico.mcflib.impl.McfApiImpl;
+import gr.unirico.mcflib.model.CommentImpl;
 import org.springframework.stereotype.Service;
 
 import gr.unirico.mcflib.api.Comment;
@@ -20,6 +25,7 @@ import gr.unirico.mcflib.api.Topic;
  */
 public class TopicService {
 
+    private McfApiImpl api = (McfApiImpl) McfApiFactory.getInstance();
 	/*
 		必須メソッド(public メソッド)
 			* トピック一覧の取得
@@ -36,15 +42,25 @@ public class TopicService {
 	 * @return トピックのリスト
 	 */
 	public List<Topic> getTopicList() {
-		return null;
+        return api.getTopicList();
 	}
+
+	public Topic getTopic(String topicId) {
+	    Topic topic = null;
+	    try {
+	        topic = api.readTopic(topicId);
+        } catch (Exception e) {
+	        e.printStackTrace();
+        }
+        return topic;
+    }
 
 	/**
 	 * トピックを作成
 	 * @return トピック
 	 */
 	public Topic createTopic() {
-		return null;
+		return api.newTopic("newTopic");
 	}
 
 	/**
@@ -54,7 +70,17 @@ public class TopicService {
 	 * @return コメントのリスト
 	 */
 	public List<Comment> getCommentList(String tid, boolean bAsc) {
-		return null;
+
+	    List<Comment> list = null;
+
+	    try {
+	        Topic topic = api.readTopic(tid);
+	        list = topic.getList();
+	        list.sort((c1, c2) -> c1.getTimestamp().compareTo(c2.getTimestamp()) * (bAsc ? 1 : -1));
+        } catch(Exception e) {
+	        e.printStackTrace();
+        }
+	    return list;
 	}
 
 	/**
@@ -62,7 +88,23 @@ public class TopicService {
 	 * @return コメント
 	 */
 	public Comment createComment() {
-		return null;
+		return api.newComment("newComment");
 	}
+
+	/**
+	* トピック情報を取得
+	* @param tid トピックID
+	* @return トピック情報を格納したmap
+	*/
+	public Map<String, Object> getTopicData(String tid){
+        HashMap<String, Object> map = new HashMap<>();
+
+        Topic topic = getTopic(tid);
+        map.put("id", tid);
+        map.put("name", topic != null ? topic.getUrl() : "[topic not found.]");
+        map.put("comments", topic != null ? topic.getList() : new ArrayList<Comment>());
+
+	    return map;
+    }
 
 }

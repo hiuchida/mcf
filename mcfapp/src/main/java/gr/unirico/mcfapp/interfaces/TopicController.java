@@ -6,6 +6,8 @@ package gr.unirico.mcfapp.interfaces;
 
 import gr.unirico.mcfapp.application.MockService;
 import gr.unirico.mcfapp.application.TopicService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,29 +15,36 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Controller
 @RequestMapping("/topics/{topicId}")
 public class TopicController {
+
+    private static final Logger logger = LoggerFactory.getLogger(TopicController.class);
 
 	// 本番用
 	@Autowired
 	TopicService topicService;
 
 	// Mock
-	@Autowired
-	MockService mockService;
+//	@Autowired
+//	MockService mockService;
 
 	@GetMapping
 	public ModelAndView index(@PathVariable("topicId") String topicId) {
 		ModelAndView mav = new ModelAndView("v1/comments");
-		mav.addObject("data", mockService.getArchive(topicId, "https://www.unirita.co.jp/" + topicId));
+		mav.addObject("data", topicService.getTopicData(topicId));
+		logger.info("show topic [topic id: " + topicId + "]");
 		return mav;
 	}
 
 	@GetMapping("/comments")
-	public ModelAndView getHistories() {
+	public ModelAndView getHistories(@PathVariable("topicId") String topicId) {
 		ModelAndView mav = new ModelAndView("v1/fragment/comment :: comment");
-		mav.addObject("data", mockService.getComments());
+		mav.addObject("data", topicService.getTopic(topicId).getList());
+		logger.info("show topic comments [topic id: " + topicId + "]");
 		return mav;
 	}
 
