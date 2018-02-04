@@ -14,10 +14,13 @@
 
 				$('#registerModal').modal('hide');
 				$('#progress-overlay').show();
+				var xsrf = getCookie('XSRF-TOKEN');
+				console.log("csrf-token: " + xsrf);
 				$.ajax({
 					type: "POST",
 					url: '/api/topics',
 					contentType: "application/json",
+					headers: { 'x-xsrf-token': xsrf },
 					data: JSON.stringify({"data": inputObj.val()})
 				}).then(
 					function(data) {
