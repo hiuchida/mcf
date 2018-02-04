@@ -1,6 +1,7 @@
 package gr.unirico.mcflib.model;
 
 import gr.unirico.mcflib.api.Node;
+import gr.unirico.mcflib.exception.IllegalHashException;
 import gr.unirico.mcflib.util.DigestBuilder;
 import gr.unirico.mcflib.util.ListBuilder;
 import gr.unirico.mcflib.util.UniqueIdUtil;
@@ -65,7 +66,7 @@ public abstract class NodeImpl implements Node {
 	public void validate(String hash) {
 		this.hash = toDigestString();
 		if (!this.hash.equals(hash)) {
-			throw new RuntimeException("Illegal hash");
+			throw new IllegalHashException(this.hash);
 		}
 	}
 

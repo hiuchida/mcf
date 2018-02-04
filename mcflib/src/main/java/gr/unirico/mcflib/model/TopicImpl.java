@@ -5,6 +5,7 @@ import java.util.List;
 
 import gr.unirico.mcflib.api.Comment;
 import gr.unirico.mcflib.api.Topic;
+import gr.unirico.mcflib.exception.IllegalPrevidException;
 import gr.unirico.mcflib.util.DateUtil;
 import gr.unirico.mcflib.util.DigestBuilder;
 import gr.unirico.mcflib.util.ListBuilder;
@@ -79,7 +80,7 @@ public class TopicImpl extends NodeImpl implements Topic {
 		checkArchived();
 		if (bValidate) {
 			if (!this.previd.equals(previd)) {
-				throw new RuntimeException("Illegal previd");
+				throw new IllegalPrevidException(this.previd);
 			}
 		} else {
 			this.previd = previd;
