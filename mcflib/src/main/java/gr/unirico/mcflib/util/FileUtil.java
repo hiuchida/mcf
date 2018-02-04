@@ -57,9 +57,19 @@ public class FileUtil {
 		}
 	}
 	
-	public static void delete(String path) {
+	public static boolean delete(String path) {
 		File file = new File(path);
-		file.delete();
+		return file.delete();
+	}
+
+	public static int deleteFiles(String path) {
+		int cnt = 0;
+		for (File f : filelist(path)) {
+			if (delete(f.getPath())) {
+				cnt++;
+			}
+		}
+		return cnt;
 	}
 
 }
