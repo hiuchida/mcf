@@ -64,6 +64,16 @@ public class McfApiImpl implements McfApi {
 		return list;
 	}
 
+	public synchronized List<Topic> getArchivedTopicList() {
+		List<Topic> list = new ArrayList<>();
+		ArchiveImpl archive = readArchive();
+		for (Topic t : archive.getList()) {
+			list.add(t);
+		}
+		logger.info("getArchivedTopicList: {}", list.size());
+		return list;
+	}
+
 	public synchronized void writeTopic(Topic t) throws IOException {
 		String id = t.getId();
 		logger.info("writeTopic: {}", id);
