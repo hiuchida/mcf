@@ -1,4 +1,4 @@
-<div class="card" th:fragment="topic" th:each="topic: ${topics}" style="margin-bottom:5px;" th:attr="onclick='moveTopic(' + ${topic.id} + ');'">
+<div class="card" th:fragment="topic" th:each="topic: ${topics}" style="margin-bottom:5px;" th:attr="onclick='moveTopic(\'' + ${topic.id} + '\');'">
 	<div class="card-body">
 		<p class="card-text">
 		<div>
