@@ -36,7 +36,7 @@ public class NodeImplTest {
 		NodeImpl node = new CommentImpl("nodeTest");
 		TestCase.assertEquals("first-id", node.getPrevid());
 		TestCase.assertEquals("nodeTest", node.getName());
-		TestCase.assertEquals("", node.getTimestamp());
+		TestCase.assertNotNull(node.getTimestamp());
 	}
 
 	@Test
