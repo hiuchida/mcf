@@ -4,28 +4,27 @@
 	libと機能がかぶるため、このクラスでストレージへのアクセスを行う。
 	各コントローラから呼び出される
  */
-
 package gr.unirico.mcfapp.application;
 
-import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import gr.unirico.mcflib.api.McfApi;
-import gr.unirico.mcflib.api.McfApiFactory;
-import gr.unirico.mcflib.impl.McfApiImpl;
-import gr.unirico.mcflib.model.CommentImpl;
 import org.springframework.stereotype.Service;
 
 import gr.unirico.mcflib.api.Comment;
+import gr.unirico.mcflib.api.McfApi;
+import gr.unirico.mcflib.api.McfApiFactory;
 import gr.unirico.mcflib.api.Topic;
 
-@Service
 /*
 	@Serviceアノテーションをつけることで呼び出された際にシングルトンなインスタンスを暗黙的に生成してくれる
  */
+@Service
 public class TopicService {
 
-    private McfApiImpl api = (McfApiImpl) McfApiFactory.getInstance();
+    private McfApi api = McfApiFactory.getInstance();
 	/*
 		必須メソッド(public メソッド)
 			* トピック一覧の取得
