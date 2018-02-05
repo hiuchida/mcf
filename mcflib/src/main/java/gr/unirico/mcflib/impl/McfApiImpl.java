@@ -56,7 +56,7 @@ public class McfApiImpl implements McfApi {
 				Topic t = readTopic(id);
 				list.add(t);
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error("Error in getTopicList", e);
 				FileUtil.delete(f.getPath());
 			}
 		}
@@ -121,7 +121,7 @@ public class McfApiImpl implements McfApi {
 				Object obj = ListParser.parse(list);
 				return (ArchiveImpl)obj;
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.error("Error in readArchive", e);
 				FileUtil.delete(file.getPath());
 			} finally {
 			}
