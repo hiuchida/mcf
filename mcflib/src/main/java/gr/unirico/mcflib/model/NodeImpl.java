@@ -2,6 +2,7 @@ package gr.unirico.mcflib.model;
 
 import gr.unirico.mcflib.api.Node;
 import gr.unirico.mcflib.exception.IllegalHashException;
+import gr.unirico.mcflib.util.DateUtil;
 import gr.unirico.mcflib.util.DigestBuilder;
 import gr.unirico.mcflib.util.ListBuilder;
 import gr.unirico.mcflib.util.UniqueIdUtil;
@@ -21,7 +22,7 @@ public abstract class NodeImpl implements Node {
 		this.previd = FIRSTID;
 		this.id = UniqueIdUtil.generate();
 		this.name = name;
-		this.timestamp = "";
+		this.timestamp = DateUtil.createTimestampStr();
 	}
 	
 	public NodeImpl(String previd, String id, String name, String timestamp) {

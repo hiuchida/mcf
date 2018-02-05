@@ -47,6 +47,7 @@ public class ArchiveImpl extends NodeImpl {
 		TopicImpl t = (TopicImpl)_t;
 		t.archive(false, this, getLastid());
 		list.add(t);
+		this.timestamp = DateUtil.createTimestampStr();
 	}
 	
 	public void addValidate(Topic _t) {

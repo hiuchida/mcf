@@ -61,6 +61,7 @@ public class TopicImpl extends NodeImpl implements Topic {
 		CommentImpl c = (CommentImpl)_c;
 		c.archive(false, this, getLastid());
 		list.add(c);
+		this.timestamp = DateUtil.createTimestampStr();
 	}
 	
 	public void addValidate(Comment _c) {
