@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -60,6 +61,7 @@ public class McfApiImpl implements McfApi {
 				FileUtil.delete(f.getPath());
 			}
 		}
+		Collections.sort(list, new TopicComparator(false));
 		logger.info("getTopicList: {}", list.size());
 		return list;
 	}
@@ -70,6 +72,7 @@ public class McfApiImpl implements McfApi {
 		for (Topic t : archive.getList()) {
 			list.add(t);
 		}
+		Collections.sort(list, new TopicComparator(false));
 		logger.info("getArchivedTopicList: {}", list.size());
 		return list;
 	}
