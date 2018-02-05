@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import gr.unirico.mcflib.api.Comment;
@@ -23,18 +25,9 @@ import gr.unirico.mcflib.api.Topic;
  */
 @Service
 public class ArchiveService {
-
+	private Logger logger = LoggerFactory.getLogger(ArchiveService.class);
     private McfApi api = McfApiFactory.getInstance();
 
-	/*
-		必須メソッド(public メソッド)
-			* アーカイブ一覧の取得
-			* 特定のアーカイブの取得
-				** アーカイブIDで取得
-			* アーカイブの作成
-		メソッド自体は特別なアノテーションを必要としない単一のメソッドとして実装すれば良い。
-	 */
-	
 	/**
 	 * アーカイブされたトピック一覧の取得
 	 * @return トピックのリスト
@@ -65,7 +58,7 @@ public class ArchiveService {
 	    try{
             api.archiveTopic(t);
         } catch (Exception e) {
-	        e.printStackTrace();
+	        logger.error("Error in archiveTopic", e);
         }
 	}
 

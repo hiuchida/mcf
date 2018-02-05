@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import gr.unirico.mcflib.api.Comment;
@@ -23,18 +25,8 @@ import gr.unirico.mcflib.api.Topic;
  */
 @Service
 public class TopicService {
-
+	private Logger logger = LoggerFactory.getLogger(TopicService.class);
     private McfApi api = McfApiFactory.getInstance();
-	/*
-		必須メソッド(public メソッド)
-			* トピック一覧の取得
-			* トピックの作成
-			* コメント一覧の取得
-				** トピックIDで取得
-				** 降順ソート
-			* コメントの作成
-		メソッド自体は特別なアノテーションを必要としない単一のメソッドとして実装すれば良い。
-	 */
 
 	/**
 	 * コメント可能なトピック一覧の取得
@@ -49,7 +41,7 @@ public class TopicService {
 	    try {
 	        topic = api.readTopic(topicId);
         } catch (Exception e) {
-	        e.printStackTrace();
+	        logger.error("Error in getTopic", e);
         }
         return topic;
     }
@@ -77,7 +69,7 @@ public class TopicService {
 	        list = topic.getList();
 	        list.sort((c1, c2) -> c1.getTimestamp().compareTo(c2.getTimestamp()) * (bAsc ? 1 : -1));
         } catch(Exception e) {
-	        e.printStackTrace();
+	        logger.error("Error in getCommentList", e);
         }
 	    return list;
 	}
