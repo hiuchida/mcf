@@ -18,7 +18,7 @@ public class TopicImpl extends NodeImpl implements Topic {
 
 	private String status;
 	private String url = "";
-	private List<Comment> list = new ArrayList<>();
+	private List<CommentImpl> list = new ArrayList<>();
 
 	public TopicImpl(String name) {
 		super(name);
@@ -34,8 +34,7 @@ public class TopicImpl extends NodeImpl implements Topic {
 		ListBuilder lb = newListBuilder(TopicImpl.class);
 		lb.append("status", status);
 		lb.append("url", url);
-		for (Comment _c : list) {
-			CommentImpl c = (CommentImpl)_c;
+		for (CommentImpl c : list) {
 			lb.append(c.toList());
 		}
 		lb.append("hash", hash);

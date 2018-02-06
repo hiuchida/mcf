@@ -11,6 +11,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import gr.unirico.mcflib.api.Archive;
 import gr.unirico.mcflib.api.Comment;
 import gr.unirico.mcflib.api.McfApi;
 import gr.unirico.mcflib.api.Topic;
@@ -67,12 +68,8 @@ public class McfApiImpl implements McfApi {
 	}
 
 	public synchronized List<Topic> getArchivedTopicList() {
-		List<Topic> list = new ArrayList<>();
-		ArchiveImpl archive = readArchive();
-		for (Topic t : archive.getList()) {
-			list.add(t);
-		}
-		Collections.sort(list, new TopicComparator(false));
+		Archive archive = readArchive();
+		List<Topic> list = archive.getList(false);
 		logger.info("getArchivedTopicList: {}", list.size());
 		return list;
 	}
@@ -103,20 +100,20 @@ public class McfApiImpl implements McfApi {
 	
 	public synchronized void archiveTopic(Topic t) throws IOException {
 		logger.info("archiveTopic: {}", t.getId());
-		ArchiveImpl archive = readArchive();
+		Archive archive = readArchive();
 		archive.add(t);
 		writeArchive(archive);
 		deleteTopic(t);
 	}
 
-	private void writeArchive(ArchiveImpl a) throws IOException {
+	private void writeArchive(Archive a) throws IOException {
 		try (PrintWriter pw = FileUtil.newWriter(dataDir + "/" + "archive.txt")) {
-			FileUtil.write(pw, a.toList());
+			FileUtil.write(pw, ((ArchiveImpl)a).toList());
 		} finally {
 		}
 	}
 
-	private ArchiveImpl readArchive() {
+	private Archive readArchive() {
 		File file = new File(dataDir + "/" + "archive.txt");
 		if (file.exists()) {
 			try (BufferedReader br = FileUtil.newReader(file.getPath())) {

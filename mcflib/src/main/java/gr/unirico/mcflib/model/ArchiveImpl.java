@@ -1,15 +1,18 @@
 package gr.unirico.mcflib.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import gr.unirico.mcflib.api.Archive;
 import gr.unirico.mcflib.api.Topic;
 import gr.unirico.mcflib.exception.IllegalPrevidException;
+import gr.unirico.mcflib.impl.TopicComparator;
 import gr.unirico.mcflib.util.DateUtil;
 import gr.unirico.mcflib.util.DigestBuilder;
 import gr.unirico.mcflib.util.ListBuilder;
 
-public class ArchiveImpl extends NodeImpl {
+public class ArchiveImpl extends NodeImpl implements Archive {
 	private List<TopicImpl> list = new ArrayList<>();
 
 	public ArchiveImpl(String name) {
@@ -76,8 +79,18 @@ public class ArchiveImpl extends NodeImpl {
 		setArchived(this);
 	}
 
-	public List<TopicImpl> getList() {
-		return list;
+	public List<Topic> getList() {
+		List<Topic> l = new ArrayList<>();
+		for (Topic t : list) {
+			l.add(t);
+		}
+		return l;
+	}
+
+	public List<Topic> getList(boolean bAsc) {
+		List<Topic> l = getList();
+		Collections.sort(l, new TopicComparator(bAsc));
+		return l;
 	}
 
 }
