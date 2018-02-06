@@ -69,12 +69,10 @@ public class ArchiveService {
 	 */
 	public Map<String, Object> getArchivedTopicData(String aid) {
 		Map<String, Object> map = new HashMap<>();
-
 		Topic topic = getArchivedTopic(aid);
 		map.put("id", aid);
 		map.put("name", topic != null ? topic.getName() : "[topic not found.]");
 		map.put("comments", topic != null ? topic.getList() : new ArrayList<Comment>());
-
 		return map;
 	}
 

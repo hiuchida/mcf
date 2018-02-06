@@ -57,17 +57,13 @@ public class TopicService {
 	/**
 	 * 指定したトピックのコメント一覧の取得
 	 * @param tid トピックID
-	 * @param bAsc true:昇順、false:降順
 	 * @return コメントのリスト
 	 */
-	public List<Comment> getCommentList(String tid, boolean bAsc) {
-
+	public List<Comment> getCommentList(String tid) {
 	    List<Comment> list = null;
-
 	    try {
 	        Topic topic = api.readTopic(tid);
 	        list = topic.getList();
-	        list.sort((c1, c2) -> c1.getTimestamp().compareTo(c2.getTimestamp()) * (bAsc ? 1 : -1));
         } catch(Exception e) {
 	        logger.error("Error in getCommentList", e);
         }
@@ -89,12 +85,10 @@ public class TopicService {
 	*/
 	public Map<String, Object> getTopicData(String tid){
         HashMap<String, Object> map = new HashMap<>();
-
         Topic topic = getTopic(tid);
         map.put("id", tid);
         map.put("name", topic != null ? topic.getUrl() : "[topic not found.]");
         map.put("comments", topic != null ? topic.getList() : new ArrayList<Comment>());
-
 	    return map;
     }
 
