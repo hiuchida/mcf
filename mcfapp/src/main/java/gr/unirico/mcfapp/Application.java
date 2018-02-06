@@ -1,10 +1,9 @@
 package gr.unirico.mcfapp;
 
-import java.io.IOException;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import gr.unirico.mcflib.api.Comment;
 import gr.unirico.mcflib.api.McfApi;
 import gr.unirico.mcflib.api.McfApiFactory;
 import gr.unirico.mcflib.api.Topic;
@@ -19,16 +18,42 @@ public class Application {
 		FileUtil.deleteFiles(dir);
 		try {
 			Topic t;
-			t = api.newTopic("Yahoo!");
+			Comment c;
+			t = api.newTopic("Yahoo! Part1");
 			t.setUrl("https://www.yahoo.co.jp/");
+			c = api.newComment("comment1");
+			c.setComment("comment1");
+			c.setUserid("testuser1");
+			t.add(c);
 			api.writeTopic(t);
-			t = api.newTopic("Google");
+			api.archiveTopic(t);
+			Thread.sleep(100);
+			t = api.newTopic("Google Part1");
 			t.setUrl("https://www.google.co.jp/");
 			api.writeTopic(t);
-			t = api.newTopic("Microsoft");
+			api.archiveTopic(t);
+			Thread.sleep(100);
+			t = api.newTopic("Microsoft Part1");
 			t.setUrl("https://www.microsoft.com/ja-jp/");
 			api.writeTopic(t);
-		} catch (IOException e) {
+			api.archiveTopic(t);
+			Thread.sleep(100);
+			t = api.newTopic("Yahoo! Part2");
+			t.setUrl("https://www.yahoo.co.jp/");
+			c = api.newComment("comment2");
+			c.setComment("comment2");
+			c.setUserid("testuser2");
+			t.add(c);
+			api.writeTopic(t);
+			Thread.sleep(100);
+			t = api.newTopic("Google Part2");
+			t.setUrl("https://www.google.co.jp/");
+			api.writeTopic(t);
+			Thread.sleep(100);
+			t = api.newTopic("Microsoft Part2");
+			t.setUrl("https://www.microsoft.com/ja-jp/");
+			api.writeTopic(t);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		SpringApplication.run(Application.class, args);
