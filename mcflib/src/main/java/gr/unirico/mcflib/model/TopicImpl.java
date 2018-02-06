@@ -1,11 +1,13 @@
 package gr.unirico.mcflib.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import gr.unirico.mcflib.api.Comment;
 import gr.unirico.mcflib.api.Topic;
 import gr.unirico.mcflib.exception.IllegalPrevidException;
+import gr.unirico.mcflib.impl.CommentComparator;
 import gr.unirico.mcflib.util.DateUtil;
 import gr.unirico.mcflib.util.DigestBuilder;
 import gr.unirico.mcflib.util.ListBuilder;
@@ -105,7 +107,17 @@ public class TopicImpl extends NodeImpl implements Topic {
 	}
 
 	public List<Comment> getList() {
-		return list;
+		List<Comment> l = new ArrayList<>();
+		for (Comment c : list) {
+			l.add(c);
+		}
+		return l;
+	}
+
+	public List<Comment> getList(boolean bAsc) {
+		List<Comment> l = getList();
+		Collections.sort(l, new CommentComparator(bAsc));
+		return l;
 	}
 
 }

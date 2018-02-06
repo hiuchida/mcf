@@ -9,5 +9,6 @@ public interface Topic extends Node {
 	public String getUrl();
 	public String getStatus();
 	public List<Comment> getList();
+	public List<Comment> getList(boolean bAsc);
 
 }
