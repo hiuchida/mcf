@@ -80,15 +80,14 @@ public class ArchiveImpl extends NodeImpl implements Archive {
 	}
 
 	public List<Topic> getList() {
+		return getList(false);
+	}
+
+	public List<Topic> getList(boolean bAsc) {
 		List<Topic> l = new ArrayList<>();
 		for (Topic t : list) {
 			l.add(t);
 		}
-		return l;
-	}
-
-	public List<Topic> getList(boolean bAsc) {
-		List<Topic> l = getList();
 		Collections.sort(l, new TopicComparator(bAsc));
 		return l;
 	}

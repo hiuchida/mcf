@@ -106,15 +106,14 @@ public class TopicImpl extends NodeImpl implements Topic {
 	}
 
 	public List<Comment> getList() {
+		return getList(false);
+	}
+
+	public List<Comment> getList(boolean bAsc) {
 		List<Comment> l = new ArrayList<>();
 		for (Comment c : list) {
 			l.add(c);
 		}
-		return l;
-	}
-
-	public List<Comment> getList(boolean bAsc) {
-		List<Comment> l = getList();
 		Collections.sort(l, new CommentComparator(bAsc));
 		return l;
 	}

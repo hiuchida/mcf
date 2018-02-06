@@ -69,7 +69,7 @@ public class McfApiImpl implements McfApi {
 
 	public synchronized List<Topic> getArchivedTopicList() {
 		Archive archive = readArchive();
-		List<Topic> list = archive.getList(false);
+		List<Topic> list = archive.getList();
 		logger.info("getArchivedTopicList: {}", list.size());
 		return list;
 	}
