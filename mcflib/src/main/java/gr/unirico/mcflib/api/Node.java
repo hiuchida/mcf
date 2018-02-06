@@ -5,6 +5,7 @@ public interface Node {
 	public String getPrevid();
 	public String getId();
 	public String getName();
+	public String getTimestamp();
 	public String getHash();
 
 }
