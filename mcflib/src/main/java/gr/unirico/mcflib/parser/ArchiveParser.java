@@ -13,7 +13,8 @@ public class ArchiveParser extends ListParser {
 		String id = get("id");
 		String name = get("name");
 		String timestamp = get("timestamp");
-		ArchiveImpl a = new ArchiveImpl(previd, id, name, timestamp);
+		String status = get("status");
+		ArchiveImpl a = new ArchiveImpl(previd, id, name, timestamp, status);
 		String hash;
 		while (true) {
 			String[] pair = splitLine();

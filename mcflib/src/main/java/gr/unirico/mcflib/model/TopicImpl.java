@@ -13,26 +13,19 @@ import gr.unirico.mcflib.util.DigestBuilder;
 import gr.unirico.mcflib.util.ListBuilder;
 
 public class TopicImpl extends NodeImpl implements Topic {
-	private static final String RUNNING = "running";
-	private static final String COMPLETE = "complete";
-
-	private String status;
 	private String url = "";
 	private List<CommentImpl> list = new ArrayList<>();
 
 	public TopicImpl(String name) {
 		super(name);
-		this.status = RUNNING;
 	}
 
 	public TopicImpl(String previd, String id, String name, String timestamp, String status) {
-		super(previd, id, name, timestamp);
-		this.status = status;
+		super(previd, id, name, timestamp, status);
 	}
 
 	public List<String> toList() {
 		ListBuilder lb = newListBuilder(TopicImpl.class);
-		lb.append("status", status);
 		lb.append("url", url);
 		for (CommentImpl c : list) {
 			lb.append(c.toList());
@@ -44,7 +37,6 @@ public class TopicImpl extends NodeImpl implements Topic {
 	@Override
 	protected String toDigestString() {
 		DigestBuilder db = newDigestBuilder(TopicImpl.class);
-		db.append("status", status);
 		db.append("url", url);
 		for (Comment _c : list) {
 			CommentImpl c = (CommentImpl)_c;
@@ -88,7 +80,6 @@ public class TopicImpl extends NodeImpl implements Topic {
 			this.previd = previd;
 			this.timestamp = DateUtil.createTimestampStr();
 		}
-		this.status = COMPLETE;
 		setArchived(this);
 	}
 
@@ -99,10 +90,6 @@ public class TopicImpl extends NodeImpl implements Topic {
 
 	public String getUrl() {
 		return url;
-	}
-
-	public String getStatus() {
-		return status;
 	}
 
 	public List<Comment> getList() {

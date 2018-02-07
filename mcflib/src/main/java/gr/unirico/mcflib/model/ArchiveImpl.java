@@ -19,8 +19,8 @@ public class ArchiveImpl extends NodeImpl implements Archive {
 		super(name);
 	}
 
-	public ArchiveImpl(String previd, String id, String name, String timestamp) {
-		super(previd, id, name, timestamp);
+	public ArchiveImpl(String previd, String id, String name, String timestamp, String status) {
+		super(previd, id, name, timestamp, status);
 	}
 
 	public List<String> toList() {

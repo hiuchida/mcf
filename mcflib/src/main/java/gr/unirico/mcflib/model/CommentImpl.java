@@ -16,8 +16,8 @@ public class CommentImpl extends NodeImpl implements Comment {
 		super(name);
 	}
 
-	public CommentImpl(String previd, String id, String name, String timestamp) {
-		super(previd, id, name, timestamp);
+	public CommentImpl(String previd, String id, String name, String timestamp, String status) {
+		super(previd, id, name, timestamp, status);
 	}
 
 	public List<String> toList() {

@@ -6,6 +6,7 @@ public interface Node {
 	public String getId();
 	public String getName();
 	public String getTimestamp();
+	public String getStatus();
 	public String getHash();
 
 }
