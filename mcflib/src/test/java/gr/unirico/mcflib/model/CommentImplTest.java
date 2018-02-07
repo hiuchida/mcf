@@ -1,5 +1,6 @@
 package gr.unirico.mcflib.model;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.junit.After;
@@ -18,7 +19,7 @@ public class CommentImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		c = new CommentImpl(NodeImplTest.TESTPREVID, NodeImplTest.TESTID, "commentTest", NodeImplTest.TESTTIMESTAMP);
+		c = new CommentImpl(NodeImplTest.TESTPREVID, NodeImplTest.TESTID, NodeImplTest.COMMENTNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS);
 		logger.debug("setUp:");
 	}
 
@@ -39,22 +40,24 @@ public class CommentImplTest {
 		c.setUserid(CommentImplTest.TESTUSER);
 		c.setComment(CommentImplTest.TESTCOMMENT);
 		List<String> l = c.toList();
-		TestCase.assertEquals(8, l.size());
-		TestCase.assertEquals("class:gr.unirico.mcflib.model.CommentImpl", l.get(0));
-		TestCase.assertEquals("previd:000001", l.get(1));
-		TestCase.assertEquals("id:000002", l.get(2));
-		TestCase.assertEquals("name:commentTest", l.get(3));
-		TestCase.assertEquals("timestamp:2018-01-01", l.get(4));
-		TestCase.assertEquals("userid:testuser", l.get(5));
-		TestCase.assertEquals("comment:testComment", l.get(6));
-		TestCase.assertTrue(l.get(7).startsWith("hash:"));
+		TestCase.assertEquals(9, l.size());
+		Iterator<String> i = l.iterator();
+		TestCase.assertEquals("class:gr.unirico.mcflib.model.CommentImpl", i.next());
+		TestCase.assertEquals("previd:000001", i.next());
+		TestCase.assertEquals("id:000002", i.next());
+		TestCase.assertEquals("name:commentTest", i.next());
+		TestCase.assertEquals("timestamp:2018-01-01", i.next());
+		TestCase.assertEquals("status:editing", i.next());
+		TestCase.assertEquals("userid:testuser", i.next());
+		TestCase.assertEquals("comment:testComment", i.next());
+		TestCase.assertTrue(i.next().startsWith("hash:"));
 	}
 
 	@Test
 	public void testToDigestString() throws Exception {
 		c.setUserid(CommentImplTest.TESTUSER);
 		c.setComment(CommentImplTest.TESTCOMMENT);
-		String hash = "x9tKpk6Fegvx4kZRpYzusoZvAIpTX1s0Ksr4ow+6ggTqPM3EHzf/SeLiGEdXxP75K13DOAd4JcR2iYEFE7TFiw==";
+		String hash = "thm/6t5ROKxfCZETKgBDTl1wvnhRh1XV54Cn3ZgDmaiQ1Ya4hNXdNAHUby0xFspvHrX9KFoku2bc4LjeM4Hd3A==";
 		TestCase.assertEquals(hash, c.toDigestString());
 	}
 

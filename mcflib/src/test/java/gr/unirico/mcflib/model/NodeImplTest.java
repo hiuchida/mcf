@@ -1,5 +1,6 @@
 package gr.unirico.mcflib.model;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.junit.After;
@@ -14,15 +15,20 @@ import junit.framework.TestCase;
 
 public class NodeImplTest {
 	private static Logger logger = LoggerFactory.getLogger(NodeImplTest.class);
+	public static final String FIRSTID = "first-id";
 	public static final String PREVID = "previd";
 	public static final String TESTPREVID = "000001";
 	public static final String TESTID = "000002";
+	public static final String COMMENTNAME = "commentTest";
+	public static final String TOPICNAME = "topicTest";
+	public static final String ARCHIVENAME = "archiveTest";
 	public static final String TESTTIMESTAMP = "2018-01-01";
+	public static final String TESTSTATUS = "editing";
 	private NodeImpl n;
 
 	@Before
 	public void setUp() throws Exception {
-		n = new CommentImpl(NodeImplTest.TESTPREVID, NodeImplTest.TESTID, "nodeTest", NodeImplTest.TESTTIMESTAMP);
+		n = new CommentImpl(NodeImplTest.TESTPREVID, NodeImplTest.TESTID, NodeImplTest.COMMENTNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS);
 		logger.debug("setUp:");
 	}
 
@@ -37,24 +43,27 @@ public class NodeImplTest {
 		TestCase.assertEquals("first-id", node.getPrevid());
 		TestCase.assertEquals("nodeTest", node.getName());
 		TestCase.assertNotNull(node.getTimestamp());
+		TestCase.assertEquals("editing", node.getStatus());
 	}
 
 	@Test
 	public void testNewListBuilder() throws Exception {
 		ListBuilder lb = n.newListBuilder(n.getClass());
 		List<String> l = lb.toList();
-		TestCase.assertEquals(5, l.size());
-		TestCase.assertEquals("class:gr.unirico.mcflib.model.CommentImpl", l.get(0));
-		TestCase.assertEquals("previd:000001", l.get(1));
-		TestCase.assertEquals("id:000002", l.get(2));
-		TestCase.assertEquals("name:nodeTest", l.get(3));
-		TestCase.assertEquals("timestamp:2018-01-01", l.get(4));
+		TestCase.assertEquals(6, l.size());
+		Iterator<String> i = l.iterator();
+		TestCase.assertEquals("class:gr.unirico.mcflib.model.CommentImpl", i.next());
+		TestCase.assertEquals("previd:000001", i.next());
+		TestCase.assertEquals("id:000002", i.next());
+		TestCase.assertEquals("name:commentTest", i.next());
+		TestCase.assertEquals("timestamp:2018-01-01", i.next());
+		TestCase.assertEquals("status:editing", i.next());
 	}
 
 	@Test
 	public void testNewDigestBuilder() throws Exception {
 		DigestBuilder db = n.newDigestBuilder(CommentImpl.class);
-		String hash = "VLzsWMqVGs0yWLtn4rKvifztiStX4qmEOT1yq+5ITXYCT3QmJerDT5Tv0eZA/EY9D2NUgUiROL3UpwnHER1kxA==";
+		String hash = "37qR8tT+vZLMrK9lcnxoMh+L7FGG5dgL6rbKkInZgM9NvH2IkcYk33LWGBPJdty3ZI1IpGYJCJzuqyZNd0Qg6Q==";
 		TestCase.assertEquals(hash, db.toString());
 	}
 
@@ -62,6 +71,7 @@ public class NodeImplTest {
 	public void testSetArchived() throws Exception {
 		n.checkArchived();
 		n.setArchived(n);
+		TestCase.assertEquals("fixed", n.getStatus());
 		try {
 			n.checkArchived();
 			TestCase.fail();
@@ -71,7 +81,7 @@ public class NodeImplTest {
 
 	@Test
 	public void testValidate() throws Exception {
-		String hash = "z02OkxodCD/BMGQ68K+dQyG9xDncCVMxt8gcR/WcNrXeGBcPlmNX+vg5un0VqTqCSQG6Vhh9+xmmVOx0lQ32Yg==";
+		String hash = "G8+ysCBGowYNSVzw0GW4DumC8tARqc/AZI9Ey8VGKVHrTjPkcuG//CpRLiKWUw2trIBsjstKnMV8gjf6C79m5w==";
 		n.validate(hash);
 	}
 

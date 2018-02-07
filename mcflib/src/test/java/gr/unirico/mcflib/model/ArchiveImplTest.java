@@ -1,5 +1,6 @@
 package gr.unirico.mcflib.model;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.junit.After;
@@ -16,7 +17,7 @@ public class ArchiveImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		a = new ArchiveImpl(NodeImplTest.TESTPREVID, NodeImplTest.TESTID, "archiveTest", NodeImplTest.TESTTIMESTAMP);
+		a = new ArchiveImpl(NodeImplTest.TESTPREVID, NodeImplTest.TESTID, NodeImplTest.ARCHIVENAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS);
 		logger.debug("setUp:");
 	}
 
@@ -34,82 +35,89 @@ public class ArchiveImplTest {
 	@Test
 	public void testToList() throws Exception {
 		List<String> l = a.toList();
-		TestCase.assertEquals(6, l.size());
-		TestCase.assertEquals("class:gr.unirico.mcflib.model.ArchiveImpl", l.get(0));
-		TestCase.assertEquals("previd:000001", l.get(1));
-		TestCase.assertEquals("id:000002", l.get(2));
-		TestCase.assertEquals("name:archiveTest", l.get(3));
-		TestCase.assertEquals("timestamp:2018-01-01", l.get(4));
-		TestCase.assertTrue(l.get(5).startsWith("hash:"));
+		TestCase.assertEquals(7, l.size());
+		Iterator<String> i = l.iterator();
+		TestCase.assertEquals("class:gr.unirico.mcflib.model.ArchiveImpl", i.next());
+		TestCase.assertEquals("previd:000001", i.next());
+		TestCase.assertEquals("id:000002", i.next());
+		TestCase.assertEquals("name:archiveTest", i.next());
+		TestCase.assertEquals("timestamp:2018-01-01", i.next());
+		TestCase.assertEquals("status:editing", i.next());
+		TestCase.assertTrue(i.next().startsWith("hash:"));
 	}
 
 	@Test
 	public void testToList2() throws Exception {
-		TopicImpl t = new TopicImpl("first-id", "000002", "topicTest", "2018-01-01", "running");
+		TopicImpl t = new TopicImpl(NodeImplTest.FIRSTID, NodeImplTest.TESTID, NodeImplTest.TOPICNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS);
 		t.setUrl(TopicImplTest.TESTURL);
 		a.addValidate(t);
 		List<String> l = a.toList();
-		TestCase.assertEquals(14, l.size());
-		TestCase.assertEquals("class:gr.unirico.mcflib.model.ArchiveImpl", l.get(0));
-		TestCase.assertEquals("previd:000001", l.get(1));
-		TestCase.assertEquals("id:000002", l.get(2));
-		TestCase.assertEquals("name:archiveTest", l.get(3));
-		TestCase.assertEquals("timestamp:2018-01-01", l.get(4));
-		TestCase.assertEquals("\tclass:gr.unirico.mcflib.model.TopicImpl", l.get(5));
-		TestCase.assertEquals("\tprevid:first-id", l.get(6));
-		TestCase.assertEquals("\tid:000002", l.get(7));
-		TestCase.assertEquals("\tname:topicTest", l.get(8));
-		TestCase.assertEquals("\ttimestamp:2018-01-01", l.get(9));
-		TestCase.assertEquals("\tstatus:complete", l.get(10));
-		TestCase.assertEquals("\turl:testUrl", l.get(11));
-		TestCase.assertTrue(l.get(12).startsWith("\thash:"));
-		TestCase.assertTrue(l.get(13).startsWith("hash:"));
+		TestCase.assertEquals(15, l.size());
+		Iterator<String> i = l.iterator();
+		TestCase.assertEquals("class:gr.unirico.mcflib.model.ArchiveImpl", i.next());
+		TestCase.assertEquals("previd:000001", i.next());
+		TestCase.assertEquals("id:000002", i.next());
+		TestCase.assertEquals("name:archiveTest", i.next());
+		TestCase.assertEquals("timestamp:2018-01-01", i.next());
+		TestCase.assertEquals("status:editing", i.next());
+		TestCase.assertEquals("\tclass:gr.unirico.mcflib.model.TopicImpl", i.next());
+		TestCase.assertEquals("\tprevid:first-id", i.next());
+		TestCase.assertEquals("\tid:000002", i.next());
+		TestCase.assertEquals("\tname:topicTest", i.next());
+		TestCase.assertEquals("\ttimestamp:2018-01-01", i.next());
+		TestCase.assertEquals("\tstatus:fixed", i.next());
+		TestCase.assertEquals("\turl:testUrl", i.next());
+		TestCase.assertTrue(i.next().startsWith("\thash:"));
+		TestCase.assertTrue(i.next().startsWith("hash:"));
 	}
 
 	@Test
 	public void testToList3() throws Exception {
-		CommentImpl c = new CommentImpl("first-id", "000002", "commentTest", "2018-01-01");
+		CommentImpl c = new CommentImpl(NodeImplTest.FIRSTID, NodeImplTest.TESTID, NodeImplTest.COMMENTNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS);
 		c.setUserid(CommentImplTest.TESTUSER);
 		c.setComment(CommentImplTest.TESTCOMMENT);
-		TopicImpl t = new TopicImpl("first-id", "000002", "topicTest", "2018-01-01", "running");
+		TopicImpl t = new TopicImpl(NodeImplTest.FIRSTID, NodeImplTest.TESTID, NodeImplTest.TOPICNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS);
 		t.setUrl(TopicImplTest.TESTURL);
 		t.addValidate(c);
 		a.addValidate(t);
 		List<String> l = a.toList();
-		TestCase.assertEquals(22, l.size());
-		TestCase.assertEquals("class:gr.unirico.mcflib.model.ArchiveImpl", l.get(0));
-		TestCase.assertEquals("previd:000001", l.get(1));
-		TestCase.assertEquals("id:000002", l.get(2));
-		TestCase.assertEquals("name:archiveTest", l.get(3));
-		TestCase.assertEquals("timestamp:2018-01-01", l.get(4));
-		TestCase.assertEquals("\tclass:gr.unirico.mcflib.model.TopicImpl", l.get(5));
-		TestCase.assertEquals("\tprevid:first-id", l.get(6));
-		TestCase.assertEquals("\tid:000002", l.get(7));
-		TestCase.assertEquals("\tname:topicTest", l.get(8));
-		TestCase.assertEquals("\ttimestamp:2018-01-01", l.get(9));
-		TestCase.assertEquals("\tstatus:complete", l.get(10));
-		TestCase.assertEquals("\turl:testUrl", l.get(11));
-		TestCase.assertEquals("\t\tclass:gr.unirico.mcflib.model.CommentImpl", l.get(12));
-		TestCase.assertEquals("\t\tprevid:first-id", l.get(13));
-		TestCase.assertEquals("\t\tid:000002", l.get(14));
-		TestCase.assertEquals("\t\tname:commentTest", l.get(15));
-		TestCase.assertEquals("\t\ttimestamp:2018-01-01", l.get(16));
-		TestCase.assertEquals("\t\tuserid:testuser", l.get(17));
-		TestCase.assertEquals("\t\tcomment:testComment", l.get(18));
-		TestCase.assertTrue(l.get(19).startsWith("\t\thash:"));
-		TestCase.assertTrue(l.get(20).startsWith("\thash:"));
-		TestCase.assertTrue(l.get(21).startsWith("hash:"));
+		TestCase.assertEquals(24, l.size());
+		Iterator<String> i = l.iterator();
+		TestCase.assertEquals("class:gr.unirico.mcflib.model.ArchiveImpl", i.next());
+		TestCase.assertEquals("previd:000001", i.next());
+		TestCase.assertEquals("id:000002", i.next());
+		TestCase.assertEquals("name:archiveTest", i.next());
+		TestCase.assertEquals("timestamp:2018-01-01", i.next());
+		TestCase.assertEquals("status:editing", i.next());
+		TestCase.assertEquals("\tclass:gr.unirico.mcflib.model.TopicImpl", i.next());
+		TestCase.assertEquals("\tprevid:first-id", i.next());
+		TestCase.assertEquals("\tid:000002", i.next());
+		TestCase.assertEquals("\tname:topicTest", i.next());
+		TestCase.assertEquals("\ttimestamp:2018-01-01", i.next());
+		TestCase.assertEquals("\tstatus:fixed", i.next());
+		TestCase.assertEquals("\turl:testUrl", i.next());
+		TestCase.assertEquals("\t\tclass:gr.unirico.mcflib.model.CommentImpl", i.next());
+		TestCase.assertEquals("\t\tprevid:first-id", i.next());
+		TestCase.assertEquals("\t\tid:000002", i.next());
+		TestCase.assertEquals("\t\tname:commentTest", i.next());
+		TestCase.assertEquals("\t\ttimestamp:2018-01-01", i.next());
+		TestCase.assertEquals("\t\tstatus:fixed", i.next());
+		TestCase.assertEquals("\t\tuserid:testuser", i.next());
+		TestCase.assertEquals("\t\tcomment:testComment", i.next());
+		TestCase.assertTrue(i.next().startsWith("\t\thash:"));
+		TestCase.assertTrue(i.next().startsWith("\thash:"));
+		TestCase.assertTrue(i.next().startsWith("hash:"));
 	}
 
 	@Test
 	public void testToDigestString() throws Exception {
-		String hash = "faTSghfh1Q1iLWDjMOAlxRuWzyuHbw17QnpmQfH6GbXEmRgUxoM7On4WK9TaFYHGYySLAwO9nXKSouzfte7hrg==";
+		String hash = "ro+JjpFvIpAVNZTwhG/9s3/Zi0mRq1oYiOcEo2cDnTQSj2DT1pgX3akWTbqrjy1Tr7/MWPrOO2agmsLBRpO1Jg==";
 		TestCase.assertEquals(hash, a.toDigestString());
 	}
 
 	@Test
 	public void testAdd() throws Exception {
-		TopicImpl t = new TopicImpl(NodeImplTest.TESTPREVID, NodeImplTest.TESTID, "topicTest", NodeImplTest.TESTTIMESTAMP, "running");
+		TopicImpl t = new TopicImpl(NodeImplTest.TESTPREVID, NodeImplTest.TESTID, NodeImplTest.TOPICNAME, NodeImplTest.TESTTIMESTAMP, "running");
 		TestCase.assertEquals(0, a.getList().size());
 		a.add(t);
 		TestCase.assertEquals(1, a.getList().size());
