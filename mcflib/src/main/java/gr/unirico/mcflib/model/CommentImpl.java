@@ -3,6 +3,7 @@ package gr.unirico.mcflib.model;
 import java.util.List;
 
 import gr.unirico.mcflib.api.Comment;
+import gr.unirico.mcflib.exception.IllegalHashException;
 import gr.unirico.mcflib.exception.IllegalPrevidException;
 import gr.unirico.mcflib.util.DateUtil;
 import gr.unirico.mcflib.util.DigestBuilder;
@@ -16,8 +17,8 @@ public class CommentImpl extends NodeImpl implements Comment {
 		super(name);
 	}
 
-	public CommentImpl(String previd, String id, String name, String timestamp, String status) {
-		super(previd, id, name, timestamp, status);
+	public CommentImpl(String previd, String prevhash, String id, String name, String timestamp, String status) {
+		super(previd, prevhash, id, name, timestamp, status);
 	}
 
 	public List<String> toList() {
@@ -41,14 +42,18 @@ public class CommentImpl extends NodeImpl implements Comment {
 		return "(" + this.id + "," + this.previd + ")";
 	}
 	
-	void archive(boolean bValidate, NodeImpl parent, String previd) {
+	void archive(boolean bValidate, NodeImpl parent, String previd, String prevhash) {
 		checkArchived();
 		if (bValidate) {
 			if (!this.previd.equals(previd)) {
 				throw new IllegalPrevidException(this.previd);
 			}
+			if (!this.prevhash.equals(prevhash)) {
+				throw new IllegalHashException(this.prevhash);
+			}
 		} else {
 			this.previd = previd;
+			this.prevhash = prevhash;
 			this.timestamp = DateUtil.createTimestampStr();
 		}
 		setArchived(this);

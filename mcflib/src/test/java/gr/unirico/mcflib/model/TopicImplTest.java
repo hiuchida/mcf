@@ -18,7 +18,7 @@ public class TopicImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		t = new TopicImpl(NodeImplTest.TESTPREVID, NodeImplTest.TESTID, NodeImplTest.TOPICNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS);
+		t = new TopicImpl(NodeImplTest.TESTPREVID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTID, NodeImplTest.TOPICNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS);
 		logger.debug("setUp:");
 	}
 
@@ -38,10 +38,11 @@ public class TopicImplTest {
 	public void testToList() throws Exception {
 		t.setUrl(TopicImplTest.TESTURL);
 		List<String> l = t.toList();
-		TestCase.assertEquals(8, l.size());
+		TestCase.assertEquals(9, l.size());
 		Iterator<String> i = l.iterator();
 		TestCase.assertEquals("class:gr.unirico.mcflib.model.TopicImpl", i.next());
 		TestCase.assertEquals("previd:000001", i.next());
+		TestCase.assertEquals("prevhash:0", i.next());
 		TestCase.assertEquals("id:000002", i.next());
 		TestCase.assertEquals("name:topicTest", i.next());
 		TestCase.assertEquals("timestamp:2018-01-01", i.next());
@@ -52,16 +53,17 @@ public class TopicImplTest {
 
 	@Test
 	public void testToList2() throws Exception {
-		CommentImpl c = new CommentImpl(NodeImplTest.FIRSTID, NodeImplTest.TESTID, NodeImplTest.COMMENTNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS);
+		CommentImpl c = new CommentImpl(NodeImplTest.FIRSTID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTID, NodeImplTest.COMMENTNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS);
 		c.setUserid(CommentImplTest.TESTUSER);
 		c.setComment(CommentImplTest.TESTCOMMENT);
 		t.setUrl(TopicImplTest.TESTURL);
 		t.addValidate(c);
 		List<String> l = t.toList();
-		TestCase.assertEquals(17, l.size());
+		TestCase.assertEquals(19, l.size());
 		Iterator<String> i = l.iterator();
 		TestCase.assertEquals("class:gr.unirico.mcflib.model.TopicImpl", i.next());
 		TestCase.assertEquals("previd:000001", i.next());
+		TestCase.assertEquals("prevhash:0", i.next());
 		TestCase.assertEquals("id:000002", i.next());
 		TestCase.assertEquals("name:topicTest", i.next());
 		TestCase.assertEquals("timestamp:2018-01-01", i.next());
@@ -69,6 +71,7 @@ public class TopicImplTest {
 		TestCase.assertEquals("url:testUrl", i.next());
 		TestCase.assertEquals("\tclass:gr.unirico.mcflib.model.CommentImpl", i.next());
 		TestCase.assertEquals("\tprevid:first-id", i.next());
+		TestCase.assertEquals("\tprevhash:0", i.next());
 		TestCase.assertEquals("\tid:000002", i.next());
 		TestCase.assertEquals("\tname:commentTest", i.next());
 		TestCase.assertEquals("\ttimestamp:2018-01-01", i.next());
@@ -82,13 +85,13 @@ public class TopicImplTest {
 	@Test
 	public void testToDigestString() throws Exception {
 		t.setUrl(TopicImplTest.TESTURL);
-		String hash = "4y9bpvY2nuFFmSC7BTPXSs/ET0PBC6l1sD31IauCtZflqOBHDhqNGR310VkgYJ/f8hv8VyJzwXaTqsyb+nD54w==";
+		String hash = "54Ql8wh0OWoJ/O/TxbPm7I9bAmFYaiCD/Z4APgCZ4INLB06VfA/s+H/M395uQQmfA2iVVNHtswalaikL6jjzuQ==";
 		TestCase.assertEquals(hash, t.toDigestString());
 	}
 
 	@Test
 	public void testAdd() throws Exception {
-		CommentImpl c = new CommentImpl(NodeImplTest.TESTPREVID, NodeImplTest.TESTID, NodeImplTest.COMMENTNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS);
+		CommentImpl c = new CommentImpl(NodeImplTest.TESTPREVID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTID, NodeImplTest.COMMENTNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS);
 		TestCase.assertEquals(0, t.getList().size());
 		t.add(c);
 		TestCase.assertEquals(1, t.getList().size());
@@ -97,20 +100,21 @@ public class TopicImplTest {
 	@Test
 	public void testArchive() throws Exception {
 		t.setUrl(TopicImplTest.TESTURL);
-		t.archive(false, t, NodeImplTest.PREVID);
+		t.archive(false, t, NodeImplTest.PREVID, NodeImplTest.FIRSTHASH);
 		TestCase.assertEquals(NodeImplTest.PREVID, t.getPrevid());
+		TestCase.assertEquals(NodeImplTest.FIRSTHASH, t.getPrevhash());
 	}
 
 	@Test
 	public void testArchive2() throws Exception {
 		t.setUrl(TopicImplTest.TESTURL);
-		t.archive(true, t, NodeImplTest.TESTPREVID);
+		t.archive(true, t, NodeImplTest.TESTPREVID, NodeImplTest.FIRSTHASH);
 	}
 
 	@Test
 	public void testSetUserid() throws Exception {
 		t.setUrl(TopicImplTest.TESTURL);
-		t.archive(false, t, NodeImplTest.PREVID);
+		t.archive(false, t, NodeImplTest.PREVID, NodeImplTest.FIRSTHASH);
 		try {
 			t.setUrl(TopicImplTest.TESTURL);
 			TestCase.fail();

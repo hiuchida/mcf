@@ -10,11 +10,12 @@ public class TopicParser extends ListParser {
 	
 	public TopicImpl parse() {
 		String previd = get("previd");
+		String prevhash = get("prevhash");
 		String id = get("id");
 		String name = get("name");
 		String timestamp = get("timestamp");
 		String status = get("status");
-		TopicImpl t = new TopicImpl(previd, id, name, timestamp, status);
+		TopicImpl t = new TopicImpl(previd, prevhash, id, name, timestamp, status);
 		t.setUrl(get("url"));
 		String hash;
 		while (true) {

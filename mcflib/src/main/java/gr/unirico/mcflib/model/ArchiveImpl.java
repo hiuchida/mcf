@@ -6,6 +6,7 @@ import java.util.List;
 
 import gr.unirico.mcflib.api.Archive;
 import gr.unirico.mcflib.api.Topic;
+import gr.unirico.mcflib.exception.IllegalHashException;
 import gr.unirico.mcflib.exception.IllegalPrevidException;
 import gr.unirico.mcflib.impl.TopicComparator;
 import gr.unirico.mcflib.util.DateUtil;
@@ -19,8 +20,8 @@ public class ArchiveImpl extends NodeImpl implements Archive {
 		super(name);
 	}
 
-	public ArchiveImpl(String previd, String id, String name, String timestamp, String status) {
-		super(previd, id, name, timestamp, status);
+	public ArchiveImpl(String previd, String prevhash, String id, String name, String timestamp, String status) {
+		super(previd, prevhash, id, name, timestamp, status);
 	}
 
 	public List<String> toList() {
@@ -48,32 +49,43 @@ public class ArchiveImpl extends NodeImpl implements Archive {
 	
 	public synchronized void add(Topic _t) {
 		TopicImpl t = (TopicImpl)_t;
-		t.archive(false, this, getLastid());
+		t.archive(false, this, getLastid(), getLasthash());
 		list.add(t);
 		this.timestamp = DateUtil.createTimestampStr();
 	}
 	
 	public void addValidate(Topic _t) {
 		TopicImpl t = (TopicImpl)_t;
-		t.archive(true, this, getLastid());
+		t.archive(true, this, getLastid(), getLasthash());
 		list.add(t);
 	}
 	
-	private synchronized String getLastid() {
+	private String getLastid() {
 		if (list.size() == 0) {
 			return FIRSTID;
 		}
 		return list.get(list.size() - 1).getId();
 	}
 	
-	void archive(boolean bValidate, NodeImpl parent, String previd) {
+	private String getLasthash() {
+		if (list.size() == 0) {
+			return FIRSTHASH;
+		}
+		return list.get(list.size() - 1).getHash();
+	}
+	
+	void archive(boolean bValidate, NodeImpl parent, String previd, String prevhash) {
 		checkArchived();
 		if (bValidate) {
 			if (!this.previd.equals(previd)) {
 				throw new IllegalPrevidException(this.previd);
 			}
+			if (!this.prevhash.equals(prevhash)) {
+				throw new IllegalHashException(this.prevhash);
+			}
 		} else {
 			this.previd = previd;
+			this.prevhash = prevhash;
 			this.timestamp = DateUtil.createTimestampStr();
 		}
 		setArchived(this);

@@ -19,7 +19,7 @@ public class CommentImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		c = new CommentImpl(NodeImplTest.TESTPREVID, NodeImplTest.TESTID, NodeImplTest.COMMENTNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS);
+		c = new CommentImpl(NodeImplTest.TESTPREVID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTID, NodeImplTest.COMMENTNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS);
 		logger.debug("setUp:");
 	}
 
@@ -40,10 +40,11 @@ public class CommentImplTest {
 		c.setUserid(CommentImplTest.TESTUSER);
 		c.setComment(CommentImplTest.TESTCOMMENT);
 		List<String> l = c.toList();
-		TestCase.assertEquals(9, l.size());
+		TestCase.assertEquals(10, l.size());
 		Iterator<String> i = l.iterator();
 		TestCase.assertEquals("class:gr.unirico.mcflib.model.CommentImpl", i.next());
 		TestCase.assertEquals("previd:000001", i.next());
+		TestCase.assertEquals("prevhash:0", i.next());
 		TestCase.assertEquals("id:000002", i.next());
 		TestCase.assertEquals("name:commentTest", i.next());
 		TestCase.assertEquals("timestamp:2018-01-01", i.next());
@@ -57,7 +58,7 @@ public class CommentImplTest {
 	public void testToDigestString() throws Exception {
 		c.setUserid(CommentImplTest.TESTUSER);
 		c.setComment(CommentImplTest.TESTCOMMENT);
-		String hash = "thm/6t5ROKxfCZETKgBDTl1wvnhRh1XV54Cn3ZgDmaiQ1Ya4hNXdNAHUby0xFspvHrX9KFoku2bc4LjeM4Hd3A==";
+		String hash = "zWUGZjrlAKZkRzdUhhT1S2NmD6Q/GHZXk77awHWD0hhLduOXktdyjqpMvQkaWcXJvgZw1HquHiwHoNPCo0sQBA==";
 		TestCase.assertEquals(hash, c.toDigestString());
 	}
 
@@ -65,21 +66,22 @@ public class CommentImplTest {
 	public void testArchive() throws Exception {
 		c.setUserid(CommentImplTest.TESTUSER);
 		c.setComment(CommentImplTest.TESTCOMMENT);
-		c.archive(false, c, NodeImplTest.PREVID);
+		c.archive(false, c, NodeImplTest.PREVID, NodeImplTest.FIRSTHASH);
 		TestCase.assertEquals(NodeImplTest.PREVID, c.getPrevid());
+		TestCase.assertEquals(NodeImplTest.FIRSTHASH, c.getPrevhash());
 	}
 
 	@Test
 	public void testArchive2() throws Exception {
 		c.setUserid(CommentImplTest.TESTUSER);
 		c.setComment(CommentImplTest.TESTCOMMENT);
-		c.archive(true, c, NodeImplTest.TESTPREVID);
+		c.archive(true, c, NodeImplTest.TESTPREVID, NodeImplTest.FIRSTHASH);
 	}
 
 	@Test
 	public void testSetUserid() throws Exception {
 		c.setUserid(CommentImplTest.TESTUSER);
-		c.archive(false, c, NodeImplTest.PREVID);
+		c.archive(false, c, NodeImplTest.PREVID, NodeImplTest.FIRSTHASH);
 		try {
 			c.setUserid(CommentImplTest.TESTUSER);
 			TestCase.fail();
@@ -90,7 +92,7 @@ public class CommentImplTest {
 	@Test
 	public void testSetComment() throws Exception {
 		c.setComment(CommentImplTest.TESTCOMMENT);
-		c.archive(false, c, NodeImplTest.PREVID);
+		c.archive(false, c, NodeImplTest.PREVID, NodeImplTest.FIRSTHASH);
 		try {
 			c.setComment(CommentImplTest.TESTCOMMENT);
 			TestCase.fail();

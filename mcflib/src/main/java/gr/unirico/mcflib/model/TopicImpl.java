@@ -6,6 +6,7 @@ import java.util.List;
 
 import gr.unirico.mcflib.api.Comment;
 import gr.unirico.mcflib.api.Topic;
+import gr.unirico.mcflib.exception.IllegalHashException;
 import gr.unirico.mcflib.exception.IllegalPrevidException;
 import gr.unirico.mcflib.impl.CommentComparator;
 import gr.unirico.mcflib.util.DateUtil;
@@ -20,8 +21,8 @@ public class TopicImpl extends NodeImpl implements Topic {
 		super(name);
 	}
 
-	public TopicImpl(String previd, String id, String name, String timestamp, String status) {
-		super(previd, id, name, timestamp, status);
+	public TopicImpl(String previd, String prevhash, String id, String name, String timestamp, String status) {
+		super(previd, prevhash, id, name, timestamp, status);
 	}
 
 	public List<String> toList() {
@@ -52,14 +53,14 @@ public class TopicImpl extends NodeImpl implements Topic {
 	
 	public synchronized void add(Comment _c) {
 		CommentImpl c = (CommentImpl)_c;
-		c.archive(false, this, getLastid());
+		c.archive(false, this, getLastid(), getLasthash());
 		list.add(c);
 		this.timestamp = DateUtil.createTimestampStr();
 	}
 	
 	public void addValidate(Comment _c) {
 		CommentImpl c = (CommentImpl)_c;
-		c.archive(true, this, getLastid());
+		c.archive(true, this, getLastid(), getLasthash());
 		list.add(c);
 	}
 	
@@ -70,14 +71,25 @@ public class TopicImpl extends NodeImpl implements Topic {
 		return list.get(list.size() - 1).getId();
 	}
 	
-	void archive(boolean bValidate, NodeImpl parent, String previd) {
+	private String getLasthash() {
+		if (list.size() == 0) {
+			return FIRSTHASH;
+		}
+		return list.get(list.size() - 1).getHash();
+	}
+
+	void archive(boolean bValidate, NodeImpl parent, String previd, String prevhash) {
 		checkArchived();
 		if (bValidate) {
 			if (!this.previd.equals(previd)) {
 				throw new IllegalPrevidException(this.previd);
 			}
+			if (!this.prevhash.equals(prevhash)) {
+				throw new IllegalHashException(this.prevhash);
+			}
 		} else {
 			this.previd = previd;
+			this.prevhash = prevhash;
 			this.timestamp = DateUtil.createTimestampStr();
 		}
 		setArchived(this);

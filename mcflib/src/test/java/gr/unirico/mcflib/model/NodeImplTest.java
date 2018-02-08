@@ -16,6 +16,7 @@ import junit.framework.TestCase;
 public class NodeImplTest {
 	private static Logger logger = LoggerFactory.getLogger(NodeImplTest.class);
 	public static final String FIRSTID = "first-id";
+	public static final String FIRSTHASH = "0";
 	public static final String PREVID = "previd";
 	public static final String TESTPREVID = "000001";
 	public static final String TESTID = "000002";
@@ -28,7 +29,7 @@ public class NodeImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		n = new CommentImpl(NodeImplTest.TESTPREVID, NodeImplTest.TESTID, NodeImplTest.COMMENTNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS);
+		n = new CommentImpl(NodeImplTest.TESTPREVID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTID, NodeImplTest.COMMENTNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS);
 		logger.debug("setUp:");
 	}
 
@@ -50,10 +51,11 @@ public class NodeImplTest {
 	public void testNewListBuilder() throws Exception {
 		ListBuilder lb = n.newListBuilder(n.getClass());
 		List<String> l = lb.toList();
-		TestCase.assertEquals(6, l.size());
+		TestCase.assertEquals(7, l.size());
 		Iterator<String> i = l.iterator();
 		TestCase.assertEquals("class:gr.unirico.mcflib.model.CommentImpl", i.next());
 		TestCase.assertEquals("previd:000001", i.next());
+		TestCase.assertEquals("prevhash:0", i.next());
 		TestCase.assertEquals("id:000002", i.next());
 		TestCase.assertEquals("name:commentTest", i.next());
 		TestCase.assertEquals("timestamp:2018-01-01", i.next());
@@ -63,7 +65,7 @@ public class NodeImplTest {
 	@Test
 	public void testNewDigestBuilder() throws Exception {
 		DigestBuilder db = n.newDigestBuilder(CommentImpl.class);
-		String hash = "37qR8tT+vZLMrK9lcnxoMh+L7FGG5dgL6rbKkInZgM9NvH2IkcYk33LWGBPJdty3ZI1IpGYJCJzuqyZNd0Qg6Q==";
+		String hash = "BV/4fSZJaiOeDWn7zlZELnHT4D5+pbM3g2X6/DxI+tHBg/OCNpyHkgQZdGApddLBe6neVTstmCWMzbDkSqf5CA==";
 		TestCase.assertEquals(hash, db.toString());
 	}
 
@@ -81,7 +83,7 @@ public class NodeImplTest {
 
 	@Test
 	public void testValidate() throws Exception {
-		String hash = "G8+ysCBGowYNSVzw0GW4DumC8tARqc/AZI9Ey8VGKVHrTjPkcuG//CpRLiKWUw2trIBsjstKnMV8gjf6C79m5w==";
+		String hash = "P5hOEFVEMVRIhGrva1ThO7wKvkli9cEBOFCRsX3oL6hgGkRSpCCvT95FMCAasQW+tHcyvZCz06tyZaP1a5jx3w==";
 		n.validate(hash);
 	}
 
