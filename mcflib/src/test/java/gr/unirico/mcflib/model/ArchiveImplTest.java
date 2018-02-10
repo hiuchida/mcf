@@ -35,8 +35,9 @@ public class ArchiveImplTest {
 	@Test
 	public void testToList() throws Exception {
 		List<String> l = a.toList();
-		TestCase.assertEquals(8, l.size());
+		TestCase.assertEquals(11, l.size());
 		Iterator<String> i = l.iterator();
+		TestCase.assertEquals("---", i.next());
 		TestCase.assertEquals("class:gr.unirico.mcflib.model.ArchiveImpl", i.next());
 		TestCase.assertEquals("previd:000001", i.next());
 		TestCase.assertEquals("prevhash:0", i.next());
@@ -44,6 +45,8 @@ public class ArchiveImplTest {
 		TestCase.assertEquals("name:archiveTest", i.next());
 		TestCase.assertEquals("timestamp:2018-01-01", i.next());
 		TestCase.assertEquals("status:editing", i.next());
+		TestCase.assertEquals("\t---", i.next());
+		TestCase.assertEquals("\t---", i.next());
 		TestCase.assertTrue(i.next().startsWith("hash:"));
 	}
 
@@ -53,8 +56,9 @@ public class ArchiveImplTest {
 		t.setUrl(TopicImplTest.TESTURL);
 		a.addValidate(t);
 		List<String> l = a.toList();
-		TestCase.assertEquals(17, l.size());
+		TestCase.assertEquals(22, l.size());
 		Iterator<String> i = l.iterator();
+		TestCase.assertEquals("---", i.next());
 		TestCase.assertEquals("class:gr.unirico.mcflib.model.ArchiveImpl", i.next());
 		TestCase.assertEquals("previd:000001", i.next());
 		TestCase.assertEquals("prevhash:0", i.next());
@@ -62,6 +66,7 @@ public class ArchiveImplTest {
 		TestCase.assertEquals("name:archiveTest", i.next());
 		TestCase.assertEquals("timestamp:2018-01-01", i.next());
 		TestCase.assertEquals("status:editing", i.next());
+		TestCase.assertEquals("\t---", i.next());
 		TestCase.assertEquals("\tclass:gr.unirico.mcflib.model.TopicImpl", i.next());
 		TestCase.assertEquals("\tprevid:first-id", i.next());
 		TestCase.assertEquals("\tprevhash:0", i.next());
@@ -70,7 +75,10 @@ public class ArchiveImplTest {
 		TestCase.assertEquals("\ttimestamp:2018-01-01", i.next());
 		TestCase.assertEquals("\tstatus:fixed", i.next());
 		TestCase.assertEquals("\turl:testUrl", i.next());
+		TestCase.assertEquals("\t\t---", i.next());
+		TestCase.assertEquals("\t\t---", i.next());
 		TestCase.assertTrue(i.next().startsWith("\thash:"));
+		TestCase.assertEquals("\t---", i.next());
 		TestCase.assertTrue(i.next().startsWith("hash:"));
 	}
 
@@ -84,8 +92,9 @@ public class ArchiveImplTest {
 		t.addValidate(c);
 		a.addValidate(t);
 		List<String> l = a.toList();
-		TestCase.assertEquals(27, l.size());
+		TestCase.assertEquals(32, l.size());
 		Iterator<String> i = l.iterator();
+		TestCase.assertEquals("---", i.next());
 		TestCase.assertEquals("class:gr.unirico.mcflib.model.ArchiveImpl", i.next());
 		TestCase.assertEquals("previd:000001", i.next());
 		TestCase.assertEquals("prevhash:0", i.next());
@@ -93,6 +102,7 @@ public class ArchiveImplTest {
 		TestCase.assertEquals("name:archiveTest", i.next());
 		TestCase.assertEquals("timestamp:2018-01-01", i.next());
 		TestCase.assertEquals("status:editing", i.next());
+		TestCase.assertEquals("\t---", i.next());
 		TestCase.assertEquals("\tclass:gr.unirico.mcflib.model.TopicImpl", i.next());
 		TestCase.assertEquals("\tprevid:first-id", i.next());
 		TestCase.assertEquals("\tprevhash:0", i.next());
@@ -101,6 +111,7 @@ public class ArchiveImplTest {
 		TestCase.assertEquals("\ttimestamp:2018-01-01", i.next());
 		TestCase.assertEquals("\tstatus:fixed", i.next());
 		TestCase.assertEquals("\turl:testUrl", i.next());
+		TestCase.assertEquals("\t\t---", i.next());
 		TestCase.assertEquals("\t\tclass:gr.unirico.mcflib.model.CommentImpl", i.next());
 		TestCase.assertEquals("\t\tprevid:first-id", i.next());
 		TestCase.assertEquals("\t\tprevhash:0", i.next());
@@ -111,7 +122,9 @@ public class ArchiveImplTest {
 		TestCase.assertEquals("\t\tuserid:testuser", i.next());
 		TestCase.assertEquals("\t\tcomment:testComment", i.next());
 		TestCase.assertTrue(i.next().startsWith("\t\thash:"));
+		TestCase.assertEquals("\t\t---", i.next());
 		TestCase.assertTrue(i.next().startsWith("\thash:"));
+		TestCase.assertEquals("\t---", i.next());
 		TestCase.assertTrue(i.next().startsWith("hash:"));
 	}
 

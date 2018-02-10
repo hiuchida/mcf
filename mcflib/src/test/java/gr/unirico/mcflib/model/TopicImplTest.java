@@ -38,8 +38,9 @@ public class TopicImplTest {
 	public void testToList() throws Exception {
 		t.setUrl(TopicImplTest.TESTURL);
 		List<String> l = t.toList();
-		TestCase.assertEquals(9, l.size());
+		TestCase.assertEquals(12, l.size());
 		Iterator<String> i = l.iterator();
+		TestCase.assertEquals("---", i.next());
 		TestCase.assertEquals("class:gr.unirico.mcflib.model.TopicImpl", i.next());
 		TestCase.assertEquals("previd:000001", i.next());
 		TestCase.assertEquals("prevhash:0", i.next());
@@ -48,6 +49,9 @@ public class TopicImplTest {
 		TestCase.assertEquals("timestamp:2018-01-01", i.next());
 		TestCase.assertEquals("status:editing", i.next());
 		TestCase.assertEquals("url:testUrl", i.next());
+		TestCase.assertEquals("\t---", i.next());
+		TestCase.assertEquals("\t---", i.next());
+
 		TestCase.assertTrue(i.next().startsWith("hash:"));
 	}
 
@@ -59,8 +63,9 @@ public class TopicImplTest {
 		t.setUrl(TopicImplTest.TESTURL);
 		t.addValidate(c);
 		List<String> l = t.toList();
-		TestCase.assertEquals(19, l.size());
+		TestCase.assertEquals(22, l.size());
 		Iterator<String> i = l.iterator();
+		TestCase.assertEquals("---", i.next());
 		TestCase.assertEquals("class:gr.unirico.mcflib.model.TopicImpl", i.next());
 		TestCase.assertEquals("previd:000001", i.next());
 		TestCase.assertEquals("prevhash:0", i.next());
@@ -69,6 +74,7 @@ public class TopicImplTest {
 		TestCase.assertEquals("timestamp:2018-01-01", i.next());
 		TestCase.assertEquals("status:editing", i.next());
 		TestCase.assertEquals("url:testUrl", i.next());
+		TestCase.assertEquals("\t---", i.next());
 		TestCase.assertEquals("\tclass:gr.unirico.mcflib.model.CommentImpl", i.next());
 		TestCase.assertEquals("\tprevid:first-id", i.next());
 		TestCase.assertEquals("\tprevhash:0", i.next());
@@ -79,6 +85,7 @@ public class TopicImplTest {
 		TestCase.assertEquals("\tuserid:testuser", i.next());
 		TestCase.assertEquals("\tcomment:testComment", i.next());
 		TestCase.assertTrue(i.next().startsWith("\thash:"));
+		TestCase.assertEquals("\t---", i.next());
 		TestCase.assertTrue(i.next().startsWith("hash:"));
 	}
 

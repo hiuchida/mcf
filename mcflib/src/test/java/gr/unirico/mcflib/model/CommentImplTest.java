@@ -40,8 +40,9 @@ public class CommentImplTest {
 		c.setUserid(CommentImplTest.TESTUSER);
 		c.setComment(CommentImplTest.TESTCOMMENT);
 		List<String> l = c.toList();
-		TestCase.assertEquals(10, l.size());
+		TestCase.assertEquals(11, l.size());
 		Iterator<String> i = l.iterator();
+		TestCase.assertEquals("---", i.next());
 		TestCase.assertEquals("class:gr.unirico.mcflib.model.CommentImpl", i.next());
 		TestCase.assertEquals("previd:000001", i.next());
 		TestCase.assertEquals("prevhash:0", i.next());

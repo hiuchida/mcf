@@ -51,8 +51,9 @@ public class NodeImplTest {
 	public void testNewListBuilder() throws Exception {
 		ListBuilder lb = n.newListBuilder(n.getClass());
 		List<String> l = lb.toList();
-		TestCase.assertEquals(7, l.size());
+		TestCase.assertEquals(8, l.size());
 		Iterator<String> i = l.iterator();
+		TestCase.assertEquals("---", i.next());
 		TestCase.assertEquals("class:gr.unirico.mcflib.model.CommentImpl", i.next());
 		TestCase.assertEquals("previd:000001", i.next());
 		TestCase.assertEquals("prevhash:0", i.next());
