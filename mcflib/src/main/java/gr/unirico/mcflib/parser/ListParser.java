@@ -45,7 +45,10 @@ public class ListParser {
 	}
 	
 	protected String[] splitLine() {
-		String line = itr.nextLine();
+		String line;
+		do {
+			line = itr.nextLine();
+		} while (line.endsWith("---"));
 		int idx = line.indexOf(":");
 		if (idx < 0) {
 			throwIllegalLine();

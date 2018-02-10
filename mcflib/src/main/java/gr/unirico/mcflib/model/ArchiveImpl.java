@@ -26,9 +26,14 @@ public class ArchiveImpl extends NodeImpl implements Archive {
 
 	public List<String> toList() {
 		ListBuilder lb = newListBuilder(ArchiveImpl.class);
-		for (TopicImpl t : list) {
-			lb.append(t.toList());
+		if (list.size() > 0) {
+			for (TopicImpl t : list) {
+				lb.append(t.toList());
+			}
+		} else {
+			lb.appendSeparator(true);
 		}
+		lb.appendSeparator(true);
 		lb.append("hash", hash);
 		return lb.toList();
 	}

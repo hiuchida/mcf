@@ -7,6 +7,7 @@ public class ListBuilder {
 	private List<String> list = new ArrayList<>();
 
 	public ListBuilder(Class<?> klass) {
+		appendSeparator(false);
 		append("class", klass.getName());
 	}
 
@@ -18,6 +19,14 @@ public class ListBuilder {
 
 	public void append(String key, String value) {
 		list.add(key + ":" + value);
+	}
+
+	public void appendSeparator(boolean bTab) {
+		if (bTab) {
+			list.add("\t---");
+		} else {
+			list.add("---");
+		}
 	}
 
 	public List<String> toList() {

@@ -28,9 +28,14 @@ public class TopicImpl extends NodeImpl implements Topic {
 	public List<String> toList() {
 		ListBuilder lb = newListBuilder(TopicImpl.class);
 		lb.append("url", url);
-		for (CommentImpl c : list) {
-			lb.append(c.toList());
+		if (list.size() > 0) {
+			for (CommentImpl c : list) {
+				lb.append(c.toList());
+			}
+		} else {
+			lb.appendSeparator(true);
 		}
+		lb.appendSeparator(true);
 		lb.append("hash", hash);
 		return lb.toList();
 	}
