@@ -2,6 +2,9 @@ package gr.unirico.mcflib.model;
 
 import gr.unirico.mcflib.api.Node;
 import gr.unirico.mcflib.exception.IllegalHashException;
+import gr.unirico.mcflib.exception.IllegalPrevidException;
+import gr.unirico.mcflib.exception.IllegalProofException;
+import gr.unirico.mcflib.impl.ProofOfWork;
 import gr.unirico.mcflib.util.DateUtil;
 import gr.unirico.mcflib.util.DigestBuilder;
 import gr.unirico.mcflib.util.ListBuilder;
@@ -71,6 +74,28 @@ public abstract class NodeImpl implements Node {
 		db.append("proof", proof);
 		return db;
 	}
+
+	protected synchronized void archive(boolean bValidate, NodeImpl parent, String previd, String prevhash, int prevproof) {
+		checkArchived();
+		if (bValidate) {
+			if (!previd.equals(this.previd)) {
+				throw new IllegalPrevidException(previd + "," + this.previd);
+			}
+			if (!prevhash.equals(this.prevhash)) {
+				throw new IllegalHashException(prevhash + "," + this.prevhash);
+			}
+			if (!ProofOfWork.validate(prevproof, this.proof)) {
+				throw new IllegalProofException(prevproof + "," + this.proof);
+			}
+		} else {
+			this.previd = previd;
+			this.prevhash = prevhash;
+			this.timestamp = DateUtil.createTimestampStr();
+			this.proof = ProofOfWork.calc(prevproof);
+		}
+		setArchived(this);
+	}
+
 	protected synchronized void setArchived(NodeImpl parent) {
 		this.bArchived = true;
 		this.parent = parent;

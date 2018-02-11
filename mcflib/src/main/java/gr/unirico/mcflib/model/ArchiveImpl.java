@@ -6,10 +6,6 @@ import java.util.List;
 
 import gr.unirico.mcflib.api.Archive;
 import gr.unirico.mcflib.api.Topic;
-import gr.unirico.mcflib.exception.IllegalHashException;
-import gr.unirico.mcflib.exception.IllegalPrevidException;
-import gr.unirico.mcflib.exception.IllegalProofException;
-import gr.unirico.mcflib.impl.ProofOfWork;
 import gr.unirico.mcflib.impl.TopicComparator;
 import gr.unirico.mcflib.util.DateUtil;
 import gr.unirico.mcflib.util.DigestBuilder;
@@ -88,27 +84,6 @@ public class ArchiveImpl extends NodeImpl implements Archive {
 		return list.get(list.size() - 1).getProof();
 	}
 	
-	void archive(boolean bValidate, NodeImpl parent, String previd, String prevhash, int prevproof) {
-		checkArchived();
-		if (bValidate) {
-			if (!this.previd.equals(previd)) {
-				throw new IllegalPrevidException(this.previd);
-			}
-			if (!this.prevhash.equals(prevhash)) {
-				throw new IllegalHashException(this.prevhash);
-			}
-			if (!ProofOfWork.validate(prevproof, this.proof)) {
-				throw new IllegalProofException(prevproof + "," + this.proof);
-			}
-		} else {
-			this.previd = previd;
-			this.prevhash = prevhash;
-			this.timestamp = DateUtil.createTimestampStr();
-			this.proof = ProofOfWork.calc(prevproof);
-		}
-		setArchived(this);
-	}
-
 	public List<Topic> getList() {
 		return getList(false);
 	}

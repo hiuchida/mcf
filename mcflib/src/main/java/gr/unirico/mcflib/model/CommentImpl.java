@@ -3,11 +3,6 @@ package gr.unirico.mcflib.model;
 import java.util.List;
 
 import gr.unirico.mcflib.api.Comment;
-import gr.unirico.mcflib.exception.IllegalHashException;
-import gr.unirico.mcflib.exception.IllegalPrevidException;
-import gr.unirico.mcflib.exception.IllegalProofException;
-import gr.unirico.mcflib.impl.ProofOfWork;
-import gr.unirico.mcflib.util.DateUtil;
 import gr.unirico.mcflib.util.DigestBuilder;
 import gr.unirico.mcflib.util.ListBuilder;
 
@@ -44,27 +39,6 @@ public class CommentImpl extends NodeImpl implements Comment {
 		return "(" + this.id + "," + this.previd + ")";
 	}
 	
-	void archive(boolean bValidate, NodeImpl parent, String previd, String prevhash, int prevproof) {
-		checkArchived();
-		if (bValidate) {
-			if (!this.previd.equals(previd)) {
-				throw new IllegalPrevidException(this.previd);
-			}
-			if (!this.prevhash.equals(prevhash)) {
-				throw new IllegalHashException(this.prevhash);
-			}
-			if (!ProofOfWork.validate(prevproof, this.proof)) {
-				throw new IllegalProofException(prevproof + "," + this.proof);
-			}
-		} else {
-			this.previd = previd;
-			this.prevhash = prevhash;
-			this.timestamp = DateUtil.createTimestampStr();
-			this.proof = ProofOfWork.calc(prevproof);
-		}
-		setArchived(this);
-	}
-
 	public synchronized void setUserid(String userid) {
 		checkArchived();
 		this.userid = userid;
