@@ -13,23 +13,23 @@ public class ListParserIterator {
 
 	public String nextLine() {
 		if (lineNo >= list.size()) {
-			throw new RuntimeException("List lack");
+			throw new IllegalStateException("List lack");
 		}
 		return list.get(lineNo++);
 	}
 	
 	public void checkEol() {
 		if (lineNo != list.size()) {
-			throw new RuntimeException("List remain");
+			throw new IllegalStateException("List remain");
 		}
 	}
 	
 	public void throwIllegalLine() {
 		if (lineNo <= 0) {
-			throw new RuntimeException("List lack");
+			throw new IllegalStateException("List lack");
 		}
 		String line = list.get(lineNo - 1);
-		throw new RuntimeException("Illegal line(" + lineNo + "):" + line);
+		throw new IllegalStateException("Illegal line(" + lineNo + "):" + line);
 	}
 
 }

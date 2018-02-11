@@ -105,14 +105,14 @@ public abstract class NodeImpl implements Node {
 	
 	protected synchronized void checkArchived() {
 		if (bArchived) {
-			throw new RuntimeException("archived");
+			throw new IllegalStateException("Already archived");
 		}
 	}
 
 	public void validate(String hash) {
 		this.hash = toDigestString();
-		if (!this.hash.equals(hash)) {
-			throw new IllegalHashException(this.hash);
+		if (!hash.equals(this.hash)) {
+			throw new IllegalHashException(hash + "," + this.hash);
 		}
 	}
 
