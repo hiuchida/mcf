@@ -3,20 +3,33 @@ package gr.unirico.mcflib.util;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class DigestUtil {
-	public static final String SHA256 = "SHA-256";
-	
-	public static String calcBase64(String algo, byte[] bytes) {
+	private static Logger logger = LoggerFactory.getLogger(DigestUtil.class);
+	private static final String SHA256 = "SHA-256";
+
+	public static String calcBase64(String s) {
+		return calcBase64(SHA256, s.getBytes());
+	}
+
+	public static String calcHex(String s) {
+		return calcHex(SHA256, s.getBytes());
+	}
+
+	private static String calcBase64(String algo, byte[] bytes) {
 		try {
 			MessageDigest md = MessageDigest.getInstance(algo);
 			md.update(bytes);
 			return Base64Util.encode(md.digest());
 		} catch (NoSuchAlgorithmException e) {
-			throw new RuntimeException(e);
+			logger.error("Error in calcBase64", e);
+			throw new IllegalArgumentException(e);
 		}
 	}
 
-	public static String calcHex(String algo, byte[] bytes) {
+	private static String calcHex(String algo, byte[] bytes) {
 		try {
 			MessageDigest md = MessageDigest.getInstance(algo);
 			md.update(bytes);
@@ -26,7 +39,8 @@ public class DigestUtil {
 			}
 			return sb.toString();
 		} catch (NoSuchAlgorithmException e) {
-			throw new RuntimeException(e);
+			logger.error("Error in calcHex", e);
+			throw new IllegalArgumentException(e);
 		}
 	}
 

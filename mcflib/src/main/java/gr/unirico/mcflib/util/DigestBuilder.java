@@ -1,6 +1,10 @@
 package gr.unirico.mcflib.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class DigestBuilder {
+	private static Logger logger = LoggerFactory.getLogger(DigestBuilder.class);
 	private StringBuilder sb = new StringBuilder();
 
 	public DigestBuilder(Class<?> klass) {
@@ -18,7 +22,8 @@ public class DigestBuilder {
 
 	@Override
 	public String toString() {
-		return DigestUtil.calcBase64(DigestUtil.SHA256, sb.toString().getBytes());
+		logger.debug("calc: {}", sb.toString());
+		return DigestUtil.calcBase64(sb.toString());
 	}
 
 }

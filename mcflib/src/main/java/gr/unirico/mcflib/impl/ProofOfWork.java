@@ -9,26 +9,27 @@ public class ProofOfWork {
 	private static Logger logger = LoggerFactory.getLogger(ProofOfWork.class);
 
 	public static int calc(int lastProof) {
-		logger.info("calc: {}", lastProof);
 		int proof = 0;
 		if (lastProof >= 0) {
 			while (!validatePrivate(lastProof, proof)) {
 				proof++;
 			}
 		}
+		logger.info("calc: {} -> {}", lastProof, proof);
 		return proof;
 	}
 
 	public static boolean validate(int lastProof, int proof) {
-		logger.info("validate: {}, {}", lastProof, proof);
-		return validatePrivate(lastProof, proof);
+		boolean rc = validatePrivate(lastProof, proof);
+		logger.info("validate: {}, {} -> {}", lastProof, proof, rc);
+		return rc;
 	}
 	
 	private static boolean validatePrivate(int lastProof, int proof) {
 		if (lastProof >= 0) {
 			String guess = String.valueOf(lastProof) + String.valueOf(proof);
-			String guess_hash = DigestUtil.calcHex(DigestUtil.SHA256, guess.toString().getBytes());
-			return guess_hash.startsWith("0000");
+			String hash = DigestUtil.calcHex(guess);
+			return hash.startsWith("0000");
 		} else {
 			return proof == 0;
 		}
