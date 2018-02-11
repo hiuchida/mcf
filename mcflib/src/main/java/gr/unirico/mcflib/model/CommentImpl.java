@@ -5,6 +5,8 @@ import java.util.List;
 import gr.unirico.mcflib.api.Comment;
 import gr.unirico.mcflib.exception.IllegalHashException;
 import gr.unirico.mcflib.exception.IllegalPrevidException;
+import gr.unirico.mcflib.exception.IllegalProofException;
+import gr.unirico.mcflib.impl.ProofOfWork;
 import gr.unirico.mcflib.util.DateUtil;
 import gr.unirico.mcflib.util.DigestBuilder;
 import gr.unirico.mcflib.util.ListBuilder;
@@ -17,8 +19,8 @@ public class CommentImpl extends NodeImpl implements Comment {
 		super(name);
 	}
 
-	public CommentImpl(String previd, String prevhash, String id, String name, String timestamp, String status) {
-		super(previd, prevhash, id, name, timestamp, status);
+	public CommentImpl(String previd, String prevhash, String id, String name, String timestamp, String status, int proof) {
+		super(previd, prevhash, id, name, timestamp, status, proof);
 	}
 
 	public List<String> toList() {
@@ -42,7 +44,7 @@ public class CommentImpl extends NodeImpl implements Comment {
 		return "(" + this.id + "," + this.previd + ")";
 	}
 	
-	void archive(boolean bValidate, NodeImpl parent, String previd, String prevhash) {
+	void archive(boolean bValidate, NodeImpl parent, String previd, String prevhash, int prevproof) {
 		checkArchived();
 		if (bValidate) {
 			if (!this.previd.equals(previd)) {
@@ -51,10 +53,14 @@ public class CommentImpl extends NodeImpl implements Comment {
 			if (!this.prevhash.equals(prevhash)) {
 				throw new IllegalHashException(this.prevhash);
 			}
+			if (!ProofOfWork.validate(prevproof, this.proof)) {
+				throw new IllegalProofException(prevproof + "," + this.proof);
+			}
 		} else {
 			this.previd = previd;
 			this.prevhash = prevhash;
 			this.timestamp = DateUtil.createTimestampStr();
+			this.proof = ProofOfWork.calc(prevproof);
 		}
 		setArchived(this);
 	}

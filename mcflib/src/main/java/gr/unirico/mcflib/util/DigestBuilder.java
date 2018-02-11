@@ -12,9 +12,13 @@ public class DigestBuilder {
 		sb.append(key).append(":").append(value).append(";");
 	}
 
+	public void append(String key, int value) {
+		sb.append(key).append(":").append(value).append(";");
+	}
+
 	@Override
 	public String toString() {
-		return DigestUtil.calc(DigestUtil.SHA512, sb.toString().getBytes());
+		return DigestUtil.calcBase64(DigestUtil.SHA256, sb.toString().getBytes());
 	}
 
 }

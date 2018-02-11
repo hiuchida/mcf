@@ -9,6 +9,7 @@ import gr.unirico.mcflib.util.UniqueIdUtil;
 
 public abstract class NodeImpl implements Node {
 	protected static final String FIRSTID = "first-id";
+	protected static final int FIRSTPROOF = 0;
 	protected static final String FIRSTHASH = "0";
 	private static final String EDITING = "editing";
 	private static final String FIXED = "fixed";
@@ -21,6 +22,7 @@ public abstract class NodeImpl implements Node {
 	protected String name;
 	protected String timestamp;
 	protected String status;
+	protected int proof;
 	protected String hash;
 	
 	public NodeImpl(String name) {
@@ -30,15 +32,17 @@ public abstract class NodeImpl implements Node {
 		this.name = name;
 		this.timestamp = DateUtil.createTimestampStr();
 		this.status = EDITING;
+		this.proof = FIRSTPROOF;
 	}
 	
-	public NodeImpl(String previd, String prevhash, String id, String name, String timestamp, String status) {
+	public NodeImpl(String previd, String prevhash, String id, String name, String timestamp, String status, int proof) {
 		this.previd = previd;
 		this.prevhash = prevhash;
 		this.id = id;
 		this.name = name;
 		this.timestamp = timestamp;
 		this.status = status;
+		this.proof = proof;
 	}
 	
 	protected abstract String toDigestString();
@@ -52,6 +56,7 @@ public abstract class NodeImpl implements Node {
 		lb.append("name", name);
 		lb.append("timestamp", timestamp);
 		lb.append("status", status);
+		lb.append("proof", proof);
 		return lb;
 	}
 
@@ -63,6 +68,7 @@ public abstract class NodeImpl implements Node {
 		db.append("name", name);
 		db.append("timestamp", timestamp);
 		db.append("status", status);
+		db.append("proof", proof);
 		return db;
 	}
 	protected synchronized void setArchived(NodeImpl parent) {
@@ -111,6 +117,10 @@ public abstract class NodeImpl implements Node {
 
 	public String getStatus() {
 		return status;
+	}
+
+	public int getProof() {
+		return proof;
 	}
 
 	public String getHash() {

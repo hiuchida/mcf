@@ -15,7 +15,8 @@ public class ArchiveParser extends ListParser {
 		String name = get("name");
 		String timestamp = get("timestamp");
 		String status = get("status");
-		ArchiveImpl a = new ArchiveImpl(previd, prevhash, id, name, timestamp, status);
+		String proof = get("proof");
+		ArchiveImpl a = new ArchiveImpl(previd, prevhash, id, name, timestamp, status, Integer.parseInt(proof));
 		String hash;
 		while (true) {
 			String[] pair = splitLine();

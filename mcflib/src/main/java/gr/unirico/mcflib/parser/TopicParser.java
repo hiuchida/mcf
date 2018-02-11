@@ -15,7 +15,8 @@ public class TopicParser extends ListParser {
 		String name = get("name");
 		String timestamp = get("timestamp");
 		String status = get("status");
-		TopicImpl t = new TopicImpl(previd, prevhash, id, name, timestamp, status);
+		String proof = get("proof");
+		TopicImpl t = new TopicImpl(previd, prevhash, id, name, timestamp, status, Integer.parseInt(proof));
 		t.setUrl(get("url"));
 		String hash;
 		while (true) {

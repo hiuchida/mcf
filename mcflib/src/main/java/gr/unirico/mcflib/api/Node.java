@@ -8,6 +8,7 @@ public interface Node {
 	public String getName();
 	public String getTimestamp();
 	public String getStatus();
+	public int getProof();
 	public String getHash();
 
 }

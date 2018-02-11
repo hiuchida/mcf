@@ -21,6 +21,10 @@ public class ListBuilder {
 		list.add(key + ":" + value);
 	}
 
+	public void append(String key, int value) {
+		list.add(key + ":" + value);
+	}
+
 	public void appendSeparator(boolean bTab) {
 		if (bTab) {
 			list.add("\t---");

@@ -14,7 +14,8 @@ public class CommentParser extends ListParser {
 		String name = get("name");
 		String timestamp = get("timestamp");
 		String status = get("status");
-		CommentImpl c = new CommentImpl(previd, prevhash, id, name, timestamp, status);
+		String proof = get("proof");
+		CommentImpl c = new CommentImpl(previd, prevhash, id, name, timestamp, status, Integer.parseInt(proof));
 		c.setUserid(get("userid"));
 		c.setComment(get("comment"));
 		String hash = get("hash");

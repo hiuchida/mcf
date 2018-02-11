@@ -8,6 +8,8 @@ import gr.unirico.mcflib.api.Archive;
 import gr.unirico.mcflib.api.Topic;
 import gr.unirico.mcflib.exception.IllegalHashException;
 import gr.unirico.mcflib.exception.IllegalPrevidException;
+import gr.unirico.mcflib.exception.IllegalProofException;
+import gr.unirico.mcflib.impl.ProofOfWork;
 import gr.unirico.mcflib.impl.TopicComparator;
 import gr.unirico.mcflib.util.DateUtil;
 import gr.unirico.mcflib.util.DigestBuilder;
@@ -20,8 +22,8 @@ public class ArchiveImpl extends NodeImpl implements Archive {
 		super(name);
 	}
 
-	public ArchiveImpl(String previd, String prevhash, String id, String name, String timestamp, String status) {
-		super(previd, prevhash, id, name, timestamp, status);
+	public ArchiveImpl(String previd, String prevhash, String id, String name, String timestamp, String status, int proof) {
+		super(previd, prevhash, id, name, timestamp, status, proof);
 	}
 
 	public List<String> toList() {
@@ -54,14 +56,14 @@ public class ArchiveImpl extends NodeImpl implements Archive {
 	
 	public synchronized void add(Topic _t) {
 		TopicImpl t = (TopicImpl)_t;
-		t.archive(false, this, getLastid(), getLasthash());
+		t.archive(false, this, getLastid(), getLasthash(), getLastproof());
 		list.add(t);
 		this.timestamp = DateUtil.createTimestampStr();
 	}
 	
 	public void addValidate(Topic _t) {
 		TopicImpl t = (TopicImpl)_t;
-		t.archive(true, this, getLastid(), getLasthash());
+		t.archive(true, this, getLastid(), getLasthash(), getLastproof());
 		list.add(t);
 	}
 	
@@ -79,7 +81,14 @@ public class ArchiveImpl extends NodeImpl implements Archive {
 		return list.get(list.size() - 1).getHash();
 	}
 	
-	void archive(boolean bValidate, NodeImpl parent, String previd, String prevhash) {
+	private int getLastproof() {
+		if (list.size() == 0) {
+			return -1;
+		}
+		return list.get(list.size() - 1).getProof();
+	}
+	
+	void archive(boolean bValidate, NodeImpl parent, String previd, String prevhash, int prevproof) {
 		checkArchived();
 		if (bValidate) {
 			if (!this.previd.equals(previd)) {
@@ -88,10 +97,14 @@ public class ArchiveImpl extends NodeImpl implements Archive {
 			if (!this.prevhash.equals(prevhash)) {
 				throw new IllegalHashException(this.prevhash);
 			}
+			if (!ProofOfWork.validate(prevproof, this.proof)) {
+				throw new IllegalProofException(prevproof + "," + this.proof);
+			}
 		} else {
 			this.previd = previd;
 			this.prevhash = prevhash;
 			this.timestamp = DateUtil.createTimestampStr();
+			this.proof = ProofOfWork.calc(prevproof);
 		}
 		setArchived(this);
 	}

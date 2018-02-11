@@ -8,7 +8,9 @@ import gr.unirico.mcflib.api.Comment;
 import gr.unirico.mcflib.api.Topic;
 import gr.unirico.mcflib.exception.IllegalHashException;
 import gr.unirico.mcflib.exception.IllegalPrevidException;
+import gr.unirico.mcflib.exception.IllegalProofException;
 import gr.unirico.mcflib.impl.CommentComparator;
+import gr.unirico.mcflib.impl.ProofOfWork;
 import gr.unirico.mcflib.util.DateUtil;
 import gr.unirico.mcflib.util.DigestBuilder;
 import gr.unirico.mcflib.util.ListBuilder;
@@ -21,8 +23,8 @@ public class TopicImpl extends NodeImpl implements Topic {
 		super(name);
 	}
 
-	public TopicImpl(String previd, String prevhash, String id, String name, String timestamp, String status) {
-		super(previd, prevhash, id, name, timestamp, status);
+	public TopicImpl(String previd, String prevhash, String id, String name, String timestamp, String status, int proof) {
+		super(previd, prevhash, id, name, timestamp, status, proof);
 	}
 
 	public List<String> toList() {
@@ -58,14 +60,14 @@ public class TopicImpl extends NodeImpl implements Topic {
 	
 	public synchronized void add(Comment _c) {
 		CommentImpl c = (CommentImpl)_c;
-		c.archive(false, this, getLastid(), getLasthash());
+		c.archive(false, this, getLastid(), getLasthash(), getLastproof());
 		list.add(c);
 		this.timestamp = DateUtil.createTimestampStr();
 	}
 	
 	public void addValidate(Comment _c) {
 		CommentImpl c = (CommentImpl)_c;
-		c.archive(true, this, getLastid(), getLasthash());
+		c.archive(true, this, getLastid(), getLasthash(), getLastproof());
 		list.add(c);
 	}
 	
@@ -83,7 +85,14 @@ public class TopicImpl extends NodeImpl implements Topic {
 		return list.get(list.size() - 1).getHash();
 	}
 
-	void archive(boolean bValidate, NodeImpl parent, String previd, String prevhash) {
+	private int getLastproof() {
+		if (list.size() == 0) {
+			return -1;
+		}
+		return list.get(list.size() - 1).getProof();
+	}
+	
+	void archive(boolean bValidate, NodeImpl parent, String previd, String prevhash, int prevproof) {
 		checkArchived();
 		if (bValidate) {
 			if (!this.previd.equals(previd)) {
@@ -92,10 +101,14 @@ public class TopicImpl extends NodeImpl implements Topic {
 			if (!this.prevhash.equals(prevhash)) {
 				throw new IllegalHashException(this.prevhash);
 			}
+			if (!ProofOfWork.validate(prevproof, this.proof)) {
+				throw new IllegalProofException(prevproof + "," + this.proof);
+			}
 		} else {
 			this.previd = previd;
 			this.prevhash = prevhash;
 			this.timestamp = DateUtil.createTimestampStr();
+			this.proof = ProofOfWork.calc(prevproof);
 		}
 		setArchived(this);
 	}
