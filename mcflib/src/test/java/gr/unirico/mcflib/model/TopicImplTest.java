@@ -129,7 +129,7 @@ public class TopicImplTest {
 		try {
 			t.setUrl(TopicImplTest.TESTURL);
 			TestCase.fail();
-		} catch (Exception e) {
+		} catch (IllegalStateException e) {
 		}
 	}
 

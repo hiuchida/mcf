@@ -88,7 +88,7 @@ public class CommentImplTest {
 		try {
 			c.setUserid(CommentImplTest.TESTUSER);
 			TestCase.fail();
-		} catch (Exception e) {
+		} catch (IllegalStateException e) {
 		}
 	}
 
@@ -99,7 +99,7 @@ public class CommentImplTest {
 		try {
 			c.setComment(CommentImplTest.TESTCOMMENT);
 			TestCase.fail();
-		} catch (Exception e) {
+		} catch (IllegalStateException e) {
 		}
 	}
 

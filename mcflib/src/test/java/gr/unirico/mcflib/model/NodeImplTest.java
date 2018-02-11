@@ -81,7 +81,7 @@ public class NodeImplTest {
 		try {
 			n.checkArchived();
 			TestCase.fail();
-		} catch (Exception e) {
+		} catch (IllegalStateException e) {
 		}
 	}
 
