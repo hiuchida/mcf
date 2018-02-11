@@ -25,11 +25,13 @@ public class NodeImplTest {
 	public static final String ARCHIVENAME = "archiveTest";
 	public static final String TESTTIMESTAMP = "2018-01-01";
 	public static final String TESTSTATUS = "editing";
+	public static final int TESTPROOF = 0;
+	public static final int TESTPROOF2 = 69732;
 	private NodeImpl n;
 
 	@Before
 	public void setUp() throws Exception {
-		n = new CommentImpl(NodeImplTest.TESTPREVID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTID, NodeImplTest.COMMENTNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS);
+		n = new CommentImpl(NodeImplTest.TESTPREVID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTID, NodeImplTest.COMMENTNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS, NodeImplTest.TESTPROOF);
 		logger.debug("setUp:");
 	}
 
@@ -51,7 +53,7 @@ public class NodeImplTest {
 	public void testNewListBuilder() throws Exception {
 		ListBuilder lb = n.newListBuilder(n.getClass());
 		List<String> l = lb.toList();
-		TestCase.assertEquals(8, l.size());
+		TestCase.assertEquals(9, l.size());
 		Iterator<String> i = l.iterator();
 		TestCase.assertEquals("---", i.next());
 		TestCase.assertEquals("class:gr.unirico.mcflib.model.CommentImpl", i.next());
@@ -61,12 +63,13 @@ public class NodeImplTest {
 		TestCase.assertEquals("name:commentTest", i.next());
 		TestCase.assertEquals("timestamp:2018-01-01", i.next());
 		TestCase.assertEquals("status:editing", i.next());
+		TestCase.assertEquals("proof:0", i.next());
 	}
 
 	@Test
 	public void testNewDigestBuilder() throws Exception {
 		DigestBuilder db = n.newDigestBuilder(CommentImpl.class);
-		String hash = "BV/4fSZJaiOeDWn7zlZELnHT4D5+pbM3g2X6/DxI+tHBg/OCNpyHkgQZdGApddLBe6neVTstmCWMzbDkSqf5CA==";
+		String hash = "rYRxljWgfcVdRlqXEQ+jlZGVxMLfQsSgNNjcsUPxZK8=";
 		TestCase.assertEquals(hash, db.toString());
 	}
 
@@ -84,7 +87,7 @@ public class NodeImplTest {
 
 	@Test
 	public void testValidate() throws Exception {
-		String hash = "P5hOEFVEMVRIhGrva1ThO7wKvkli9cEBOFCRsX3oL6hgGkRSpCCvT95FMCAasQW+tHcyvZCz06tyZaP1a5jx3w==";
+		String hash = "cg4ylzLfRc+iNL5fP3nb4GeBfzluBsXNYkKf7SAPaww=";
 		n.validate(hash);
 	}
 
