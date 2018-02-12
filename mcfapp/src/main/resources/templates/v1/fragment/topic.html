@@ -2,12 +2,28 @@
 	<div class="card-body">
 		<p class="card-text">
 		<div>
-			<span>ID：</span>
-			<span th:utext="${topic.id}"></span>
-		</div>
-		<div>
 			<span>トピック：</span>
 			<span th:utext="${topic.name}"></span>
+		</div>
+		<div>
+			<span>サイトURL：</span>
+			<span th:utext="${topic.url}"></span>
+		</div>
+		<div>
+			<span>タイムスタンプ：</span>
+			<span th:utext="${topic.timestamp}"></span>
+		</div>
+		<div>
+			<span>プルーフ：</span>
+			<span th:utext="${topic.proof}"></span>
+		</div>
+		<div>
+			<span>ハッシュ値：</span>
+			<span th:utext="${topic.hash}"></span>
+		</div>
+		<div>
+			<span>プレハッシュ値：</span>
+			<span th:utext="${topic.prevhash}"></span>
 		</div>
 		</p>
 	</div>
@@ -16,12 +32,28 @@
 	<div class="card-body">
 		<p class="card-text">
 		<div>
-			<span>ID：</span>
-			<span th:utext="${archive.id}"></span>
+			<span>トピック：</span>
+			<span th:utext="${archive.name}"></span>
 		</div>
 		<div>
-			<span>アーカイブ：</span>
-			<span th:utext="${archive.name}"></span>
+			<span>サイトURL：</span>
+			<span th:utext="${archive.url}"></span>
+		</div>
+		<div>
+			<span>タイムスタンプ：</span>
+			<span th:utext="${archive.timestamp}"></span>
+		</div>
+		<div>
+			<span>プルーフ：</span>
+			<span th:utext="${archive.proof}"></span>
+		</div>
+		<div>
+			<span>ハッシュ値：</span>
+			<span th:utext="${archive.hash}"></span>
+		</div>
+		<div>
+			<span>プレハッシュ値：</span>
+			<span th:utext="${archive.prevhash}"></span>
 		</div>
 		</p>
 	</div>
