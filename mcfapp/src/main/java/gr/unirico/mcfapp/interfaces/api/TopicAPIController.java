@@ -34,6 +34,7 @@ public class TopicAPIController {
 	ArchiveService archiveService;
 
 	@GetMapping
+	@ResponseStatus(HttpStatus.OK)
 	public ModelAndView getTopics(){
 		ModelAndView mav = new ModelAndView("v1/fragment/topic::topic");
 		mav.addObject("topics", topicService.getTopicList());
@@ -47,6 +48,7 @@ public class TopicAPIController {
 	}
 
 	@GetMapping("{topicId}/comments")
+	@ResponseStatus(HttpStatus.OK)
 	public ModelAndView getComments(@PathVariable("topicId") String tid){
 		ModelAndView mav = new ModelAndView("v1/fragment/comment::comment");
 		mav.addObject("data", topicService.getTopicData(tid));
