@@ -1,8 +1,13 @@
 package gr.unirico.mcfapp.interfaces.api;
 
+import gr.unirico.mcfapp.application.ArchiveService;
+import gr.unirico.mcfapp.application.TopicService;
+import gr.unirico.mcflib.api.Comment;
 import gr.unirico.mcflib.api.McfApi;
 import gr.unirico.mcflib.api.McfApiFactory;
 import gr.unirico.mcflib.api.Topic;
+import gr.unirico.mcflib.model.CommentImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,39 +27,45 @@ import java.util.Map;
 @RequestMapping("/api/topics")
 public class TopicAPIController {
 
-	McfApi api = McfApiFactory.getInstance();
+	@Autowired
+	TopicService topicService;
+
+	@Autowired
+	ArchiveService archiveService;
 
 	@GetMapping
 	public ModelAndView getTopics(){
-		List<Topic> topics = api.getTopicList();
 		ModelAndView mav = new ModelAndView("v1/fragment/topic::topic");
-		mav.addObject("topics", topics);
+		mav.addObject("topics", topicService.getTopicList());
 		return mav;
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public void saveTopic(@RequestBody Map<String, String> data) {
-		String content = data.get("data");
-		try {
-			api.writeTopic(api.newTopic(content));
-		} catch (Exception e){
-			e.printStackTrace();
-		}
+	public void saveTopic( @RequestBody Map<String, String> data) {
+		topicService.createTopic(data.get("data"));
+	}
+
+	@GetMapping("{topicId}/comments")
+	public ModelAndView getComments(@PathVariable("topicId") String tid){
+		ModelAndView mav = new ModelAndView("v1/fragment/comment::comment");
+		mav.addObject("data", topicService.getTopicData(tid));
+		return mav;
 	}
 
 	@PostMapping("/{topicId}/comment")
 	@ResponseStatus(HttpStatus.CREATED)
-	public void saveComment(@RequestBody Map<String, String> data) {
+	public void saveComment(@PathVariable("topicId") String tid, @RequestBody Map<String, String> data) {
 		String content = data.get("data");
-		System.out.println(content);
+		topicService.getTopic(tid).add(topicService.createComment(content));
 	}
 
 	@GetMapping("/{topicId}/archive")
 	@ResponseStatus(HttpStatus.OK)
-	public Map<String, String> archive(@PathVariable("topicId") String topicId) {
+	public Map<String, String> archive(@PathVariable("topicId") String tid) {
+		archiveService.archiveTopic(topicService.getTopic(tid));
 		Map<String, String> map = new HashMap<>();
-		map.put("archiveId", topicId);
+		map.put("archiveId", tid);
 		return map;
 	}
 }
