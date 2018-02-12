@@ -1,12 +1,9 @@
 <div class="card" th:fragment="topic" th:each="topic: ${topics}" style="margin-bottom:5px;" th:attr="onclick='moveTopic(\'' + ${topic.id} + '\');'">
 	<div class="card-body">
+		<h5 class="card-title" th:text="${topic.name}"></h5>
 		<p class="card-text">
 		<div>
-			<span>トピック：</span>
-			<span th:utext="${topic.name}"></span>
-		</div>
-		<div>
-			<span>サイトURL：</span>
+			<span>サイト：</span>
 			<span th:utext="${topic.url}"></span>
 		</div>
 		<div>
@@ -30,13 +27,10 @@
 </div>
 <div class="card" th:fragment="archive" th:each="archive: ${archives}" style="margin-bottom:5px;" th:attr="onclick='moveArchive(\'' + ${archive.id} + '\');'">
 	<div class="card-body">
+		<h5 class="card-title" th:text="${archive.name}"></h5>
 		<p class="card-text">
 		<div>
-			<span>トピック：</span>
-			<span th:utext="${archive.name}"></span>
-		</div>
-		<div>
-			<span>サイトURL：</span>
+			<span>サイト：</span>
 			<span th:utext="${archive.url}"></span>
 		</div>
 		<div>
