@@ -38,7 +38,9 @@ public class TopicAPIController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public void saveTopic( @RequestBody Map<String, String> data) {
-		topicService.createTopic(data.get("data"));
+		String sitename = data.get("data"); //TODO サイト名
+		String siteurl = data.get("data");
+		topicService.createTopic(sitename, siteurl);
 	}
 
 	@GetMapping("{topicId}/comments")
@@ -52,8 +54,9 @@ public class TopicAPIController {
 	@PostMapping("/{topicId}/comment")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void saveComment(@PathVariable("topicId") String tid, @RequestBody Map<String, String> data) {
-		String content = data.get("data");
-		topicService.getTopic(tid).add(topicService.createComment(content));
+		String userid = "testuser1"; //TODO ログインしたユーザID
+		String comment = data.get("data");
+		topicService.getTopic(tid).add(topicService.createComment(userid, comment));
 	}
 
 	@GetMapping("/{topicId}/archive")

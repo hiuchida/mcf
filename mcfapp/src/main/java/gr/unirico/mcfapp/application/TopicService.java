@@ -48,12 +48,14 @@ public class TopicService {
 
 	/**
 	 * トピックを作成
-	 * @return トピック
+	 * @param sitename サイト名
+	 * @param siteurl サイトurl
+	 * @return トピックインスタンス
 	 */
-	public Topic createTopic(String url) {
+	public Topic createTopic(String sitename, String siteurl) {
 	    Topic t = null;
 	    try{
-	        t = api.newTopic(url);
+	        t = api.newTopic(sitename, siteurl);
 	        api.writeTopic(t);
         }catch (Exception e){
             logger.error("Error in createTopic", e);
@@ -79,10 +81,12 @@ public class TopicService {
 
 	/**
 	 * コメントを作成
-	 * @return コメント
+	 * @param userid ユーザID
+	 * @param comment コメント
+	 * @return コメントインスタンス
 	 */
-	public Comment createComment(String content) {
-		return api.newComment(content);
+	public Comment createComment(String userid, String comment) {
+		return api.newComment(userid, comment);
 	}
 
 	/**
