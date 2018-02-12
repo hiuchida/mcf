@@ -12,7 +12,8 @@
 	</ol>
 	<div class="jumbotron">
 		<h1 th:text="|${data.name}（アーカイブ）|"></h1>
-		<p>アーカイブされた情報を表示しています。</p>
+		<p><a target="_blank" th:href="${data.url}" th:text="${data.url}"></a></p>
+		<p>アーカイブされたトピックの情報を表示しています。</p>
 	</div>
 	<div class="row">
 		<div id="comment-list" class="col-md-12">

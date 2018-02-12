@@ -72,6 +72,7 @@ public class ArchiveService {
 		Topic topic = getArchivedTopic(aid);
 		map.put("id", aid);
 		map.put("name", topic != null ? topic.getName() : "[topic not found.]");
+        map.put("url", topic != null ? topic.getUrl() : "[topic not found.]");
 		map.put("comments", topic != null ? topic.getList() : new ArrayList<Comment>());
 		return map;
 	}

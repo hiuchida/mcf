@@ -98,7 +98,8 @@ public class TopicService {
         HashMap<String, Object> map = new HashMap<>();
         Topic topic = getTopic(tid);
         map.put("id", tid);
-        map.put("name", topic != null ? topic.getUrl() : "[topic not found.]");
+        map.put("name", topic != null ? topic.getName() : "[topic not found.]");
+        map.put("url", topic != null ? topic.getUrl() : "[topic not found.]");
         map.put("comments", topic != null ? topic.getList() : new ArrayList<Comment>());
 	    return map;
     }
