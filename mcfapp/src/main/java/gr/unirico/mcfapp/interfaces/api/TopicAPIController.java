@@ -1,12 +1,8 @@
 package gr.unirico.mcfapp.interfaces.api;
 
-import gr.unirico.mcfapp.application.ArchiveService;
-import gr.unirico.mcfapp.application.TopicService;
-import gr.unirico.mcflib.api.Comment;
-import gr.unirico.mcflib.api.McfApi;
-import gr.unirico.mcflib.api.McfApiFactory;
-import gr.unirico.mcflib.api.Topic;
-import gr.unirico.mcflib.model.CommentImpl;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,10 +14,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import gr.unirico.mcfapp.application.ArchiveService;
+import gr.unirico.mcfapp.application.TopicService;
 
 @RestController
 @RequestMapping("/api/topics")
