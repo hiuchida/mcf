@@ -35,14 +35,19 @@ public class McfApiImpl implements McfApi {
 		return dataDir;
 	}
 
-	public Comment newComment(String name) {
-		logger.info("newComment: {}", name);
-		return new CommentImpl(name);
+	public Comment newComment(String userid, String comment) {
+		logger.info("newComment: {}, {}", userid, comment);
+		Comment c = new CommentImpl("comment name");
+		c.setUserid(userid);
+		c.setComment(comment);
+		return c;
 	}
 
-	public Topic newTopic(String name) {
-		logger.info("newTopic: {}", name);
-		return new TopicImpl(name);
+	public Topic newTopic(String sitename, String siteurl) {
+		logger.info("newTopic: {}, {}", sitename, siteurl);
+		Topic t = new TopicImpl(sitename);
+		t.setUrl(siteurl);
+		return t;
 	}
 
 	public synchronized List<Topic> getTopicList() {

@@ -24,8 +24,8 @@ public class Debug {
 		String id2;
 		String id3;
 		{
-			Topic t = api.newTopic("Thread-1");
-			Comment c = api.newComment("Comment-1");
+			Topic t = api.newTopic("Thread-1", "Site-1");
+			Comment c = api.newComment("User-1", "Comment-1");
 			t.add(c);
 			api.writeTopic(t);
 			id = t.getId();
@@ -36,7 +36,7 @@ public class Debug {
 			Topic t = api.readTopic(id);
 			out.println(t);
 			
-			Comment c = api.newComment("Comment-2");
+			Comment c = api.newComment("User-2", "Comment-2");
 			t.add(c);
 			api.writeTopic(t);
 		}
@@ -48,8 +48,8 @@ public class Debug {
 			api.archiveTopic(t);
 		}
 		{
-			Topic t = api.newTopic("Thread-2");
-			Comment c = api.newComment("Comment-1");
+			Topic t = api.newTopic("Thread-2", "Site-2");
+			Comment c = api.newComment("User-1", "Comment-1");
 			t.add(c);
 			api.writeTopic(t);
 			id2 = t.getId();
@@ -62,7 +62,7 @@ public class Debug {
 			api.archiveTopic(t);
 		}
 		{
-			Topic t = api.newTopic("Thread-3");
+			Topic t = api.newTopic("Thread-3", "Site-3");
 			api.writeTopic(t);
 			id3 = t.getId();
 		}
