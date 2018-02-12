@@ -40,14 +40,17 @@ public class McfApiImplTest {
 
 	@Test
 	public void testNewComment() throws Exception {
-		Comment c = a.newComment("test");
-		TestCase.assertEquals("test", c.getName());
+		Comment c = a.newComment("testuser1", "testcomment");
+		TestCase.assertEquals("comment name", c.getName());
+		TestCase.assertEquals("testuser1", c.getUserid());
+		TestCase.assertEquals("testcomment", c.getComment());
 	}
 
 	@Test
 	public void testNewTopic() throws Exception {
-		Topic t = a.newTopic("test");
-		TestCase.assertEquals("test", t.getName());
+		Topic t = a.newTopic("testsite", "testurl");
+		TestCase.assertEquals("testsite", t.getName());
+		TestCase.assertEquals("testurl", t.getUrl());
 	}
 
 	@Test
@@ -64,7 +67,7 @@ public class McfApiImplTest {
 
 	@Test
 	public void testArchiveTopic() throws Exception {
-		Topic t = a.newTopic("test");
+		Topic t = a.newTopic("testsite", "testurl");
 		a.writeTopic(t);
 		Topic t2 = a.readTopic(t.getId());
 		a.archiveTopic(t2);
