@@ -20,6 +20,7 @@ import gr.unirico.mcfapp.application.TopicService;
 @RestController
 @RequestMapping("/api/topics")
 public class TopicAPIController {
+	//private static final Logger logger = LoggerFactory.getLogger(TopicAPIController.class);
 
 	@Autowired
 	TopicService topicService;
@@ -67,4 +68,5 @@ public class TopicAPIController {
 		map.put("archiveId", tid);
 		return map;
 	}
+
 }

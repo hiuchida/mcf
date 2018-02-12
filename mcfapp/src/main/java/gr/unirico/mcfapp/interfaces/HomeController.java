@@ -2,7 +2,6 @@
 	トップ画面を表示するコントローラ
 	トピックとアーカイブの一覧を表示する
  */
-
 package gr.unirico.mcfapp.interfaces;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,7 @@ import gr.unirico.mcfapp.application.TopicService;
 @Controller
 @RequestMapping("/")
 public class HomeController {
+	//private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
 	// 本番用
 	@Autowired
@@ -26,20 +26,15 @@ public class HomeController {
 	@Autowired
 	ArchiveService archiveService;
 
-	// Mock
-//	@Autowired
-//	MockService mockService;
-
 	@GetMapping
 	public ModelAndView index() {
 		// ユーザ名を取得する
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		System.out.println(authentication.getName());
-
 		ModelAndView mav = new ModelAndView("v1/home");
 		mav.addObject("topics", topicService.getTopicList());
 		mav.addObject("archives", archiveService.getArchivedTopicList());
-
 		return mav;
 	}
+
 }

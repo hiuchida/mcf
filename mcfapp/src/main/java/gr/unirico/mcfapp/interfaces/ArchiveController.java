@@ -1,7 +1,6 @@
 /*
 	アーカイブリスト画面を表示するコントローラ
  */
-
 package gr.unirico.mcfapp.interfaces;
 
 import org.slf4j.Logger;
@@ -18,16 +17,11 @@ import gr.unirico.mcfapp.application.ArchiveService;
 @Controller
 @RequestMapping("/archives/{archiveId}")
 public class ArchiveController {
-
 	private static final Logger logger = LoggerFactory.getLogger(ArchiveController.class);
 
 	// 本番用
 	@Autowired
 	ArchiveService archiveService;
-
-	// Mock
-//	@Autowired
-//	MockService mockService;
 
 	@GetMapping
 	public ModelAndView index(@PathVariable("archiveId") String archiveId) {
@@ -36,4 +30,5 @@ public class ArchiveController {
 		logger.info("show archive [targetId: "  + archiveId + "]");
 		return mav;
 	}
+
 }

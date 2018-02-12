@@ -9,14 +9,15 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/login")
 public class LoginController {
+	//private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
 	@GetMapping
 	public ModelAndView login(@RequestParam(name = "error", required = false) String error) {
 		ModelAndView mav = new ModelAndView("v1/login");
-
-		if(error != null) {
+		if (error != null) {
 			mav.addObject("error", "error");
 		}
 		return mav;
 	}
+
 }

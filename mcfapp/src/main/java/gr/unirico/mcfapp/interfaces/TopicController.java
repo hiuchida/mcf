@@ -1,7 +1,6 @@
 /*
 	コメントリスト画面を表示するコントローラ
  */
-
 package gr.unirico.mcfapp.interfaces;
 
 import org.slf4j.Logger;
@@ -18,16 +17,11 @@ import gr.unirico.mcfapp.application.TopicService;
 @Controller
 @RequestMapping("/topics/{topicId}")
 public class TopicController {
-
     private static final Logger logger = LoggerFactory.getLogger(TopicController.class);
 
 	// 本番用
 	@Autowired
 	TopicService topicService;
-
-	// Mock
-//	@Autowired
-//	MockService mockService;
 
 	@GetMapping
 	public ModelAndView index(@PathVariable("topicId") String topicId) {
