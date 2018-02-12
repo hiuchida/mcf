@@ -50,8 +50,15 @@ public class TopicService {
 	 * トピックを作成
 	 * @return トピック
 	 */
-	public Topic createTopic() {
-		return api.newTopic("newTopic");
+	public Topic createTopic(String url) {
+	    Topic t = null;
+	    try{
+	        t = api.newTopic(url);
+	        api.writeTopic(t);
+        }catch (Exception e){
+            logger.error("Error in createTopic", e);
+        }
+		return t;
 	}
 
 	/**
@@ -74,8 +81,8 @@ public class TopicService {
 	 * コメントを作成
 	 * @return コメント
 	 */
-	public Comment createComment() {
-		return api.newComment("newComment");
+	public Comment createComment(String content) {
+		return api.newComment(content);
 	}
 
 	/**
