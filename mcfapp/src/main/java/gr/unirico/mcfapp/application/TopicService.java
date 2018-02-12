@@ -36,10 +36,15 @@ public class TopicService {
         return api.getTopicList();
 	}
 
-	public Topic getTopic(String topicId) {
+	/**
+	 * トピックを取得
+	 * @param tid トピックID
+	 * @return トピックインスタンス
+	 */
+	public Topic getTopic(String tid) {
 	    Topic topic = null;
 	    try {
-	        topic = api.readTopic(topicId);
+	        topic = api.readTopic(tid);
         } catch (Exception e) {
 	        logger.error("Error in getTopic", e);
         }
@@ -80,13 +85,20 @@ public class TopicService {
 	}
 
 	/**
-	 * コメントを作成
+	 * コメントを追加
+	 * @param tid トピックID
 	 * @param userid ユーザID
 	 * @param comment コメント
-	 * @return コメントインスタンス
 	 */
-	public Comment createComment(String userid, String comment) {
-		return api.newComment(userid, comment);
+	public void addComment(String tid, String userid, String comment) {
+	    Topic topic = null;
+	    try {
+	        topic = api.readTopic(tid);
+			topic.add(api.newComment(userid, comment));
+			api.writeTopic(topic);
+        } catch (Exception e) {
+	        logger.error("Error in addComment", e);
+        }
 	}
 
 	/**

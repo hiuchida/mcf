@@ -34,7 +34,7 @@ public class TopicController {
 	@GetMapping("/comments")
 	public ModelAndView getHistories(@PathVariable("topicId") String topicId) {
 		ModelAndView mav = new ModelAndView("v1/fragment/comment :: comment");
-		mav.addObject("data", topicService.getTopic(topicId).getList());
+		mav.addObject("data", topicService.getTopicData(topicId));
 		logger.info("show topic comments [topic id: " + topicId + "]");
 		return mav;
 	}

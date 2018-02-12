@@ -57,7 +57,8 @@ public class TopicAPIController {
 	public void saveComment(@PathVariable("topicId") String tid, @RequestBody Map<String, String> data) {
 		String userid = "testuser1"; //TODO ログインしたユーザID
 		String comment = data.get("data");
-		topicService.getTopic(tid).add(topicService.createComment(userid, comment));
+		topicService.addComment(tid, userid, comment);
+		
 	}
 
 	@GetMapping("/{topicId}/archive")
