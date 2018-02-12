@@ -25,6 +25,10 @@ public class Application {
 			c.setComment("comment1");
 			c.setUserid("testuser1");
 			t.add(c);
+			c = api.newComment("comment2");
+			c.setComment("comment2");
+			c.setUserid("testuser2");
+			t.add(c);
 			api.writeTopic(t);
 			api.archiveTopic(t);
 			Thread.sleep(100);
@@ -40,6 +44,10 @@ public class Application {
 			Thread.sleep(100);
 			t = api.newTopic("Yahoo! Part2");
 			t.setUrl("https://www.yahoo.co.jp/");
+			c = api.newComment("comment1");
+			c.setComment("comment1");
+			c.setUserid("testuser1");
+			t.add(c);
 			c = api.newComment("comment2");
 			c.setComment("comment2");
 			c.setUserid("testuser2");

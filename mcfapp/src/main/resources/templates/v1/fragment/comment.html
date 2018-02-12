@@ -3,13 +3,25 @@
 		<h5 class="card-title" th:text="${comment.comment}"></h5>
 		<p class="card-text">
 		<div>
+			<span>ユーザ：</span>
+			<span th:utext="${comment.userid}"></span>
+		</div>
+		<div>
+			<span>タイムスタンプ：</span>
+			<span th:utext="${comment.timestamp}"></span>
+		</div>
+		<div>
+			<span>プルーフ：</span>
+			<span th:utext="${comment.proof}"></span>
+		</div>
+		<div>
 			<span>ハッシュ値：</span>
 			<span th:utext="${comment.hash}"></span>
 		</div>
-		<!--<div>-->
-			<!--<span>プレハッシュ：</span>-->
-			<!--<span th:utext="${comment.prehash}"></span>-->
-		<!--</div>-->
+		<div>
+			<span>プレハッシュ値：</span>
+			<span th:utext="${comment.prevhash}"></span>
+		</div>
 		</p>
 	</div>
 </div>
