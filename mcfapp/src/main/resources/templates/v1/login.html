@@ -1,4 +1,4 @@
-<html layout:decorator="v1/common/layout" xmlns:th="http://www.thymeleaf.org">
+<html layout:decorator="v1/common/layout" th:with="authentication=false" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<title th:text="ログイン"></title>
 </head>
@@ -9,7 +9,7 @@
 		<strong>ログインに失敗しました: </strong>ユーザが存在しないか、パスワードが間違っています。
 	</div>
 
-	<h1>ログイン</h1>
+	<h1 style="padding-top:30px;">ログイン</h1>
 	<div class="jumbotron" style="padding:32px;">
 		<form action="" th:action="@{/login}" method="post" name="login">
 			<div class="form-group">

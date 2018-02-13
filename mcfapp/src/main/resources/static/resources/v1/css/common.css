@@ -10,8 +10,15 @@ body {
 }
 
 .container {
-  padding-top: 30px;
+  padding-top: 5px;
   padding-left: 230px;
+}
+
+.dropdown-toggle {
+	font-size: 1.1rem;
+}
+.dropdown-toggle:hover {
+	text-decoration:none;
 }
 
 .breadcrumb > li + li:before {

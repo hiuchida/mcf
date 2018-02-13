@@ -22,7 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		// 認可設定
 		http.authorizeRequests()
-				.antMatchers("/login").permitAll()
+				.antMatchers("/login", "/").permitAll()
 				.anyRequest().authenticated()
 				.and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 

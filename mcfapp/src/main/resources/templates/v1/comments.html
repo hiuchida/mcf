@@ -1,5 +1,5 @@
 <!doctype html>
-<html layout:decorator="v1/common/layout" xmlns:th="http://www.thymeleaf.org">
+<html layout:decorator="v1/common/layout" th:with="authentication=true" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<title th:text="|トピック - ${data.name}|"></title>
 	<script th:inline="javascript">

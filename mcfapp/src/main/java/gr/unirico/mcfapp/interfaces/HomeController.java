@@ -28,9 +28,6 @@ public class HomeController {
 
 	@GetMapping
 	public ModelAndView index() {
-		// ユーザ名を取得する
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		System.out.println(authentication.getName());
 		ModelAndView mav = new ModelAndView("v1/home");
 		mav.addObject("topics", topicService.getTopicList());
 		mav.addObject("archives", archiveService.getArchivedTopicList());

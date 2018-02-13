@@ -23,9 +23,6 @@ public class Application {
 	}
 
 	public void startUpTask() {
-
-		//		McfApiFactory.init(factoryDataPath);
-//		McfApi api = McfApiFactory.getInstance();
 		String dir = api.getDataDir();
 		FileUtil.deleteFiles(dir);
 		try {

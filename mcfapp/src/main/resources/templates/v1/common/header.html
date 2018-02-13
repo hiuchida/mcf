@@ -1,0 +1,26 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<header id="header" th:fragment="header">
+	<script th:inline="javascript">
+		window.addEventListener("load", function(event) {
+			$('#login-btn').on('click', function() {
+				location.href = '/login';
+			});
+		});
+	</script>
+	<div th:if="${authentication}">
+		<div class="text-right" style="margin-right:150px;margin-top:20px;">
+			<a sec:authorize="isAnonymous()" class="btn btn-outline-primary btn-lg" href="/login" role="button">ログイン</a>
+			<div sec:authorize="isAuthenticated()">
+				<a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="fas fa-user">
+						<span th:text="${#authentication.principal.Username}"></span>
+					</i>
+				</a>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+					<a class="dropdown-item" href="/logout">ログアウト</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
+</html>
