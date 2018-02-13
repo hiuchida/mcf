@@ -3,9 +3,10 @@ package gr.unirico.mcflib.util;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class DateUtil {
-	private static DateFormat format4timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+	private static DateFormat format4timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.JAPAN);
 
 	public static String createTimestampStr() {
 		return createTimestampStr(new Date());
