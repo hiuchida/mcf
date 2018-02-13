@@ -1,5 +1,6 @@
 package gr.unirico.mcfapp;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -8,11 +9,22 @@ import gr.unirico.mcflib.api.McfApi;
 import gr.unirico.mcflib.api.McfApiFactory;
 import gr.unirico.mcflib.api.Topic;
 import gr.unirico.mcflib.util.FileUtil;
+import org.springframework.context.ConfigurableApplicationContext;
 
 @SpringBootApplication
 public class Application {
+
+	@Value("${mcfapp.factory.data.path}")
+	String factoryDataPath;
+
 	public static void main(String[] args) {
-		McfApiFactory.init("/var/data/mcfapp");
+		ConfigurableApplicationContext ctx =  SpringApplication.run(Application.class, args);
+		Application app = ctx.getBean(Application.class);
+		app.startUpTask();
+	}
+
+	public void startUpTask() {
+		McfApiFactory.init(factoryDataPath);
 		McfApi api = McfApiFactory.getInstance();
 		String dir = api.getDataDir();
 		FileUtil.deleteFiles(dir);
@@ -50,7 +62,5 @@ public class Application {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		SpringApplication.run(Application.class, args);
 	}
-
 }
