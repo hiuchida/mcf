@@ -11,6 +11,10 @@
 			<span th:utext="${topic.timestamp}"></span>
 		</div>
 		<div>
+			<span>コメント件数：</span>
+			<span th:utext="${topic.listsize}"></span>
+		</div>
+		<div>
 			<span>プルーフ：</span>
 			<span th:utext="${topic.proof}"></span>
 		</div>
@@ -36,6 +40,10 @@
 		<div>
 			<span>タイムスタンプ：</span>
 			<span th:utext="${archive.timestamp}"></span>
+		</div>
+		<div>
+			<span>コメント件数：</span>
+			<span th:utext="${archive.listsize}"></span>
 		</div>
 		<div>
 			<span>プルーフ：</span>
