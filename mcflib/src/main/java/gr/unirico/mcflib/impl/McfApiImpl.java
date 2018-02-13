@@ -41,7 +41,7 @@ public class McfApiImpl implements McfApi {
 
 	public Comment newComment(String userid, String comment) {
 		logger.info("newComment: {}, {}", userid, comment);
-		Comment c = new CommentImpl("comment name");
+		CommentImpl c = new CommentImpl("comment name");
 		c.setUserid(userid);
 		c.setComment(comment);
 		return c;
@@ -49,7 +49,7 @@ public class McfApiImpl implements McfApi {
 
 	public Topic newTopic(String sitename, String siteurl) {
 		logger.info("newTopic: {}, {}", sitename, siteurl);
-		Topic t = new TopicImpl(sitename);
+		TopicImpl t = new TopicImpl(sitename);
 		t.setUrl(siteurl);
 		return t;
 	}
