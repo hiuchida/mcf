@@ -29,6 +29,7 @@ public class ArchiveImplTest {
 	@Test
 	public void testNew() throws Exception {
 		ArchiveImpl archive = new ArchiveImpl("test");
+		TestCase.assertEquals(0, archive.getListsize());
 		TestCase.assertEquals(0, archive.getList().size());
 	}
 
@@ -143,8 +144,10 @@ public class ArchiveImplTest {
 	@Test
 	public void testAdd() throws Exception {
 		TopicImpl t = new TopicImpl(NodeImplTest.TESTPREVID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTID, NodeImplTest.TOPICNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS, NodeImplTest.TESTPROOF);
+		TestCase.assertEquals(0, a.getListsize());
 		TestCase.assertEquals(0, a.getList().size());
 		a.add(t);
+		TestCase.assertEquals(1, a.getListsize());
 		TestCase.assertEquals(1, a.getList().size());
 	}
 

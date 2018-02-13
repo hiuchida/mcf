@@ -31,6 +31,7 @@ public class TopicImplTest {
 	public void testNew() throws Exception {
 		TopicImpl topic = new TopicImpl("test");
 		TestCase.assertEquals("", topic.getUrl());
+		TestCase.assertEquals(0, topic.getListsize());
 		TestCase.assertEquals(0, topic.getList().size());
 	}
 
@@ -102,8 +103,10 @@ public class TopicImplTest {
 	@Test
 	public void testAdd() throws Exception {
 		CommentImpl c = new CommentImpl(NodeImplTest.TESTPREVID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTID, NodeImplTest.COMMENTNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS, NodeImplTest.TESTPROOF);
+		TestCase.assertEquals(0, t.getListsize());
 		TestCase.assertEquals(0, t.getList().size());
 		t.add(c);
+		TestCase.assertEquals(1, t.getListsize());
 		TestCase.assertEquals(1, t.getList().size());
 	}
 
