@@ -1,6 +1,6 @@
 <div class="card" th:fragment="comment" th:each="comment: ${data.comments}" style="margin-bottom:5px;">
 	<div class="card-body">
-		<h5 class="card-title" th:text="${comment.comment}"></h5>
+		<h5 class="card-title" th:text="${comment.name}"></h5>
 		<p class="card-text">
 		<div>
 			<span>ユーザ：</span>
