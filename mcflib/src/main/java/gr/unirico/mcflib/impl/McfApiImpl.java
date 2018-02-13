@@ -45,9 +45,8 @@ public class McfApiImpl implements McfApi {
 
 	public Comment newComment(String userid, String comment) {
 		logger.info("newComment: {}, {}", userid, comment);
-		CommentImpl c = new CommentImpl("comment name");
+		CommentImpl c = new CommentImpl(comment);
 		c.setUserid(userid);
-		c.setComment(comment);
 		return c;
 	}
 

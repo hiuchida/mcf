@@ -8,7 +8,6 @@ import gr.unirico.mcflib.util.ListBuilder;
 
 public class CommentImpl extends NodeImpl implements Comment {
 	private String userid = "";
-	private String comment = "";
 
 	public CommentImpl(String name) {
 		super(name);
@@ -21,7 +20,6 @@ public class CommentImpl extends NodeImpl implements Comment {
 	public List<String> toList() {
 		ListBuilder lb = newListBuilder(CommentImpl.class);
 		lb.append("userid", userid);
-		lb.append("comment", comment);
 		lb.append("hash", hash);
 		return lb.toList();
 	}
@@ -30,7 +28,6 @@ public class CommentImpl extends NodeImpl implements Comment {
 	protected String toDigestString() {
 		DigestBuilder db = newDigestBuilder(CommentImpl.class);
 		db.append("userid", userid);
-		db.append("comment", comment);
 		return db.toString();
 	}
 	
@@ -44,17 +41,8 @@ public class CommentImpl extends NodeImpl implements Comment {
 		this.userid = userid;
 	}
 
-	public synchronized void setComment(String comment) {
-		checkArchived();
-		this.comment = comment;
-	}
-
 	public String getUserid() {
 		return userid;
-	}
-
-	public String getComment() {
-		return comment;
 	}
 
 }
