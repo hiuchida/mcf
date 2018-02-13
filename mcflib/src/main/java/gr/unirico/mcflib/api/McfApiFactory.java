@@ -3,19 +3,14 @@ package gr.unirico.mcflib.api;
 import gr.unirico.mcflib.impl.McfApiImpl;
 
 public class McfApiFactory {
-	private static McfApiImpl singleton;
+	private static McfApiImpl singleton = new McfApiImpl("data");
 	
-	public synchronized static McfApi getInstance() {
-		if (singleton == null) {
-			singleton = new McfApiImpl("data");
-		}
+	public static McfApi getInstance() {
 		return singleton;
 	}
 	
-	public synchronized static void init(String dataDir) {
-		if (singleton == null) {
-			singleton = new McfApiImpl(dataDir);
-		}
+	public static void init(String dataDir) {
+		singleton.setDataDir(dataDir);
 	}
 	
 }

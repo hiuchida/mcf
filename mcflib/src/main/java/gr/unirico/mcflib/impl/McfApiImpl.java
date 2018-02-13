@@ -31,6 +31,10 @@ public class McfApiImpl implements McfApi {
 		logger.info("McfApiImpl: {}", dataDir);
 	}
 	
+	public void setDataDir(String dataDir) {
+		this.dataDir = dataDir;
+	}
+
 	public String getDataDir() {
 		return dataDir;
 	}
