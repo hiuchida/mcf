@@ -30,7 +30,7 @@ public class ListParserTest {
 			t.add(c);
 			
 			tlist = t.toList();
-			TestCase.assertEquals(24, tlist.size());
+			TestCase.assertEquals(23, tlist.size());
 		}
 		{
 			TopicImpl t = (TopicImpl) ListParser.parse(tlist);
@@ -40,7 +40,7 @@ public class ListParserTest {
 			t.add(c);
 			
 			tlist = t.toList();
-			TestCase.assertEquals(36, tlist.size());
+			TestCase.assertEquals(34, tlist.size());
 		}
 		{
 			TopicImpl t = (TopicImpl) ListParser.parse(tlist);
@@ -50,7 +50,7 @@ public class ListParserTest {
 			a.add(t);
 			
 			alist = a.toList();
-			TestCase.assertEquals(47, alist.size());
+			TestCase.assertEquals(45, alist.size());
 		}
 		{
 			TopicImpl t = new TopicImpl("Thread-2");
@@ -58,7 +58,7 @@ public class ListParserTest {
 			t.add(c);
 			
 			tlist = t.toList();
-			TestCase.assertEquals(24, tlist.size());
+			TestCase.assertEquals(23, tlist.size());
 		}
 		{
 			ArchiveImpl a = (ArchiveImpl) ListParser.parse(alist);
@@ -69,7 +69,7 @@ public class ListParserTest {
 			
 			a.add(t);
 			alist = a.toList();
-			TestCase.assertEquals(71, alist.size());
+			TestCase.assertEquals(68, alist.size());
 		}
 	}
 

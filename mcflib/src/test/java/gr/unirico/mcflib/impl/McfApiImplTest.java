@@ -41,9 +41,8 @@ public class McfApiImplTest {
 	@Test
 	public void testNewComment() throws Exception {
 		Comment c = a.newComment("testuser1", "testcomment");
-		TestCase.assertEquals("comment name", c.getName());
+		TestCase.assertEquals("testcomment", c.getName());
 		TestCase.assertEquals("testuser1", c.getUserid());
-		TestCase.assertEquals("testcomment", c.getComment());
 	}
 
 	@Test

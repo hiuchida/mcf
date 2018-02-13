@@ -90,13 +90,12 @@ public class ArchiveImplTest {
 	public void testToList3() throws Exception {
 		CommentImpl c = new CommentImpl(NodeImplTest.FIRSTID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTID, NodeImplTest.COMMENTNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS, NodeImplTest.TESTPROOF);
 		c.setUserid(CommentImplTest.TESTUSER);
-		c.setComment(CommentImplTest.TESTCOMMENT);
 		TopicImpl t = new TopicImpl(NodeImplTest.FIRSTID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTID, NodeImplTest.TOPICNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS, NodeImplTest.TESTPROOF);
 		t.setUrl(TopicImplTest.TESTURL);
 		t.addValidate(c);
 		a.addValidate(t);
 		List<String> l = a.toList();
-		TestCase.assertEquals(35, l.size());
+		TestCase.assertEquals(34, l.size());
 		Iterator<String> i = l.iterator();
 		TestCase.assertEquals("---", i.next());
 		TestCase.assertEquals("class:gr.unirico.mcflib.model.ArchiveImpl", i.next());
@@ -127,7 +126,6 @@ public class ArchiveImplTest {
 		TestCase.assertEquals("\t\tstatus:fixed", i.next());
 		TestCase.assertEquals("\t\tproof:0", i.next());
 		TestCase.assertEquals("\t\tuserid:testuser", i.next());
-		TestCase.assertEquals("\t\tcomment:testComment", i.next());
 		TestCase.assertTrue(i.next().startsWith("\t\thash:"));
 		TestCase.assertEquals("\t\t---", i.next());
 		TestCase.assertTrue(i.next().startsWith("\thash:"));

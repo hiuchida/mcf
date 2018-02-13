@@ -87,7 +87,7 @@ public class NodeImplTest {
 
 	@Test
 	public void testValidate() throws Exception {
-		String hash = "cg4ylzLfRc+iNL5fP3nb4GeBfzluBsXNYkKf7SAPaww=";
+		String hash = "nF844bsr03B2N7JC1o7fmQ6PZdVKzFjWPbK8NpHWMDo=";
 		n.validate(hash);
 	}
 

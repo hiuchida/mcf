@@ -61,11 +61,10 @@ public class TopicImplTest {
 	public void testToList2() throws Exception {
 		CommentImpl c = new CommentImpl(NodeImplTest.FIRSTID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTID, NodeImplTest.COMMENTNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS, NodeImplTest.TESTPROOF);
 		c.setUserid(CommentImplTest.TESTUSER);
-		c.setComment(CommentImplTest.TESTCOMMENT);
 		t.setUrl(TopicImplTest.TESTURL);
 		t.addValidate(c);
 		List<String> l = t.toList();
-		TestCase.assertEquals(24, l.size());
+		TestCase.assertEquals(23, l.size());
 		Iterator<String> i = l.iterator();
 		TestCase.assertEquals("---", i.next());
 		TestCase.assertEquals("class:gr.unirico.mcflib.model.TopicImpl", i.next());
@@ -87,7 +86,6 @@ public class TopicImplTest {
 		TestCase.assertEquals("\tstatus:fixed", i.next());
 		TestCase.assertEquals("\tproof:0", i.next());
 		TestCase.assertEquals("\tuserid:testuser", i.next());
-		TestCase.assertEquals("\tcomment:testComment", i.next());
 		TestCase.assertTrue(i.next().startsWith("\thash:"));
 		TestCase.assertEquals("\t---", i.next());
 		TestCase.assertTrue(i.next().startsWith("hash:"));
