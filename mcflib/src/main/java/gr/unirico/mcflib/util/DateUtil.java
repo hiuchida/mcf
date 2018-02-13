@@ -10,7 +10,6 @@ import java.util.TimeZone;
 public class DateUtil {
 	private static TimeZone jst = TimeZone.getTimeZone("JST");
 	private static Locale jp = Locale.JAPANESE;
-	private static DateFormat format4timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ", jp);
 
 	public static String createTimestampStr() {
 		Calendar c = Calendar.getInstance(jst, jp);
@@ -21,7 +20,9 @@ public class DateUtil {
 		if (date == null) {
 			return "";
 		}
-		return format4timestamp.format(date);
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ", jp);
+		df.setTimeZone(jst);
+		return df.format(date);
 	}
 
 }
