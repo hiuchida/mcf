@@ -15,6 +15,10 @@
 			<span th:utext="${topic.listsize}"></span>
 		</div>
 		<div>
+			<span>ステータス：</span>
+			<span th:utext="${topic.status}"></span>
+		</div>
+		<div>
 			<span>プルーフ：</span>
 			<span th:utext="${topic.validateproof}"></span>
 		</div>
@@ -44,6 +48,10 @@
 		<div>
 			<span>コメント件数：</span>
 			<span th:utext="${archive.listsize}"></span>
+		</div>
+		<div>
+			<span>ステータス：</span>
+			<span th:utext="${archive.status}"></span>
 		</div>
 		<div>
 			<span>プルーフ：</span>
