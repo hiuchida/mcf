@@ -13,11 +13,11 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import gr.unirico.mcflib.api.Comment;
 import gr.unirico.mcflib.api.McfApi;
-import gr.unirico.mcflib.api.McfApiFactory;
 import gr.unirico.mcflib.api.Topic;
 
 /*
@@ -26,7 +26,9 @@ import gr.unirico.mcflib.api.Topic;
 @Service
 public class TopicService {
 	private Logger logger = LoggerFactory.getLogger(TopicService.class);
-    private McfApi api = McfApiFactory.getInstance();
+
+	@Autowired
+	McfApi api;
 
 	/**
 	 * コメント可能なトピック一覧の取得

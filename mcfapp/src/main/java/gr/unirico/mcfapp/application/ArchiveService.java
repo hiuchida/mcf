@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import gr.unirico.mcflib.api.Comment;
 import gr.unirico.mcflib.api.McfApi;
-import gr.unirico.mcflib.api.McfApiFactory;
 import gr.unirico.mcflib.api.Topic;
 
 /*
@@ -27,7 +26,6 @@ import gr.unirico.mcflib.api.Topic;
 @Service
 public class ArchiveService {
 	private Logger logger = LoggerFactory.getLogger(ArchiveService.class);
-//    private McfApi api = McfApiFactory.getInstance();
 
 	@Autowired
 	McfApi api;
