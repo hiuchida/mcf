@@ -27,6 +27,7 @@ public abstract class NodeImpl implements Node {
 	protected String timestamp;
 	protected String status;
 	protected int proof;
+	protected String validateproof;
 	protected String hash;
 	
 	public NodeImpl(String name) {
@@ -37,6 +38,7 @@ public abstract class NodeImpl implements Node {
 		this.timestamp = DateUtil.createTimestampStr();
 		this.status = EDITING;
 		this.proof = FIRSTPROOF;
+		this.validateproof = "" + FIRSTPROOF;
 	}
 	
 	public NodeImpl(String previd, String prevhash, String id, String name, String timestamp, String status, int proof) {
@@ -47,6 +49,7 @@ public abstract class NodeImpl implements Node {
 		this.timestamp = timestamp;
 		this.status = status;
 		this.proof = proof;
+		this.validateproof = "" + proof;
 	}
 	
 	protected abstract String toDigestString();
@@ -85,15 +88,16 @@ public abstract class NodeImpl implements Node {
 			if (!prevhash.equals(this.prevhash)) {
 				throw new IllegalHashException(prevhash + "," + this.prevhash);
 			}
-			if (!ProofOfWork.validate(prevproof, this.proof)) {
+			if (!ProofOfWork.validate(prevproof, prevhash, this.proof)) {
 				throw new IllegalProofException(prevproof + "," + this.proof);
 			}
 		} else {
 			this.previd = previd;
 			this.prevhash = prevhash;
 			this.timestamp = DateUtil.createTimestampStr();
-			this.proof = ProofOfWork.calc(prevproof);
+			this.proof = ProofOfWork.calc(prevproof, prevhash);
 		}
+		this.validateproof = ProofOfWork.calcHash(prevproof, prevhash, this.proof);
 		setArchived(this);
 	}
 
@@ -153,6 +157,10 @@ public abstract class NodeImpl implements Node {
 		return proof;
 	}
 
+	public String getValidateproof() {
+		return validateproof;
+	}
+	
 	public String getHash() {
 		return hash;
 	}

@@ -10,6 +10,7 @@ public interface Node {
 	public String getTimestamp();
 	public String getStatus();
 	public int getProof();
+	public String getValidateproof();
 	public String getHash();
 	public String getShorthash();
 
