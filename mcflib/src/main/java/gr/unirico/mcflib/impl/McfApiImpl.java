@@ -32,7 +32,11 @@ public class McfApiImpl implements McfApi {
 	}
 	
 	public void setDataDir(String dataDir) {
-		this.dataDir = dataDir;
+		if (dataDir != null) {
+			this.dataDir = dataDir;
+			FileUtil.mkdir(dataDir);
+			logger.info("setDataDir: {}", dataDir);
+		}
 	}
 
 	public String getDataDir() {
