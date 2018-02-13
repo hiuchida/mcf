@@ -84,6 +84,10 @@ public class ArchiveImpl extends NodeImpl implements Archive {
 		return list.get(list.size() - 1).getProof();
 	}
 	
+	public int getListsize() {
+		return list.size();
+	}
+
 	public List<Topic> getList() {
 		return getList(false);
 	}

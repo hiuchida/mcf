@@ -97,6 +97,10 @@ public class TopicImpl extends NodeImpl implements Topic {
 		return url;
 	}
 
+	public int getListsize() {
+		return list.size();
+	}
+
 	public List<Comment> getList() {
 		return getList(false);
 	}
