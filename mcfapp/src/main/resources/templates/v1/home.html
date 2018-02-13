@@ -8,8 +8,8 @@
 		window.addEventListener("load", function(event) {
 			$('#registerBtn').on('click', function(){
 				var siteName = $('#site-name');
-				var inputObj = $('#url-text');
-				if(inputObj[0].validity.typeMismatch) {
+				var urlText = $('#url-text');
+				if(urlText[0].validity.typeMismatch) {
 					return false;
 				}
 
@@ -19,7 +19,7 @@
 					type: "POST",
 					url: '/api/topics',
 					contentType: "application/json",
-					data: JSON.stringify({"name": siteName.val(), "url": inputObj.val()})
+					data: JSON.stringify({"name": siteName.val(), "url": urlText.val()})
 				}).then(
 					function(data) {
 						$('#success-alert').html('トピックを登録しました。').alert().fadeTo(2000, 500).slideUp(500);

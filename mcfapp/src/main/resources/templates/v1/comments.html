@@ -12,7 +12,7 @@
 					type: "POST",
 					url: apiUrl + '/comment',
 					contentType: "application/json",
-					data: JSON.stringify({"data": $('#comment-text').val()})
+					data: JSON.stringify({"userid": $('#user-id').val(), "comment": $('#comment-text').val()})
 				}).then(
 					function(data) {
 						$('#success-alert').html('コメントを投稿しました。').alert().fadeTo(2000, 500).slideUp(500);
@@ -80,6 +80,7 @@
 	<div class="row">
 		<div class="col-md-6">
 			<div class="input-group mb-3">
+                <input type="hidden" id="user-id" th:value="${userid}" />
 				<input type="text" id="comment-text" class="form-control" placeholder="コメントを入力してください。" />
 				<div class="input-group-append">
 					<button id="mcf-write" class="btn btn-primary" type="button">送信</button>

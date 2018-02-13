@@ -55,8 +55,8 @@ public class TopicAPIController {
 	@PostMapping("/{topicId}/comment")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void saveComment(@PathVariable("topicId") String tid, @RequestBody Map<String, String> data) {
-		String userid = "testuser1"; //TODO ログインしたユーザID
-		String comment = data.get("data");
+		String userid = data.get("userid");
+		String comment = data.get("comment");
 		topicService.addComment(tid, userid, comment);
 		
 	}
