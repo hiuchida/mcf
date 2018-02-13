@@ -156,6 +156,7 @@ public class ArchiveImplTest {
 		a.archive(false, a, NodeImplTest.PREVID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTPROOF);
 		TestCase.assertEquals(NodeImplTest.PREVID, a.getPrevid());
 		TestCase.assertEquals(NodeImplTest.FIRSTHASH, a.getPrevhash());
+		TestCase.assertEquals(NodeImplTest.TESTPROOF2, a.getProof());
 	}
 
 	@Test

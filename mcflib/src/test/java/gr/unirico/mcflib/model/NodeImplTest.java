@@ -26,7 +26,7 @@ public class NodeImplTest {
 	public static final String TESTTIMESTAMP = "2018-01-01";
 	public static final String TESTSTATUS = "editing";
 	public static final int TESTPROOF = 0;
-	public static final int TESTPROOF2 = 69732;
+	public static final int TESTPROOF2 = 39359;
 	private NodeImpl n;
 
 	@Before

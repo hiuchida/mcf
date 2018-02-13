@@ -116,6 +116,7 @@ public class TopicImplTest {
 		t.archive(false, t, NodeImplTest.PREVID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTPROOF);
 		TestCase.assertEquals(NodeImplTest.PREVID, t.getPrevid());
 		TestCase.assertEquals(NodeImplTest.FIRSTHASH, t.getPrevhash());
+		TestCase.assertEquals(NodeImplTest.TESTPROOF2, t.getProof());
 	}
 
 	@Test

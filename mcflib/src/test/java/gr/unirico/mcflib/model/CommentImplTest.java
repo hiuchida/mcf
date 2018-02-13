@@ -71,6 +71,7 @@ public class CommentImplTest {
 		c.archive(false, c, NodeImplTest.PREVID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTPROOF);
 		TestCase.assertEquals(NodeImplTest.PREVID, c.getPrevid());
 		TestCase.assertEquals(NodeImplTest.FIRSTHASH, c.getPrevhash());
+		TestCase.assertEquals(NodeImplTest.TESTPROOF2, c.getProof());
 	}
 
 	@Test
