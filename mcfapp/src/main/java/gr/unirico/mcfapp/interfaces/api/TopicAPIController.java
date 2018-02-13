@@ -39,8 +39,8 @@ public class TopicAPIController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public void saveTopic( @RequestBody Map<String, String> data) {
-		String sitename = data.get("data"); //TODO ÉTÉCÉgñº
-		String siteurl = data.get("data");
+		String sitename = data.get("name");
+		String siteurl = data.get("url");
 		topicService.createTopic(sitename, siteurl);
 	}
 
