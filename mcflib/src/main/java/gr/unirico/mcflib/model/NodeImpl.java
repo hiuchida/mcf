@@ -8,6 +8,7 @@ import gr.unirico.mcflib.impl.ProofOfWork;
 import gr.unirico.mcflib.util.DateUtil;
 import gr.unirico.mcflib.util.DigestBuilder;
 import gr.unirico.mcflib.util.ListBuilder;
+import gr.unirico.mcflib.util.StringUtil;
 import gr.unirico.mcflib.util.UniqueIdUtil;
 
 public abstract class NodeImpl implements Node {
@@ -128,6 +129,10 @@ public abstract class NodeImpl implements Node {
 		return prevhash;
 	}
 
+	public String getShortprevhash() {
+		return StringUtil.getShortHash(prevhash);
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -150,6 +155,10 @@ public abstract class NodeImpl implements Node {
 
 	public String getHash() {
 		return hash;
+	}
+
+	public String getShorthash() {
+		return StringUtil.getShortHash(hash);
 	}
 
 }
