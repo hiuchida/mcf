@@ -1,16 +1,30 @@
 package gr.unirico.mcflib.api;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import gr.unirico.mcflib.impl.McfApiImpl;
 
 public class McfApiFactory {
-	private static McfApiImpl singleton = new McfApiImpl("data");
+	private static Logger logger = LoggerFactory.getLogger(McfApiFactory.class);
+	private static McfApiImpl singleton;
 	
-	public static McfApi getInstance() {
+	public synchronized static McfApi getInstance() {
+		if (singleton == null) {
+			logger.info("getInstance: create data");
+			singleton = new McfApiImpl("data");
+		}
 		return singleton;
 	}
 	
-	public static void init(String dataDir) {
-		singleton.setDataDir(dataDir);
+	public synchronized static void init(String dataDir) {
+		if (singleton == null) {
+			logger.info("init: create {}", dataDir);
+			singleton = new McfApiImpl(dataDir);
+		} else {
+			logger.info("init: set {}", dataDir);
+			singleton.setDataDir(dataDir);
+		}
 	}
 	
 }
