@@ -9,10 +9,11 @@ import java.util.TimeZone;
 
 public class DateUtil {
 	private static TimeZone jst = TimeZone.getTimeZone("JST");
-	private static DateFormat format4timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.JAPAN);
+	private static Locale jp = Locale.JAPANESE;
+	private static DateFormat format4timestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ", jp);
 
 	public static String createTimestampStr() {
-		Calendar c = Calendar.getInstance(jst);
+		Calendar c = Calendar.getInstance(jst, jp);
 		return createTimestampStr(c.getTime());
 	}
 
