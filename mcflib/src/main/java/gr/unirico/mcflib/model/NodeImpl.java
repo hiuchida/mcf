@@ -4,6 +4,7 @@ import gr.unirico.mcflib.api.Node;
 import gr.unirico.mcflib.exception.IllegalHashException;
 import gr.unirico.mcflib.exception.IllegalPrevidException;
 import gr.unirico.mcflib.exception.IllegalProofException;
+import gr.unirico.mcflib.exception.IllegalStatusException;
 import gr.unirico.mcflib.impl.ProofOfWork;
 import gr.unirico.mcflib.util.DateUtil;
 import gr.unirico.mcflib.util.DigestBuilder;
@@ -88,6 +89,9 @@ public abstract class NodeImpl implements Node {
 			if (!prevhash.equals(this.prevhash)) {
 				throw new IllegalHashException(prevhash + "," + this.prevhash);
 			}
+			if (!FIXED.equals(this.status)) {
+				throw new IllegalStatusException(FIXED + "," + this.status);
+			}
 			if (!ProofOfWork.validate(prevproof, prevhash, this.proof)) {
 				throw new IllegalProofException(prevproof + "," + this.proof);
 			}
@@ -95,19 +99,16 @@ public abstract class NodeImpl implements Node {
 			this.previd = previd;
 			this.prevhash = prevhash;
 			this.timestamp = DateUtil.createTimestampStr();
+			this.status = FIXED;
 			this.proof = ProofOfWork.calc(prevproof, prevhash);
+			this.hash = toDigestString();
 		}
-		this.validateproof = ProofOfWork.calcHash(prevproof, prevhash, this.proof);
-		setArchived(this);
-	}
-
-	protected synchronized void setArchived(NodeImpl parent) {
+		//永続化されないプロパティ
 		this.bArchived = true;
 		this.parent = parent;
-		this.status = FIXED;
-		this.hash = toDigestString();
+		this.validateproof = ProofOfWork.calcHash(prevproof, prevhash, this.proof);
 	}
-	
+
 	protected synchronized void checkArchived() {
 		if (bArchived) {
 			throw new IllegalStateException("Already archived");
