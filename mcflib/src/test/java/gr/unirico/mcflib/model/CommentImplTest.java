@@ -61,23 +61,13 @@ public class CommentImplTest {
 	}
 
 	@Test
-	public void testArchive() throws Exception {
-		c.setUserid(CommentImplTest.TESTUSER);
-		c.archive(false, c, NodeImplTest.PREVID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTPROOF);
-		TestCase.assertEquals(NodeImplTest.PREVID, c.getPrevid());
-		TestCase.assertEquals(NodeImplTest.FIRSTHASH, c.getPrevhash());
-		TestCase.assertEquals(NodeImplTest.TESTPROOF2, c.getProof());
-	}
-
-	@Test
-	public void testArchive2() throws Exception {
-		c = new CommentImpl(NodeImplTest.TESTPREVID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTID, NodeImplTest.COMMENTNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS, NodeImplTest.TESTPROOF2);
-		c.setUserid(CommentImplTest.TESTUSER);
-		c.archive(true, c, NodeImplTest.TESTPREVID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTPROOF);
-	}
-
-	@Test
 	public void testSetUserid() throws Exception {
+		c.setUserid(CommentImplTest.TESTUSER);
+		TestCase.assertEquals(CommentImplTest.TESTUSER, c.getUserid());
+	}
+
+	@Test
+	public void testSetUserid2() throws Exception {
 		c.setUserid(CommentImplTest.TESTUSER);
 		c.archive(false, c, NodeImplTest.PREVID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTPROOF);
 		try {

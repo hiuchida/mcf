@@ -53,13 +53,12 @@ public class TopicImplTest {
 		TestCase.assertEquals("url:testUrl", i.next());
 		TestCase.assertEquals("\t---", i.next());
 		TestCase.assertEquals("\t---", i.next());
-
 		TestCase.assertTrue(i.next().startsWith("hash:"));
 	}
 
 	@Test
 	public void testToList2() throws Exception {
-		CommentImpl c = new CommentImpl(NodeImplTest.FIRSTID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTID, NodeImplTest.COMMENTNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS, NodeImplTest.TESTPROOF);
+		CommentImpl c = new CommentImpl(NodeImplTest.FIRSTID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTID, NodeImplTest.COMMENTNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS2, NodeImplTest.TESTPROOF);
 		c.setUserid(CommentImplTest.TESTUSER);
 		t.setUrl(TopicImplTest.TESTURL);
 		t.addValidate(c);
@@ -106,26 +105,29 @@ public class TopicImplTest {
 		t.add(c);
 		TestCase.assertEquals(1, t.getListsize());
 		TestCase.assertEquals(1, t.getList().size());
+		TestCase.assertEquals(c.getId(), t.getList().get(0).getId());
 	}
 
 	@Test
-	public void testArchive() throws Exception {
-		t.setUrl(TopicImplTest.TESTURL);
+	public void testAdd2() throws Exception {
+		CommentImpl c = new CommentImpl(NodeImplTest.TESTPREVID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTID, NodeImplTest.COMMENTNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS, NodeImplTest.TESTPROOF);
+		t.add(c);
 		t.archive(false, t, NodeImplTest.PREVID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTPROOF);
-		TestCase.assertEquals(NodeImplTest.PREVID, t.getPrevid());
-		TestCase.assertEquals(NodeImplTest.FIRSTHASH, t.getPrevhash());
-		TestCase.assertEquals(NodeImplTest.TESTPROOF2, t.getProof());
-	}
-
-	@Test
-	public void testArchive2() throws Exception {
-		t = new TopicImpl(NodeImplTest.TESTPREVID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTID, NodeImplTest.TOPICNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS, NodeImplTest.TESTPROOF2);
-		t.setUrl(TopicImplTest.TESTURL);
-		t.archive(true, t, NodeImplTest.TESTPREVID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTPROOF);
+		try {
+			t.add(c);
+			TestCase.fail();
+		} catch (IllegalStateException e) {
+		}
 	}
 
 	@Test
 	public void testSetUserid() throws Exception {
+		t.setUrl(TopicImplTest.TESTURL);
+		TestCase.assertEquals(TopicImplTest.TESTURL, t.getUrl());
+	}
+
+	@Test
+	public void testSetUserid2() throws Exception {
 		t.setUrl(TopicImplTest.TESTURL);
 		t.archive(false, t, NodeImplTest.PREVID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTPROOF);
 		try {

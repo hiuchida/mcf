@@ -25,6 +25,7 @@ public class NodeImplTest {
 	public static final String ARCHIVENAME = "archiveTest";
 	public static final String TESTTIMESTAMP = "2018-01-01";
 	public static final String TESTSTATUS = "editing";
+	public static final String TESTSTATUS2 = "fixed";
 	public static final int TESTPROOF = 0;
 	public static final int TESTPROOF2 = 39359;
 	private NodeImpl n;
@@ -74,10 +75,24 @@ public class NodeImplTest {
 	}
 
 	@Test
-	public void testSetArchived() throws Exception {
+	public void testArchive() throws Exception {
+		n.archive(false, n, NodeImplTest.PREVID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTPROOF);
+		TestCase.assertEquals(NodeImplTest.PREVID, n.getPrevid());
+		TestCase.assertEquals(NodeImplTest.FIRSTHASH, n.getPrevhash());
+		TestCase.assertEquals(NodeImplTest.TESTSTATUS2, n.getStatus());
+		TestCase.assertEquals(NodeImplTest.TESTPROOF2, n.getProof());
+	}
+
+	@Test
+	public void testArchive2() throws Exception {
+		n = new CommentImpl(NodeImplTest.TESTPREVID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTID, NodeImplTest.COMMENTNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS2, NodeImplTest.TESTPROOF2);
+		n.archive(true, n, NodeImplTest.TESTPREVID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTPROOF);
+	}
+
+	@Test
+	public void testCheckArchived() throws Exception {
 		n.checkArchived();
-		n.setArchived(n);
-		TestCase.assertEquals("fixed", n.getStatus());
+		n.archive(false, n, NodeImplTest.PREVID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTPROOF);
 		try {
 			n.checkArchived();
 			TestCase.fail();

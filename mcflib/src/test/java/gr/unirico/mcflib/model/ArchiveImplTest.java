@@ -54,7 +54,7 @@ public class ArchiveImplTest {
 
 	@Test
 	public void testToList2() throws Exception {
-		TopicImpl t = new TopicImpl(NodeImplTest.FIRSTID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTID, NodeImplTest.TOPICNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS, NodeImplTest.TESTPROOF);
+		TopicImpl t = new TopicImpl(NodeImplTest.FIRSTID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTID, NodeImplTest.TOPICNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS2, NodeImplTest.TESTPROOF);
 		t.setUrl(TopicImplTest.TESTURL);
 		a.addValidate(t);
 		List<String> l = a.toList();
@@ -88,9 +88,9 @@ public class ArchiveImplTest {
 
 	@Test
 	public void testToList3() throws Exception {
-		CommentImpl c = new CommentImpl(NodeImplTest.FIRSTID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTID, NodeImplTest.COMMENTNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS, NodeImplTest.TESTPROOF);
+		CommentImpl c = new CommentImpl(NodeImplTest.FIRSTID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTID, NodeImplTest.COMMENTNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS2, NodeImplTest.TESTPROOF);
 		c.setUserid(CommentImplTest.TESTUSER);
-		TopicImpl t = new TopicImpl(NodeImplTest.FIRSTID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTID, NodeImplTest.TOPICNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS, NodeImplTest.TESTPROOF);
+		TopicImpl t = new TopicImpl(NodeImplTest.FIRSTID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTID, NodeImplTest.TOPICNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS2, NodeImplTest.TESTPROOF);
 		t.setUrl(TopicImplTest.TESTURL);
 		t.addValidate(c);
 		a.addValidate(t);
@@ -147,20 +147,19 @@ public class ArchiveImplTest {
 		a.add(t);
 		TestCase.assertEquals(1, a.getListsize());
 		TestCase.assertEquals(1, a.getList().size());
+		TestCase.assertEquals(t.getId(), a.getList().get(0).getId());
 	}
 
 	@Test
-	public void testArchive() throws Exception {
+	public void testAdd2() throws Exception {
+		TopicImpl t = new TopicImpl(NodeImplTest.TESTPREVID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTID, NodeImplTest.TOPICNAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS, NodeImplTest.TESTPROOF);
+		a.add(t);
 		a.archive(false, a, NodeImplTest.PREVID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTPROOF);
-		TestCase.assertEquals(NodeImplTest.PREVID, a.getPrevid());
-		TestCase.assertEquals(NodeImplTest.FIRSTHASH, a.getPrevhash());
-		TestCase.assertEquals(NodeImplTest.TESTPROOF2, a.getProof());
-	}
-
-	@Test
-	public void testArchive2() throws Exception {
-		a = new ArchiveImpl(NodeImplTest.TESTPREVID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTID, NodeImplTest.ARCHIVENAME, NodeImplTest.TESTTIMESTAMP, NodeImplTest.TESTSTATUS, NodeImplTest.TESTPROOF2);
-		a.archive(true, a, NodeImplTest.TESTPREVID, NodeImplTest.FIRSTHASH, NodeImplTest.TESTPROOF);
+		try {
+			a.add(t);
+			TestCase.fail();
+		} catch (IllegalStateException e) {
+		}
 	}
 
 }
