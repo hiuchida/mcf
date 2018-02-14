@@ -26,7 +26,7 @@ public class TopicController {
 	@Autowired
 	TopicService topicService;
 
-	@GetMapping("/topics")
+	@GetMapping
 	public ModelAndView list(){
 		ModelAndView mav = new ModelAndView("v1/fragment/topic::topic");
 		mav.addObject("topics", topicService.getTopicList());

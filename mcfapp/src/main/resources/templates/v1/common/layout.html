@@ -6,6 +6,9 @@
 	<meta charset="utf-8"/>
 	<meta http-equiv="x-ua-compatible" content="ie=edge"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
 	<title>Block Topics</title>
 	<link th:href="@{'/resources/v1/css/common.css'}" rel="stylesheet"/>
 
@@ -31,6 +34,20 @@
 			}
 			return result;
 		}
+
+		function setCsrfTokenToAjaxHeader() {
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$(document).ajaxSend(function(e, xhr, options) {
+				console.info("hoge");
+				xhr.setRequestHeader(header, token);
+			});
+		}
+
+		window.addEventListener("load", function(event) {
+			setCsrfTokenToAjaxHeader();
+		});
+
 	</script>
 </head>
 
