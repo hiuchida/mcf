@@ -93,7 +93,7 @@ public class TopicImplTest {
 	@Test
 	public void testToDigestString() throws Exception {
 		t.setUrl(TopicImplTest.TESTURL);
-		String hash = "/n2oZTzaLCl/OEkV3Gqjr70H4zNEOBIg1uq1J+OwmOk=";
+		String hash = "KxJd0Gqk4QGDKtg8Jzx3fMpsb3zPTYZs903sbIuQkfI=";
 		TestCase.assertEquals(hash, t.toDigestString());
 	}
 

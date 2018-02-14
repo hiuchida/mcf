@@ -56,7 +56,7 @@ public class CommentImplTest {
 	@Test
 	public void testToDigestString() throws Exception {
 		c.setUserid(CommentImplTest.TESTUSER);
-		String hash = "DWL+pXKXCw+dr5EgGD6JN91eZ8wt+lruyDbfskB80kU=";
+		String hash = "njRac/KP62Zf4GkxWNZ4d/+aR5kJc9MvFH7r+vDy/qo=";
 		TestCase.assertEquals(hash, c.toDigestString());
 	}
 

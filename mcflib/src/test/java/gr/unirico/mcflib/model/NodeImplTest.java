@@ -70,7 +70,7 @@ public class NodeImplTest {
 	@Test
 	public void testNewDigestBuilder() throws Exception {
 		DigestBuilder db = n.newDigestBuilder(CommentImpl.class);
-		String hash = "rYRxljWgfcVdRlqXEQ+jlZGVxMLfQsSgNNjcsUPxZK8=";
+		String hash = "fDOthAfGERzhD9z3rOH185946pZMKmat0pU02aQugU8=";
 		TestCase.assertEquals(hash, db.toString());
 	}
 
@@ -102,7 +102,7 @@ public class NodeImplTest {
 
 	@Test
 	public void testValidate() throws Exception {
-		String hash = "nF844bsr03B2N7JC1o7fmQ6PZdVKzFjWPbK8NpHWMDo=";
+		String hash = "nIkEaKUHSdwH3DKibATBxhl7H6qb+yRmkDiJG6/ueWk=";
 		n.validate(hash);
 	}
 

@@ -3,12 +3,14 @@ package gr.unirico.mcflib.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import gr.unirico.mcflib.api.McfApiFactory;
+
 public class DigestBuilder {
 	private static Logger logger = LoggerFactory.getLogger(DigestBuilder.class);
 	private StringBuilder sb = new StringBuilder();
 
 	public DigestBuilder(Class<?> klass) {
-		append("secret", "VPCAxzUeJRNGV7FC");
+		append("secret", McfApiFactory.getSecret());
 		append("class", klass.getName());
 	}
 	

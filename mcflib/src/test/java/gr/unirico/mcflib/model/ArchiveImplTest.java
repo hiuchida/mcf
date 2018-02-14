@@ -135,7 +135,7 @@ public class ArchiveImplTest {
 
 	@Test
 	public void testToDigestString() throws Exception {
-		String hash = "OYfkI2GwWDpWDoFAJB7gHP1L/TpxT8bnOqxdetlXwqU=";
+		String hash = "DAJZr2Db8YbYDvUBIWSyXUB/h7CGO6q+HFCIws9QQIw=";
 		TestCase.assertEquals(hash, a.toDigestString());
 	}
 
