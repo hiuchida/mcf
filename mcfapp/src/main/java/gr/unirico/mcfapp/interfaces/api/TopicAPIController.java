@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,12 +45,13 @@ public class TopicAPIController {
 	}
 
 	@PostMapping("/{topicId}/comment")
-	public ResponseEntity<?> saveComment(@PathVariable("topicId") String tid, @RequestBody Map<String, String> data) {
-		String userid = data.get("userid");
+	public ResponseEntity<?> saveComment(@PathVariable("topicId") String tid,
+										 @RequestBody Map<String, String> data,
+										 @AuthenticationPrincipal User user) {
 		String comment = data.get("comment");
 
 		try {
-			topicService.addComment(tid, userid, comment);
+			topicService.addComment(tid, user.getUsername(), comment);
 		} catch (Exception e) {
 			logger.error("Error in addComment", e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

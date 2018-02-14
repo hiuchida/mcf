@@ -6,7 +6,6 @@
  */
 package gr.unirico.mcfapp.application;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +13,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import gr.unirico.mcflib.api.Comment;
 import gr.unirico.mcflib.api.McfApi;
 import gr.unirico.mcflib.api.Topic;
 
@@ -62,13 +60,13 @@ public class ArchiveService {
 	 * @param aid アーカイブ済みトピックID
 	 * @return トピック情報を格納したmap
 	 */
-	public Map<String, Object> getArchivedTopicData(String aid) {
+	public Map<String, Object> getArchivedTopicData(String aid) throws Exception{
 		Map<String, Object> map = new HashMap<>();
 		Topic topic = getArchivedTopic(aid);
 		map.put("id", aid);
-		map.put("name", topic != null ? topic.getName() : "[topic not found.]");
-        map.put("url", topic != null ? topic.getUrl() : "[topic not found.]");
-		map.put("comments", topic != null ? topic.getList() : new ArrayList<Comment>());
+		map.put("name", topic.getName());
+        map.put("url", topic.getUrl());
+		map.put("comments", topic.getList());
 		return map;
 	}
 

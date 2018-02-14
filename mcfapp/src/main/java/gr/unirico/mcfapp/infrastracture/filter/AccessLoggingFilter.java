@@ -1,4 +1,4 @@
-package gr.unirico.mcfapp.filter;
+package gr.unirico.mcfapp.infrastracture.filter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

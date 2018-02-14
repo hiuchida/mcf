@@ -14,6 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import gr.unirico.mcfapp.application.ArchiveService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Controller
 @RequestMapping("/archives/{archiveId}")
 public class ArchiveController {
@@ -25,8 +28,17 @@ public class ArchiveController {
 
 	@GetMapping
 	public ModelAndView index(@PathVariable("archiveId") String archiveId) {
+		Map<String, Object> data = new HashMap<>();
+
+		try {
+			data = archiveService.getArchivedTopicData(archiveId);
+		} catch (Exception e) {
+			logger.error("Error in getArchivedTopic", e);
+			return new ModelAndView("redirect:/");
+		}
+
 		ModelAndView mav = new ModelAndView("v1/archives");
-		mav.addObject("data", archiveService.getArchivedTopicData(archiveId));
+		mav.addObject("data", data);
 		logger.info("show archive [targetId: "  + archiveId + "]");
 		return mav;
 	}

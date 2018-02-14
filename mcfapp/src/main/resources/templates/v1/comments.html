@@ -1,5 +1,6 @@
 <!doctype html>
-<html layout:decorator="v1/common/layout" th:with="authentication=true" xmlns:th="http://www.thymeleaf.org">
+<html layout:decorator="v1/common/layout" th:with="authentication=true" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
 	<title th:text="|トピック - ${data.name}|"></title>
 	<script th:inline="javascript">
@@ -12,7 +13,7 @@
 					type: "POST",
 					url: apiUrl + '/comment',
 					contentType: "application/json",
-					data: JSON.stringify({"userid": $('#user-id').val(), "comment": $('#comment-text').val()})
+					data: JSON.stringify({"comment": $('#comment-text').val()})
 				}).then(
 					function(data) {
 						$('#success-alert').html('コメントを投稿しました。').alert().fadeTo(2000, 500).slideUp(500);
@@ -73,14 +74,20 @@
 		<p><a target="_blank" th:href="${data.url}" th:text="${data.url}"></a></p>
 		<p>トピックの情報を表示しています。</p>
 		<p>どんどんコメントしよう。</p>
-		<div class="text-right">
+		<div sec:authorize="isAuthenticated()" class="text-right">
 			<button id="archiveBtn" type="button" class="btn btn-danger">トピックをアーカイブする</button>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-6">
-			<div class="input-group mb-3">
-                <input type="hidden" id="user-id" th:value="${userid}" />
+			<div sec:authorize="isAnonymous()" class="card">
+				<div class="card-body">
+					<p class="card-text">
+						コメントを追加するには、ログインする必要があります。
+					</p>
+				</div>
+			</div>
+			<div sec:authorize="isAuthenticated()" class="input-group mb-3">
 				<input type="text" id="comment-text" class="form-control" placeholder="コメントを入力してください。" />
 				<div class="input-group-append">
 					<button id="mcf-write" class="btn btn-primary" type="button">送信</button>

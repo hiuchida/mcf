@@ -20,6 +20,7 @@
 				<label for="password"><strong>パスワード</strong></label>
 				<input type="password" class="form-control" placeholder="パスワード" name="password" id="password" required="true"/>
 			</div>
+			<input type="hidden" name="redirectUri" id="redirectUri" th:value="${redirectUri}"/>
 			<button class="btn btn-primary" type="submit">ログイン</button>
 		</form>
 	</div>

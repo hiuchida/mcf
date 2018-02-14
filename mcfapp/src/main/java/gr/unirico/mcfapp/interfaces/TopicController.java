@@ -6,8 +6,6 @@ package gr.unirico.mcfapp.interfaces;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,7 +34,7 @@ public class TopicController {
 	}
 
 	@GetMapping("/{topicId}")
-	public ModelAndView index(@AuthenticationPrincipal User user, @PathVariable("topicId") String topicId) {
+	public ModelAndView index(@PathVariable("topicId") String topicId) {
 		Map<String, Object> topic = new HashMap<>();
 		try {
 			topic = topicService.getTopicData(topicId);
@@ -46,7 +44,6 @@ public class TopicController {
 		}
 
 		ModelAndView mav = new ModelAndView("v1/comments");
-		mav.addObject("userid", user.getUsername());
 		mav.addObject("data", topic);
 		logger.info("show topic [topic id: " + topicId + "]");
 		return mav;
