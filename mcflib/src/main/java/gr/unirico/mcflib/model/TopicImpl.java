@@ -51,7 +51,7 @@ public class TopicImpl extends NodeImpl implements Topic {
 	
 	@Override
 	public String toString() {
-		return this.previd + "," + this.status + "," + this.list.toString();
+		return this.previd + "," + this.list.toString();
 	}
 	
 	public synchronized void add(Comment _c) {

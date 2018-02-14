@@ -1,11 +1,8 @@
 package gr.unirico.mcflib.model;
 
 import gr.unirico.mcflib.api.Node;
-import gr.unirico.mcflib.exception.IllegalHashException;
-import gr.unirico.mcflib.exception.IllegalPrevidException;
-import gr.unirico.mcflib.exception.IllegalProofException;
-import gr.unirico.mcflib.exception.IllegalStatusException;
 import gr.unirico.mcflib.impl.ProofOfWork;
+import gr.unirico.mcflib.impl.Validator;
 import gr.unirico.mcflib.util.DateUtil;
 import gr.unirico.mcflib.util.DigestBuilder;
 import gr.unirico.mcflib.util.ListBuilder;
@@ -56,7 +53,9 @@ public abstract class NodeImpl implements Node {
 	protected abstract String toDigestString();
 
 	protected ListBuilder newListBuilder(Class<?> klass) {
-		this.hash = toDigestString();
+		if (!bArchived) {
+			this.hash = toDigestString();
+		}
 		ListBuilder lb = new ListBuilder(klass);
 		lb.append("previd", previd);
 		lb.append("prevhash", prevhash);
@@ -83,18 +82,10 @@ public abstract class NodeImpl implements Node {
 	protected synchronized void archive(boolean bValidate, NodeImpl parent, String previd, String prevhash, int prevproof) {
 		checkArchived();
 		if (bValidate) {
-			if (!previd.equals(this.previd)) {
-				throw new IllegalPrevidException(previd + "," + this.previd);
-			}
-			if (!prevhash.equals(this.prevhash)) {
-				throw new IllegalHashException(prevhash + "," + this.prevhash);
-			}
-			if (!FIXED.equals(this.status)) {
-				throw new IllegalStatusException(FIXED + "," + this.status);
-			}
-			if (!ProofOfWork.validate(prevproof, prevhash, this.proof)) {
-				throw new IllegalProofException(prevproof + "," + this.proof);
-			}
+			Validator.previd(previd, this.previd);
+			Validator.prevhash(prevhash, this.prevhash);
+			Validator.status(FIXED, this.status);
+			Validator.proof(prevproof, prevhash, this.proof);
 		} else {
 			this.previd = previd;
 			this.prevhash = prevhash;
@@ -103,7 +94,7 @@ public abstract class NodeImpl implements Node {
 			this.proof = ProofOfWork.calc(prevproof, prevhash);
 			this.hash = toDigestString();
 		}
-		//永続化されないプロパティ
+		//豌ｸ邯壼喧縺輔ｌ縺ｪ縺�繝励Ο繝代ユ繧｣
 		this.bArchived = true;
 		this.parent = parent;
 		this.validateproof = ProofOfWork.calcHash(prevproof, prevhash, this.proof);
@@ -117,9 +108,7 @@ public abstract class NodeImpl implements Node {
 
 	public void validate(String hash) {
 		this.hash = toDigestString();
-		if (!hash.equals(this.hash)) {
-			throw new IllegalHashException(hash + "," + this.hash);
-		}
+		Validator.hash(hash, this.hash);
 	}
 
 	public Node getParent() {
