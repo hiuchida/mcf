@@ -16,10 +16,13 @@ public class McfFactoryConfig {
 	@Value("${mcfapp.factory.data.path}")
 	String factoryDataPath;
 
+	@Value("${mcfapp.factory.secret}")
+	String factorySecret;
+
 	@Bean
 	public McfApi mcfApi() {
 		logger.info("setup factory.");
-		McfApiFactory.init(factoryDataPath);
+		McfApiFactory.init(factoryDataPath, factorySecret);
 		return McfApiFactory.getInstance();
 	}
 
