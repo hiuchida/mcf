@@ -13,34 +13,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import gr.unirico.mcfapp.application.ArchiveService;
-
-import java.util.HashMap;
-import java.util.Map;
+import gr.unirico.mcfapp.application.TopicService;
+import gr.unirico.mcflib.api.Topic;
 
 @Controller
 @RequestMapping("/archives/{archiveId}")
 public class ArchiveController {
 	private static final Logger logger = LoggerFactory.getLogger(ArchiveController.class);
 
-	// 本番用
 	@Autowired
 	ArchiveService archiveService;
 
+	@Autowired
+	TopicService topicService;
+
 	@GetMapping
 	public ModelAndView index(@PathVariable("archiveId") String archiveId) {
-		Map<String, Object> data = new HashMap<>();
-
+		logger.info("index: /archives/{}", archiveId);
 		try {
-			data = archiveService.getArchivedTopicData(archiveId);
+			ModelAndView mav = new ModelAndView("v1/archives");
+			Topic topic = archiveService.getArchivedTopic(archiveId);
+			mav.addObject("data", topicService.getMapFromTopic(topic));
+			return mav;
 		} catch (Exception e) {
-			logger.error("Error in getArchivedTopic", e);
+			logger.error("Error in getArchivedTopicData", e);
 			return new ModelAndView("redirect:/");
 		}
-
-		ModelAndView mav = new ModelAndView("v1/archives");
-		mav.addObject("data", data);
-		logger.info("show archive [targetId: "  + archiveId + "]");
-		return mav;
 	}
 
 }

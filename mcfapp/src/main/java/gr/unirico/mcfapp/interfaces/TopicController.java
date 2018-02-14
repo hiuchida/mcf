@@ -13,21 +13,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import gr.unirico.mcfapp.application.TopicService;
-
-import java.util.HashMap;
-import java.util.Map;
+import gr.unirico.mcflib.api.Topic;
 
 @Controller
 @RequestMapping("/topics")
 public class TopicController {
     private static final Logger logger = LoggerFactory.getLogger(TopicController.class);
 
-	// 本番用
 	@Autowired
 	TopicService topicService;
 
 	@GetMapping
-	public ModelAndView list(){
+	public ModelAndView list() {
+		logger.info("list: /topics");
 		ModelAndView mav = new ModelAndView("v1/fragment/topic::topic");
 		mav.addObject("topics", topicService.getTopicList());
 		return mav;
@@ -35,26 +33,25 @@ public class TopicController {
 
 	@GetMapping("/{topicId}")
 	public ModelAndView index(@PathVariable("topicId") String topicId) {
-		Map<String, Object> topic = new HashMap<>();
+		logger.info("index: /topics/{}", topicId);
 		try {
-			topic = topicService.getTopicData(topicId);
+			ModelAndView mav = new ModelAndView("v1/comments");
+			Topic topic = topicService.getTopic(topicId);
+			mav.addObject("data", topicService.getMapFromTopic(topic));
+			return mav;
 		} catch (Exception e) {
 			logger.error("Error in getTopic", e);
 			return new ModelAndView("redirect:/");
 		}
-
-		ModelAndView mav = new ModelAndView("v1/comments");
-		mav.addObject("data", topic);
-		logger.info("show topic [topic id: " + topicId + "]");
-		return mav;
 	}
 
 	@GetMapping("/{topicId}/comments")
-	public ModelAndView getHistories(@PathVariable("topicId") String topicId) {
+	public ModelAndView comments(@PathVariable("topicId") String topicId) {
+		logger.info("comments: /topics/{}/comments", topicId);
 		ModelAndView mav = new ModelAndView("v1/fragment/comment :: comment");
 		try {
-			mav.addObject("data", topicService.getTopicData(topicId));
-			logger.info("show topic comments [topic id: " + topicId + "]");
+			Topic topic = topicService.getTopic(topicId);
+			mav.addObject("data", topicService.getMapFromTopic(topic));
 		} catch (Exception e) {
 			logger.error("Error in getTopic", e);
 		}

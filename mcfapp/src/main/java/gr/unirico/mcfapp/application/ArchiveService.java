@@ -6,9 +6,7 @@
  */
 package gr.unirico.mcfapp.application;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +19,7 @@ import gr.unirico.mcflib.api.Topic;
  */
 @Service
 public class ArchiveService {
+	//private Logger logger = LoggerFactory.getLogger(ArchiveService.class);
 
 	@Autowired
 	McfApi api;
@@ -35,39 +34,24 @@ public class ArchiveService {
 
 	/**
 	 * アーカイブされたトピックの取得
-	 * @param tid トピックID
+	 * @param topicId トピックID
 	 * @return トピック
 	 */
-	public Topic getArchivedTopic(String tid) {
-	    for(Topic t : getArchivedTopicList()){
-	    	if(t.getId().equals(tid)){
-	    		return t;
+	public Topic getArchivedTopic(String topicId) throws Exception {
+	    for(Topic topic : getArchivedTopicList()){
+	    	if(topic.getId().equals(topicId)){
+	    		return topic;
 			}
 		}
-		return null;
+		throw new Exception("No such topic " + topicId);
 	}
 
 	/**
 	 * 指定したトピックをアーカイブ
-	 * @param t トピック
+	 * @param topic トピック
 	 */
-	public void archiveTopic(Topic t) throws Exception{
-		api.archiveTopic(t);
-	}
-
-	/**
-	 * アーカイブ済みのトピックの情報を取得
-	 * @param aid アーカイブ済みトピックID
-	 * @return トピック情報を格納したmap
-	 */
-	public Map<String, Object> getArchivedTopicData(String aid) throws Exception{
-		Map<String, Object> map = new HashMap<>();
-		Topic topic = getArchivedTopic(aid);
-		map.put("id", aid);
-		map.put("name", topic.getName());
-        map.put("url", topic.getUrl());
-		map.put("comments", topic.getList());
-		return map;
+	public void archiveTopic(Topic topic) throws Exception {
+		api.archiveTopic(topic);
 	}
 
 }

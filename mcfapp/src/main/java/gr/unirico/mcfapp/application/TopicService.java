@@ -6,17 +6,13 @@
  */
 package gr.unirico.mcfapp.application;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import gr.unirico.mcflib.api.Comment;
 import gr.unirico.mcflib.api.McfApi;
 import gr.unirico.mcflib.api.Topic;
 
@@ -25,7 +21,7 @@ import gr.unirico.mcflib.api.Topic;
  */
 @Service
 public class TopicService {
-	private Logger logger = LoggerFactory.getLogger(TopicService.class);
+	//private Logger logger = LoggerFactory.getLogger(TopicService.class);
 
 	@Autowired
 	McfApi api;
@@ -40,11 +36,11 @@ public class TopicService {
 
 	/**
 	 * トピックを取得
-	 * @param tid トピックID
+	 * @param topicId トピックID
 	 * @return トピックインスタンス
 	 */
-	public Topic getTopic(String tid) throws Exception {
-	    return api.readTopic(tid);
+	public Topic getTopic(String topicId) throws Exception {
+	    return api.readTopic(topicId);
     }
 
 	/**
@@ -54,51 +50,34 @@ public class TopicService {
 	 * @return トピックインスタンス
 	 */
 	public Topic createTopic(String sitename, String siteurl) throws Exception {
-	   Topic t = api.newTopic(sitename, siteurl);
+		Topic t = api.newTopic(sitename, siteurl);
 		api.writeTopic(t);
 		return t;
 	}
 
 	/**
-	 * 指定したトピックのコメント一覧の取得
-	 * @param tid トピックID
-	 * @return コメントのリスト
-	 */
-	public List<Comment> getCommentList(String tid) {
-	    List<Comment> list = null;
-	    try {
-	        Topic topic = api.readTopic(tid);
-	        list = topic.getList();
-        } catch(Exception e) {
-	        logger.error("Error in getCommentList", e);
-        }
-	    return list;
-	}
-
-	/**
 	 * コメントを追加
-	 * @param tid トピックID
+	 * @param topicId トピックID
 	 * @param userid ユーザID
 	 * @param comment コメント
 	 */
-	public void addComment(String tid, String userid, String comment) throws Exception {
-		Topic topic = api.readTopic(tid);
+	public void addComment(String topicId, String userid, String comment) throws Exception {
+		Topic topic = api.readTopic(topicId);
 		topic.add(api.newComment(userid, comment));
 		api.writeTopic(topic);
 	}
 
 	/**
-	* トピック情報を取得
-	* @param tid トピックID
-	* @return トピック情報を格納したmap
+	* トピック情報をマップに変換
+	* @param topic トピック情報
+	* @return トピック情報を格納したマップ
 	*/
-	public Map<String, Object> getTopicData(String tid) throws Exception {
-        HashMap<String, Object> map = new HashMap<>();
-        Topic topic = getTopic(tid);
-        map.put("id", tid);
-        map.put("name", topic != null ? topic.getName() : "[topic not found.]");
-        map.put("url", topic != null ? topic.getUrl() : "[topic not found.]");
-        map.put("comments", topic != null ? topic.getList() : new ArrayList<Comment>());
+	public Map<String, Object> getMapFromTopic(Topic topic) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", topic.getId());
+        map.put("name", topic.getName());
+        map.put("url", topic.getUrl());
+        map.put("comments", topic.getList());
 	    return map;
     }
 

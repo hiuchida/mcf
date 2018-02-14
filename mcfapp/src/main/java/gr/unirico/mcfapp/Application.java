@@ -1,14 +1,16 @@
 package gr.unirico.mcfapp;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
 import gr.unirico.mcflib.api.Comment;
 import gr.unirico.mcflib.api.McfApi;
 import gr.unirico.mcflib.api.Topic;
 import gr.unirico.mcflib.util.FileUtil;
-import org.springframework.context.ConfigurableApplicationContext;
 
 @SpringBootApplication
 public class Application {
@@ -23,6 +25,8 @@ public class Application {
 	}
 
 	public void startUpTask() {
+		Logger logger = LoggerFactory.getLogger(Application.class);
+		logger.info("Creating test data");
 		String dir = api.getDataDir();
 		FileUtil.deleteFiles(dir);
 		try {
@@ -56,8 +60,9 @@ public class Application {
 			Thread.sleep(100);
 			t = api.newTopic("Microsoft Part2", "https://www.microsoft.com/ja-jp/");
 			api.writeTopic(t);
+			logger.info("Complete test data");
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Error in startUpTask", e);
 		}
 	}
 }

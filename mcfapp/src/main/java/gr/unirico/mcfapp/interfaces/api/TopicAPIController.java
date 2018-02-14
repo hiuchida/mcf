@@ -33,45 +33,45 @@ public class TopicAPIController {
 
 	@PostMapping
 	public ResponseEntity<?> saveTopic(@RequestBody Map<String, String> data) {
-		String sitename = data.get("name");
-		String siteurl = data.get("url");
+		logger.info("saveTopic: /api/topics");
 		try {
+			String sitename = data.get("name");
+			String siteurl = data.get("url");
 			topicService.createTopic(sitename, siteurl);
+			return ResponseEntity.status(HttpStatus.CREATED).build();
 		} catch (Exception e) {
 			logger.error("Error in createTopic", e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
-		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
 	@PostMapping("/{topicId}/comment")
-	public ResponseEntity<?> saveComment(@PathVariable("topicId") String tid,
+	public ResponseEntity<?> saveComment(@PathVariable("topicId") String topicId,
 										 @RequestBody Map<String, String> data,
 										 @AuthenticationPrincipal User user) {
-		String comment = data.get("comment");
-
+		logger.info("saveComment: /api/topics/{}/comment", topicId);
 		try {
-			topicService.addComment(tid, user.getUsername(), comment);
+			String comment = data.get("comment");
+			topicService.addComment(topicId, user.getUsername(), comment);
+			return ResponseEntity.status(HttpStatus.CREATED).build();
 		} catch (Exception e) {
 			logger.error("Error in addComment", e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
-
-		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
 	@GetMapping("/{topicId}/archive")
-	public ResponseEntity<?> archive(@PathVariable("topicId") String tid) {
+	public ResponseEntity<?> archive(@PathVariable("topicId") String topicId) {
+		logger.info("archive: /api/topics/{}/archive", topicId);
 		try {
-			archiveService.archiveTopic(topicService.getTopic(tid));
+			Map<String, String> map = new HashMap<>();
+			archiveService.archiveTopic(topicService.getTopic(topicId));
+			map.put("archiveId", topicId);
+			return ResponseEntity.ok(map);
 		} catch (Exception e) {
 			logger.error("Error in archiveTopic", e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
-
-		Map<String, String> map = new HashMap<>();
-		map.put("archiveId", tid);
-		return ResponseEntity.ok(map);
 	}
 
 }
