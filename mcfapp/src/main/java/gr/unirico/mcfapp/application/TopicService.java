@@ -43,14 +43,8 @@ public class TopicService {
 	 * @param tid トピックID
 	 * @return トピックインスタンス
 	 */
-	public Topic getTopic(String tid) {
-	    Topic topic = null;
-	    try {
-	        topic = api.readTopic(tid);
-        } catch (Exception e) {
-	        logger.error("Error in getTopic", e);
-        }
-        return topic;
+	public Topic getTopic(String tid) throws Exception {
+	    return api.readTopic(tid);
     }
 
 	/**
@@ -59,14 +53,9 @@ public class TopicService {
 	 * @param siteurl サイトurl
 	 * @return トピックインスタンス
 	 */
-	public Topic createTopic(String sitename, String siteurl) {
-	    Topic t = null;
-	    try{
-	        t = api.newTopic(sitename, siteurl);
-	        api.writeTopic(t);
-        }catch (Exception e){
-            logger.error("Error in createTopic", e);
-        }
+	public Topic createTopic(String sitename, String siteurl) throws Exception {
+	   Topic t = api.newTopic(sitename, siteurl);
+		api.writeTopic(t);
 		return t;
 	}
 
@@ -92,15 +81,10 @@ public class TopicService {
 	 * @param userid ユーザID
 	 * @param comment コメント
 	 */
-	public void addComment(String tid, String userid, String comment) {
-	    Topic topic = null;
-	    try {
-	        topic = api.readTopic(tid);
-			topic.add(api.newComment(userid, comment));
-			api.writeTopic(topic);
-        } catch (Exception e) {
-	        logger.error("Error in addComment", e);
-        }
+	public void addComment(String tid, String userid, String comment) throws Exception {
+		Topic topic = api.readTopic(tid);
+		topic.add(api.newComment(userid, comment));
+		api.writeTopic(topic);
 	}
 
 	/**
@@ -108,7 +92,7 @@ public class TopicService {
 	* @param tid トピックID
 	* @return トピック情報を格納したmap
 	*/
-	public Map<String, Object> getTopicData(String tid){
+	public Map<String, Object> getTopicData(String tid) throws Exception {
         HashMap<String, Object> map = new HashMap<>();
         Topic topic = getTopic(tid);
         map.put("id", tid);

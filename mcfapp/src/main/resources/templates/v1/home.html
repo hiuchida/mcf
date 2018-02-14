@@ -45,7 +45,7 @@
 		function loadTopics() {
 			$.ajax({
 				type: "GET",
-				url: '/api/topics'
+				url: '/topics'
 			}).then(
 				function(data) {
 					$('#topic-list').html(data);

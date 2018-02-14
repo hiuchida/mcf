@@ -11,8 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +23,6 @@ import gr.unirico.mcflib.api.Topic;
  */
 @Service
 public class ArchiveService {
-	private Logger logger = LoggerFactory.getLogger(ArchiveService.class);
 
 	@Autowired
 	McfApi api;
@@ -56,12 +53,8 @@ public class ArchiveService {
 	 * 指定したトピックをアーカイブ
 	 * @param t トピック
 	 */
-	public void archiveTopic(Topic t) {
-	    try{
-            api.archiveTopic(t);
-        } catch (Exception e) {
-	        logger.error("Error in archiveTopic", e);
-        }
+	public void archiveTopic(Topic t) throws Exception{
+		api.archiveTopic(t);
 	}
 
 	/**

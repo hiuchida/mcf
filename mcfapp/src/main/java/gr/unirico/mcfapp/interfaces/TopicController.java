@@ -16,8 +16,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import gr.unirico.mcfapp.application.TopicService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Controller
-@RequestMapping("/topics/{topicId}")
+@RequestMapping("/topics")
 public class TopicController {
     private static final Logger logger = LoggerFactory.getLogger(TopicController.class);
 
@@ -25,20 +28,39 @@ public class TopicController {
 	@Autowired
 	TopicService topicService;
 
-	@GetMapping
+	@GetMapping("/topics")
+	public ModelAndView list(){
+		ModelAndView mav = new ModelAndView("v1/fragment/topic::topic");
+		mav.addObject("topics", topicService.getTopicList());
+		return mav;
+	}
+
+	@GetMapping("/{topicId}")
 	public ModelAndView index(@AuthenticationPrincipal User user, @PathVariable("topicId") String topicId) {
+		Map<String, Object> topic = new HashMap<>();
+		try {
+			topic = topicService.getTopicData(topicId);
+		} catch (Exception e) {
+			logger.error("Error in getTopic", e);
+			return new ModelAndView("redirect:/");
+		}
+
 		ModelAndView mav = new ModelAndView("v1/comments");
 		mav.addObject("userid", user.getUsername());
-		mav.addObject("data", topicService.getTopicData(topicId));
+		mav.addObject("data", topic);
 		logger.info("show topic [topic id: " + topicId + "]");
 		return mav;
 	}
 
-	@GetMapping("/comments")
+	@GetMapping("/{topicId}/comments")
 	public ModelAndView getHistories(@PathVariable("topicId") String topicId) {
 		ModelAndView mav = new ModelAndView("v1/fragment/comment :: comment");
-		mav.addObject("data", topicService.getTopicData(topicId));
-		logger.info("show topic comments [topic id: " + topicId + "]");
+		try {
+			mav.addObject("data", topicService.getTopicData(topicId));
+			logger.info("show topic comments [topic id: " + topicId + "]");
+		} catch (Exception e) {
+			logger.error("Error in getTopic", e);
+		}
 		return mav;
 	}
 
