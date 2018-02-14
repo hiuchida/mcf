@@ -35,7 +35,7 @@ public class TopicController {
 	public ModelAndView index(@PathVariable("topicId") String topicId) {
 		logger.info("index: /topics/{}", topicId);
 		try {
-			ModelAndView mav = new ModelAndView("v1/comments");
+			ModelAndView mav = new ModelAndView("v1/topics");
 			Topic topic = topicService.getTopic(topicId);
 			mav.addObject("data", topicService.getMapFromTopic(topic));
 			return mav;
