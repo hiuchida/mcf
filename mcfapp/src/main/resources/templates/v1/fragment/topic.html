@@ -1,5 +1,5 @@
-<div class="card" th:fragment="topic" th:each="topic: ${topics}" style="margin-bottom:5px;" th:attr="onclick='moveTopic(\'' + ${topic.id} + '\');'">
-	<div class="card-body">
+<div class="card" th:fragment="topic" th:each="topic: ${topics}" style="margin-bottom:5px;">
+	<div class="card-body" th:attr="onclick='moveTopic(\'' + ${topic.id} + '\');'">
 		<h5 class="card-title" th:text="${topic.name}"></h5>
 		<p class="card-text">
 		<div>
@@ -19,6 +19,12 @@
 			<span th:utext="${topic.status}"></span>
 		</div>
 		<div>
+			<hr/>
+		</div>
+		<div>
+			<span>【内部情報】</span>
+		</div>
+		<div>
 			<span>プルーフ：</span>
 			<span th:utext="${topic.validateproof}"></span>
 		</div>
@@ -33,8 +39,8 @@
 		</p>
 	</div>
 </div>
-<div class="card" th:fragment="archive" th:each="archive: ${archives}" style="margin-bottom:5px;" th:attr="onclick='moveArchive(\'' + ${archive.id} + '\');'">
-	<div class="card-body">
+<div class="card" th:fragment="archive" th:each="archive: ${archives}" style="margin-bottom:5px;">
+	<div class="card-body" th:attr="onclick='moveArchive(\'' + ${archive.id} + '\');'">
 		<h5 class="card-title" th:text="${archive.name}"></h5>
 		<p class="card-text">
 		<div>
@@ -52,6 +58,12 @@
 		<div>
 			<span>ステータス：</span>
 			<span th:utext="${archive.status}"></span>
+		</div>
+		<div>
+			<hr/>
+		</div>
+		<div>
+			<span>【内部情報】</span>
 		</div>
 		<div>
 			<span>プルーフ：</span>

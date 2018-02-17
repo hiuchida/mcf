@@ -35,6 +35,7 @@ public class Application {
 			t = api.newTopic("Yahoo! Part1", "https://www.yahoo.co.jp/");
 			c = api.newComment("testuser1", "comment1");
 			t.add(c);
+			Thread.sleep(100);
 			c = api.newComment("testuser2", "comment2");
 			t.add(c);
 			api.writeTopic(t);
@@ -51,6 +52,7 @@ public class Application {
 			t = api.newTopic("Yahoo! Part2", "https://www.yahoo.co.jp/");
 			c = api.newComment("testuser1", "comment1");
 			t.add(c);
+			Thread.sleep(100);
 			c = api.newComment("testuser2", "comment2");
 			t.add(c);
 			api.writeTopic(t);
