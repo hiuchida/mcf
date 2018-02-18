@@ -17,6 +17,7 @@ public class CommentImpl extends NodeImpl implements Comment {
 		super(previd, prevhash, id, name, timestamp, status, proof);
 	}
 
+	@Override
 	public List<String> toList() {
 		ListBuilder lb = newListBuilder(CommentImpl.class);
 		lb.append("userid", userid);

@@ -23,6 +23,7 @@ public class TopicImpl extends NodeImpl implements Topic {
 		super(previd, prevhash, id, name, timestamp, status, proof);
 	}
 
+	@Override
 	public List<String> toList() {
 		ListBuilder lb = newListBuilder(TopicImpl.class);
 		lb.append("url", url);

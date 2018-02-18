@@ -90,7 +90,7 @@ public class McfApiImpl implements McfApi {
 		String id = t.getId();
 		logger.info("writeTopic: {}", id);
 		try (PrintWriter pw = FileUtil.newWriter(dataDir + "/" + id + ".txt")) {
-			FileUtil.write(pw, ((TopicImpl)t).toList());
+			FileUtil.write(pw, t.toList());
 		} finally {
 		}
 	}
@@ -120,7 +120,7 @@ public class McfApiImpl implements McfApi {
 
 	private void writeArchive(Archive a) throws IOException {
 		try (PrintWriter pw = FileUtil.newWriter(dataDir + "/" + "archive.txt")) {
-			FileUtil.write(pw, ((ArchiveImpl)a).toList());
+			FileUtil.write(pw, a.toList());
 		} finally {
 		}
 	}

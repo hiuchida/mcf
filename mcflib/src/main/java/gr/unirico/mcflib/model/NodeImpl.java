@@ -1,5 +1,7 @@
 package gr.unirico.mcflib.model;
 
+import java.util.List;
+
 import gr.unirico.mcflib.api.Node;
 import gr.unirico.mcflib.impl.ProofOfWork;
 import gr.unirico.mcflib.impl.Validator;
@@ -50,6 +52,7 @@ public abstract class NodeImpl implements Node {
 		this.validateproof = "" + proof;
 	}
 	
+	public abstract List<String> toList();
 	protected abstract String toDigestString();
 
 	protected ListBuilder newListBuilder(Class<?> klass) {

@@ -22,6 +22,7 @@ public class ArchiveImpl extends NodeImpl implements Archive {
 		super(previd, prevhash, id, name, timestamp, status, proof);
 	}
 
+	@Override
 	public List<String> toList() {
 		ListBuilder lb = newListBuilder(ArchiveImpl.class);
 		if (list.size() > 0) {

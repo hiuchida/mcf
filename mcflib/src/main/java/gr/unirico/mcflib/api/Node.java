@@ -1,6 +1,9 @@
 package gr.unirico.mcflib.api;
 
+import java.util.List;
+
 public interface Node {
+	public List<String> toList();
 	public Node getParent();
 	public String getPrevid();
 	public String getPrevhash();
