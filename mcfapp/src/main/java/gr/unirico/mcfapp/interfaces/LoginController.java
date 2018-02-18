@@ -26,7 +26,6 @@ public class LoginController {
 			@RequestParam(name = "error", required = false) String error, HttpServletRequest request) throws Exception{
 		logger.info("login: /login");
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		// FIXME
 		if(authentication.getCredentials() != null) {
 			ModelAndView mav = new ModelAndView("v1/login");
 			if(StringUtils.isNotBlank(redirectUri)) {
