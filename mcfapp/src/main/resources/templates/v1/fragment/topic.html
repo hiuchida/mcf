@@ -25,6 +25,14 @@
 			<span>【内部情報】</span>
 		</div>
 		<div>
+			<span>id：</span>
+			<span th:utext="${topic.id}"></span>
+		</div>
+		<div>
+			<span>前のid：</span>
+			<span th:utext="${topic.previd}"></span>
+		</div>
+		<div>
 			<span>プルーフ：</span>
 			<span th:utext="${topic.validateproof}"></span>
 		</div>
@@ -33,7 +41,7 @@
 			<span th:utext="${topic.shorthash}"></span>
 		</div>
 		<div>
-			<span>プレハッシュ値：</span>
+			<span>前のハッシュ値：</span>
 			<span th:utext="${topic.shortprevhash}"></span>
 		</div>
 		</p>
@@ -66,6 +74,14 @@
 			<span>【内部情報】</span>
 		</div>
 		<div>
+			<span>id：</span>
+			<span th:utext="${archive.id}"></span>
+		</div>
+		<div>
+			<span>前のid：</span>
+			<span th:utext="${archive.previd}"></span>
+		</div>
+		<div>
 			<span>プルーフ：</span>
 			<span th:utext="${archive.validateproof}"></span>
 		</div>
@@ -74,7 +90,7 @@
 			<span th:utext="${archive.shorthash}"></span>
 		</div>
 		<div>
-			<span>プレハッシュ値：</span>
+			<span>前のハッシュ値：</span>
 			<span th:utext="${archive.shortprevhash}"></span>
 		</div>
 		</p>

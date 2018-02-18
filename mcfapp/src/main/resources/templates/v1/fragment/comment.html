@@ -21,6 +21,14 @@
 			<span>【内部情報】</span>
 		</div>
 		<div>
+			<span>id：</span>
+			<span th:utext="${comment.id}"></span>
+		</div>
+		<div>
+			<span>前のid：</span>
+			<span th:utext="${comment.previd}"></span>
+		</div>
+		<div>
 			<span>プルーフ：</span>
 			<span th:utext="${comment.validateproof}"></span>
 		</div>
@@ -29,7 +37,7 @@
 			<span th:utext="${comment.shorthash}"></span>
 		</div>
 		<div>
-			<span>プレハッシュ値：</span>
+			<span>前のハッシュ値：</span>
 			<span th:utext="${comment.shortprevhash}"></span>
 		</div>
 		</p>
