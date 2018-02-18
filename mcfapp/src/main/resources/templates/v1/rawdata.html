@@ -1,0 +1,30 @@
+<!doctype html>
+<html layout:decorator="v1/common/layout" th:with="authentication=true" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+	<title th:text="|トピック - ${data.name}|"></title>
+</head>
+
+<body>
+<div class="container" layout:fragment="layout-content">
+	<ol class="breadcrumb">
+		<li><a href="/">ホーム</a></li>
+		<li class="active" th:text="${data.name}"></li>
+	</ol>
+	<div class="jumbotron">
+		<h1 th:text="|${data.name}（生データ）|"></h1>
+		<p>生データを表示しています。</p>
+	</div>
+	<div class="row">
+		<div id="comment-list" class="col-md-6">
+			<div class="card" th:each="line: ${list}" style="margin-bottom:5px;">
+				<div>
+					<span th:utext="${line}"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+
+</html>

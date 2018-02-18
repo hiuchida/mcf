@@ -17,7 +17,7 @@ import gr.unirico.mcfapp.application.TopicService;
 import gr.unirico.mcflib.api.Topic;
 
 @Controller
-@RequestMapping("/archives/{archiveId}")
+@RequestMapping("/archives")
 public class ArchiveController {
 	private static final Logger logger = LoggerFactory.getLogger(ArchiveController.class);
 
@@ -27,7 +27,7 @@ public class ArchiveController {
 	@Autowired
 	TopicService topicService;
 
-	@GetMapping
+	@GetMapping("/{archiveId}")
 	public ModelAndView index(@PathVariable("archiveId") String archiveId) {
 		logger.info("index: /archives/{}", archiveId);
 		try {
@@ -36,7 +36,22 @@ public class ArchiveController {
 			mav.addObject("data", topicService.getMapFromTopic(topic));
 			return mav;
 		} catch (Exception e) {
-			logger.error("Error in getArchivedTopicData", e);
+			logger.error("Error in getArchivedTopic", e);
+			return new ModelAndView("redirect:/");
+		}
+	}
+
+	@GetMapping("/{archiveId}/rawdata")
+	public ModelAndView rawdata(@PathVariable("archiveId") String archiveId) {
+		logger.info("index: /archives/{}/rawdata", archiveId);
+		try {
+			ModelAndView mav = new ModelAndView("v1/rawdata");
+			Topic topic = archiveService.getArchivedTopic(archiveId);
+			mav.addObject("data", topicService.getMapFromTopic(topic));
+			mav.addObject("list", topic.toList());
+			return mav;
+		} catch (Exception e) {
+			logger.error("Error in getArchivedTopic", e);
 			return new ModelAndView("redirect:/");
 		}
 	}

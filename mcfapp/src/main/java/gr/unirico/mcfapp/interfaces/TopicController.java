@@ -58,4 +58,19 @@ public class TopicController {
 		return mav;
 	}
 
+	@GetMapping("/{topicId}/rawdata")
+	public ModelAndView rawdata(@PathVariable("topicId") String topicId) {
+		logger.info("index: /topics/{}/rawdata", topicId);
+		try {
+			ModelAndView mav = new ModelAndView("v1/rawdata");
+			Topic topic = topicService.getTopic(topicId);
+			mav.addObject("data", topicService.getMapFromTopic(topic));
+			mav.addObject("list", topic.toList());
+			return mav;
+		} catch (Exception e) {
+			logger.error("Error in getTopic", e);
+			return new ModelAndView("redirect:/");
+		}
+	}
+
 }

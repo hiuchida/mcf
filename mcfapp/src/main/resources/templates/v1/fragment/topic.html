@@ -46,6 +46,9 @@
 		</div>
 		</p>
 	</div>
+	<div>
+		<span><a th:href="@{'/topics/' + ${topic.id} + '/rawdata'}" th:text="生データを表示する"></a></span>
+	</div>
 </div>
 <div class="card" th:fragment="archive" th:each="archive: ${archives}" style="margin-bottom:5px;">
 	<div class="card-body" th:attr="onclick='moveArchive(\'' + ${archive.id} + '\');'">
@@ -94,5 +97,8 @@
 			<span th:utext="${archive.shortprevhash}"></span>
 		</div>
 		</p>
+	</div>
+	<div>
+		<span><a th:href="@{'/archives/' + ${archive.id} + '/rawdata'}" th:text="生データを表示する"></a></span>
 	</div>
 </div>
