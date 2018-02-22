@@ -10,17 +10,40 @@
 	</div>
 
 	<h1 style="padding-top:30px;">ログイン</h1>
-	<p>テストユーザは、ユーザIDが "testuser1" から "testuser9" までの9ユーザ、パスワードはすべて "password" 共通です。</p>
+	<p>ユーザを選択して、ログインボタンを押してください。</p>
 	<div class="jumbotron" style="padding:32px;">
 		<form action="" th:action="@{/login}" method="post" name="login">
 			<div class="form-group">
 				<label for="uid"><strong>ユーザID</strong></label>
-				<input type="text" class="form-control" placeholder="ユーザID" name="uid" id="uid" required="true"/>
 			</div>
 			<div class="form-group">
-				<label for="password"><strong>パスワード</strong></label>
-				<input type="password" class="form-control" placeholder="パスワード" name="password" id="password" required="true"/>
+				<input type="radio" name="uid" id="uid" value="testuser1" checked="checked"/>testuser1
 			</div>
+			<div class="form-group">
+				<input type="radio" name="uid" id="uid" value="testuser2" />testuser2
+			</div>
+			<div class="form-group">
+				<input type="radio" name="uid" id="uid" value="testuser3" />testuser3
+			</div>
+			<div class="form-group">
+				<input type="radio" name="uid" id="uid" value="testuser4" />testuser4
+			</div>
+			<div class="form-group">
+				<input type="radio" name="uid" id="uid" value="testuser5" />testuser5
+			</div>
+			<div class="form-group">
+				<input type="radio" name="uid" id="uid" value="testuser6" />testuser6
+			</div>
+			<div class="form-group">
+				<input type="radio" name="uid" id="uid" value="testuser7" />testuser7
+			</div>
+			<div class="form-group">
+				<input type="radio" name="uid" id="uid" value="testuser8" />testuser8
+			</div>
+			<div class="form-group">
+				<input type="radio" name="uid" id="uid" value="testuser9" />testuser9
+			</div>
+			<input type="hidden" name="password" id="password" th:value="password"/>
 			<input type="hidden" name="redirectUri" id="redirectUri" th:value="${redirectUri}"/>
 			<button class="btn btn-primary" type="submit">ログイン</button>
 		</form>
