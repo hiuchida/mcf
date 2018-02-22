@@ -1,5 +1,6 @@
 package gr.unirico.mcflib.util;
 
+import java.lang.invoke.MethodHandles;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -7,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DigestUtil {
-	private static Logger logger = LoggerFactory.getLogger(DigestUtil.class);
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	private static final String SHA256 = "SHA-256";
 
 	public static String calcBase64(String s) {

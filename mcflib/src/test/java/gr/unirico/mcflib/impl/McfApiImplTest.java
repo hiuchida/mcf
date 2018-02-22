@@ -1,5 +1,6 @@
 package gr.unirico.mcflib.impl;
 
+import java.lang.invoke.MethodHandles;
 import java.util.List;
 
 import org.junit.After;
@@ -14,7 +15,7 @@ import gr.unirico.mcflib.util.FileUtil;
 import junit.framework.TestCase;
 
 public class McfApiImplTest {
-	private static Logger logger = LoggerFactory.getLogger(McfApiImplTest.class);
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	private McfApiImpl a;
 	
 	@Before

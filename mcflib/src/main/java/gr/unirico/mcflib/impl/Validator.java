@@ -1,5 +1,7 @@
 package gr.unirico.mcflib.impl;
 
+import java.lang.invoke.MethodHandles;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,7 +11,7 @@ import gr.unirico.mcflib.exception.IllegalProofException;
 import gr.unirico.mcflib.exception.IllegalStatusException;
 
 public class Validator {
-	private static Logger logger = LoggerFactory.getLogger(Validator.class);
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
 	public static void previd(String previd, String thisPrevid) {
 		boolean rc = previd.equals(thisPrevid);

@@ -1,5 +1,6 @@
 package gr.unirico.mcfapp.interfaces;
 
+import java.lang.invoke.MethodHandles;
 import java.net.URL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/login")
 public class LoginController {
-    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+    private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
 	@GetMapping
 	public ModelAndView login(

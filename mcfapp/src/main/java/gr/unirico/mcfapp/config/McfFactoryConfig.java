@@ -1,5 +1,7 @@
 package gr.unirico.mcfapp.config;
 
+import java.lang.invoke.MethodHandles;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,7 +13,7 @@ import gr.unirico.mcflib.api.McfApiFactory;
 
 @Configuration
 public class McfFactoryConfig {
-	Logger logger = LoggerFactory.getLogger(this.getClass());
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
 	@Value("${mcfapp.factory.data.path}")
 	String factoryDataPath;

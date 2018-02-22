@@ -1,5 +1,7 @@
 package gr.unirico.mcfapp;
 
+import java.lang.invoke.MethodHandles;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +27,7 @@ public class Application {
 	}
 
 	public void startUpTask() {
-		Logger logger = LoggerFactory.getLogger(Application.class);
+		final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 		logger.info("Creating test data");
 		String dir = api.getDataDir();
 		FileUtil.deleteFiles(dir);

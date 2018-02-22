@@ -3,6 +3,8 @@
  */
 package gr.unirico.mcfapp.interfaces;
 
+import java.lang.invoke.MethodHandles;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,7 @@ import gr.unirico.mcflib.api.Topic;
 @Controller
 @RequestMapping("/archives")
 public class ArchiveController {
-	private static final Logger logger = LoggerFactory.getLogger(ArchiveController.class);
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
 	@Autowired
 	ArchiveService archiveService;

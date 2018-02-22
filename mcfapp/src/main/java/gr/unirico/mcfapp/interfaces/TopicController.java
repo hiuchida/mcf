@@ -3,6 +3,8 @@
  */
 package gr.unirico.mcfapp.interfaces;
 
+import java.lang.invoke.MethodHandles;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,7 @@ import gr.unirico.mcflib.api.Topic;
 @Controller
 @RequestMapping("/topics")
 public class TopicController {
-    private static final Logger logger = LoggerFactory.getLogger(TopicController.class);
+    private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
 	@Autowired
 	TopicService topicService;

@@ -1,12 +1,14 @@
 package gr.unirico.mcflib.api;
 
+import java.lang.invoke.MethodHandles;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import gr.unirico.mcflib.impl.McfApiImpl;
 
 public class McfApiFactory {
-	private static Logger logger = LoggerFactory.getLogger(McfApiFactory.class);
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	private static McfApiImpl singleton;
 	private static String secret = "secretKey";
 	

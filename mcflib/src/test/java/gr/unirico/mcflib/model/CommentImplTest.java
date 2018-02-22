@@ -1,5 +1,6 @@
 package gr.unirico.mcflib.model;
 
+import java.lang.invoke.MethodHandles;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import junit.framework.TestCase;
 
 public class CommentImplTest {
-	private static Logger logger = LoggerFactory.getLogger(CommentImplTest.class);
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	public static final String TESTUSER = "testuser";
 	public static final String TESTCOMMENT = "testComment";
 	private CommentImpl c;

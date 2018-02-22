@@ -21,8 +21,6 @@ import gr.unirico.mcflib.api.Topic;
  */
 @Service
 public class TopicService {
-	//private Logger logger = LoggerFactory.getLogger(TopicService.class);
-
 	@Autowired
 	McfApi api;
 

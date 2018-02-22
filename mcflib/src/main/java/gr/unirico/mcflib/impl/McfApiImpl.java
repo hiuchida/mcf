@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,7 +23,7 @@ import gr.unirico.mcflib.parser.ListParser;
 import gr.unirico.mcflib.util.FileUtil;
 
 public class McfApiImpl implements McfApi {
-	private static Logger logger = LoggerFactory.getLogger(McfApiImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	private String dataDir;
 	
 	public McfApiImpl(String dataDir) {

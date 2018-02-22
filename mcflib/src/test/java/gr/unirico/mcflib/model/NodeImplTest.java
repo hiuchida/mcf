@@ -1,5 +1,6 @@
 package gr.unirico.mcflib.model;
 
+import java.lang.invoke.MethodHandles;
 import java.util.Iterator;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import gr.unirico.mcflib.util.ListBuilder;
 import junit.framework.TestCase;
 
 public class NodeImplTest {
-	private static Logger logger = LoggerFactory.getLogger(NodeImplTest.class);
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 	public static final String FIRSTID = "first-id";
 	public static final String FIRSTHASH = "0";
 	public static final String PREVID = "previd";

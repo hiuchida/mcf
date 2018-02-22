@@ -1,5 +1,6 @@
 package gr.unirico.mcfapp.interfaces.api;
 
+import java.lang.invoke.MethodHandles;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,7 +24,7 @@ import gr.unirico.mcfapp.application.TopicService;
 @RestController
 @RequestMapping("/api/topics")
 public class TopicAPIController {
-	private static final Logger logger = LoggerFactory.getLogger(TopicAPIController.class);
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
 	@Autowired
 	TopicService topicService;

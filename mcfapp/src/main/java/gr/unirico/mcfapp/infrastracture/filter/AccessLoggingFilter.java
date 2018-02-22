@@ -18,7 +18,7 @@ import java.io.IOException;
 
 @Component
 public class AccessLoggingFilter extends OncePerRequestFilter {
-	private Logger log = LoggerFactory.getLogger("AccessLog");
+	private static final Logger log = LoggerFactory.getLogger("AccessLog");
 
 	@Value("${mcfapp.logging.console.accesslog.filter.enabled:false}")
 	private boolean filterEnabled;

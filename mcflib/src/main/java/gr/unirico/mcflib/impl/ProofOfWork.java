@@ -1,5 +1,7 @@
 package gr.unirico.mcflib.impl;
 
+import java.lang.invoke.MethodHandles;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -7,7 +9,7 @@ import gr.unirico.mcflib.util.DigestUtil;
 import gr.unirico.mcflib.util.StringUtil;
 
 public class ProofOfWork {
-	private static Logger logger = LoggerFactory.getLogger(ProofOfWork.class);
+	private static final Logger logger = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
 	public static int calc(int lastProof, String prevhash) {
 		int proof = 0;
