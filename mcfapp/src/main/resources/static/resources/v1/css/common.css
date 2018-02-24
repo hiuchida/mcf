@@ -14,6 +14,15 @@ body {
   padding-left: 230px;
 }
 
+.login-radio-btn-area {
+	cursor: pointer;
+}
+.login-radio-btn-area:hover {
+	font-weight: bold;
+	background-color: rgba(0, 123,255,0.5);
+	color: #f0f0f0;
+}
+
 .dropdown-toggle {
 	font-size: 1.1rem;
 }

@@ -14,34 +14,14 @@
 	<div class="jumbotron" style="padding:32px;">
 		<form action="" th:action="@{/login}" method="post" name="login">
 			<div class="form-group">
-				<label for="uid"><strong>ユーザID</strong></label>
-			</div>
-			<div class="form-group">
-				<input type="radio" name="uid" id="uid" value="testuser1" checked="checked"/>testuser1
-			</div>
-			<div class="form-group">
-				<input type="radio" name="uid" id="uid" value="testuser2" />testuser2
-			</div>
-			<div class="form-group">
-				<input type="radio" name="uid" id="uid" value="testuser3" />testuser3
-			</div>
-			<div class="form-group">
-				<input type="radio" name="uid" id="uid" value="testuser4" />testuser4
-			</div>
-			<div class="form-group">
-				<input type="radio" name="uid" id="uid" value="testuser5" />testuser5
-			</div>
-			<div class="form-group">
-				<input type="radio" name="uid" id="uid" value="testuser6" />testuser6
-			</div>
-			<div class="form-group">
-				<input type="radio" name="uid" id="uid" value="testuser7" />testuser7
-			</div>
-			<div class="form-group">
-				<input type="radio" name="uid" id="uid" value="testuser8" />testuser8
-			</div>
-			<div class="form-group">
-				<input type="radio" name="uid" id="uid" value="testuser9" />testuser9
+				<div>
+					<label for="uid"><strong>ユーザID</strong></label>
+				</div>
+				<label class="col-sm-offset-2 col-sm-12 login-radio-btn-area" th:each="i : ${#numbers.sequence(1, 9)}">
+					<div class="radio">
+						<input type="radio" name="uid" th:value="'testuser' + ${i}" th:text="' testuser' + ${i}" th:checked="${i == 1}"></input>
+					</div>
+				</label>
 			</div>
 			<input type="hidden" name="password" id="password" th:value="password"/>
 			<input type="hidden" name="redirectUri" id="redirectUri" th:value="${redirectUri}"/>
