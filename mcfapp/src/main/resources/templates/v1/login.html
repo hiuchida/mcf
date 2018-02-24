@@ -15,11 +15,11 @@
 		<form action="" th:action="@{/login}" method="post" name="login">
 			<div class="form-group">
 				<div>
-					<label for="uid"><strong>ユーザID</strong></label>
+					<label for="uid"><strong>ユーザ</strong></label>
 				</div>
 				<label class="col-sm-offset-2 col-sm-12 login-radio-btn-area" th:each="i : ${#numbers.sequence(1, 9)}">
 					<div class="radio">
-						<input type="radio" name="uid" th:value="'testuser' + ${i}" th:text="' testuser' + ${i}" th:checked="${i == 1}"></input>
+						<input type="radio" name="uid" th:value="'テストユーザ' + ${i}" th:text="' テストユーザ' + ${i}" th:checked="${i == 1}"></input>
 					</div>
 				</label>
 			</div>

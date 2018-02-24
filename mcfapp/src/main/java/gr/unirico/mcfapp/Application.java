@@ -35,10 +35,10 @@ public class Application {
 			Topic t;
 			Comment c;
 			t = api.newTopic("Yahoo! Part1", "https://www.yahoo.co.jp/");
-			c = api.newComment("testuser1", "comment1");
+			c = api.newComment("テストユーザ1", "コメント1");
 			t.add(c);
 			Thread.sleep(100);
-			c = api.newComment("testuser2", "comment2");
+			c = api.newComment("テストユーザ2", "コメント2");
 			t.add(c);
 			api.writeTopic(t);
 			api.archiveTopic(t);
@@ -52,10 +52,10 @@ public class Application {
 			api.archiveTopic(t);
 			Thread.sleep(100);
 			t = api.newTopic("Yahoo! Part2", "https://www.yahoo.co.jp/");
-			c = api.newComment("testuser1", "comment1");
+			c = api.newComment("テストユーザ1", "コメント1");
 			t.add(c);
 			Thread.sleep(100);
-			c = api.newComment("testuser2", "comment2");
+			c = api.newComment("テストユーザ2", "コメント2");
 			t.add(c);
 			api.writeTopic(t);
 			Thread.sleep(100);
